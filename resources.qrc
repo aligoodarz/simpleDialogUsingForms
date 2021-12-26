@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/orientation_images">
+        <file>images/b_orientation.png</file>
+        <file>images/t_orientation.png</file>
+        <file>images/u_orientation.png</file>
+    </qresource>
+</RCC>
