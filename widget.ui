@@ -252,6 +252,9 @@
        <pointsize>20</pointsize>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="text">
       <string>Select A Model to Display the Corresponding Image</string>
      </property>

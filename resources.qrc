@@ -1,7 +1,10 @@
 <RCC>
-    <qresource prefix="/orientation_images">
+    <qresource prefix="/orientations">
         <file>images/b_orientation.png</file>
         <file>images/t_orientation.png</file>
         <file>images/u_orientation.png</file>
+    </qresource>
+    <qresource prefix="/cssStyleSheets">
+        <file>styleSheet.css</file>
     </qresource>
 </RCC>

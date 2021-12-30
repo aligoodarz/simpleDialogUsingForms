@@ -46,9 +46,9 @@ void Widget::on_saveButton_clicked()
 void Widget::on_modelComboBox_currentIndexChanged(int index)
 {
     //Create pixmaps for the 3 orientations
-    QPixmap uPixmap(":/orientation_images/images/u_orientation.png");
-    QPixmap bPixmap(":/orientation_images/images/b_orientation.png");
-    QPixmap tPixmap(":/orientation_images/images/t_orientation.png");
+    QPixmap uPixmap(":/orientations/images/u_orientation.png");
+    QPixmap bPixmap(":/orientations/images/b_orientation.png");
+    QPixmap tPixmap(":/orientations/images/t_orientation.png");
     //Change parameter 1 and parameter 2 fields based on selection
     //Also change the displayed figure based on the selection
     switch (ui->modelComboBox->currentIndex())
@@ -94,7 +94,7 @@ void Widget::saveJson()
     jsonDocument.setObject(userSelection);
     QByteArray bytes = jsonDocument.toJson(QJsonDocument::Indented);
     QFile file("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/specimenInfo.json");
-    if( file.open( QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate ) )
+    if( file.open( QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append ) )
         {
             QTextStream iStream( &file );
             iStream.setCodec( "utf-8" );

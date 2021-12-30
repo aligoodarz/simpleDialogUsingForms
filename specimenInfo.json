@@ -1,7 +1,14 @@
 {
-    "model": "B",
-    "parameter1": "90",
-    "parameter2": "120",
+    "model": "U",
+    "parameter1": "23",
+    "parameter2": "47",
     "space": "3D",
+    "units": "m"
+}
+{
+    "model": "B",
+    "parameter1": "29",
+    "parameter2": "45",
+    "space": "2D",
     "units": "m"
 }
