@@ -7,20 +7,7 @@
 
 //Handling the CSS file for styling
 //This function reads the Css file
-QString readTextFile (QString path)
-{
-    QFile file(path);
-
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        QTextStream in(&file);
-        return in.readAll();
-    }else
-    {
-    qDebug()<<"File Failed to Open";
-    }
-    return "";
-}
+QString readTextFile (QString path);
 
 
 //The main function that runs the application
@@ -45,5 +32,19 @@ int main(int argc, char *argv[])
 }
 
 
+QString readTextFile (QString path)
+{
+    QFile file(path);
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QTextStream in(&file);
+        return in.readAll();
+    }else
+    {
+    qDebug()<<"File Failed to Open";
+    }
+    return "";
+}
 
 

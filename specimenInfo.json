@@ -12,3 +12,17 @@
     "space": "2D",
     "units": "m"
 }
+{
+    "model": "B",
+    "parameter1": "23",
+    "parameter2": "98",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "90",
+    "parameter2": "22",
+    "space": "2D",
+    "units": "m"
+}
