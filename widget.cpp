@@ -31,12 +31,13 @@ void Widget::on_saveButton_clicked()
         ui->parameter1LineEdit->text()==""   ||
         ui->parameter2LineEdit->text()=="")
     {
-        QMessageBox::warning(this, "Empty Fields",
-                             "At least one input field is empty, please fill out everything to proceed");
+        warnUser();
     }else
     {
        saveJson();
-       QMessageBox::information(this,"Success!","Specimen Info has been saved to the JSON file");
+       ui->emptyFieldLabel->setText("Specimen Info Has Been Successfully Saved.");
+       ui->emptyFieldLabel->setStyleSheet("color:green; font-weight:bold");
+       QTimer::singleShot(4000,this,[=](){ui->emptyFieldLabel->setText("");});
 
     }
 
@@ -83,6 +84,14 @@ void Widget::on_modelComboBox_currentIndexChanged(int index)
 
 void Widget::saveJson()
 {
+    // Set Everything to normal colors if they have been flagged as empty
+    QString normalLabel = "color : black; font-weight: normal";
+    ui->spaceLabel->setStyleSheet(normalLabel);
+    ui->unitsLabel->setStyleSheet(normalLabel);
+    ui->modelLabel->setStyleSheet(normalLabel);
+    ui->parameter1Label->setStyleSheet(normalLabel);
+    ui->parameter2Label->setStyleSheet(normalLabel);
+
     QJsonObject userSelection;
     userSelection.insert("model",modelSelection);
     userSelection.insert("space",spaceSelection);
@@ -123,6 +132,26 @@ void Widget::saveJson()
     file.write(jsonDocument.toJson());
     file.close();
     */
+
+}
+
+void Widget::warnUser()
+{
+    QString errorStyle = "color : red; font-weight: bold";
+
+    ui->emptyFieldLabel->setText("At Least One Field Is Empty, Fill out everything to proceed");
+    ui->emptyFieldLabel->setStyleSheet(errorStyle);
+
+    if (ui->spaceComboBox->currentIndex()==0) { ui->spaceLabel->setStyleSheet(errorStyle);
+                                                /*ui->spaceComboBox->setStyleSheet(errorStyle);*/}
+    if (ui->unitsComboBox->currentIndex()==0) { ui->unitsLabel->setStyleSheet(errorStyle);
+                                                /*ui->unitsComboBox->setStyleSheet(errorStyle);*/}
+    if (ui->modelComboBox->currentIndex()==0) { ui->modelLabel->setStyleSheet(errorStyle);
+                                                /*ui->modelComboBox->setStyleSheet(errorStyle);*/}
+    if (ui->parameter1LineEdit->text()=="") { ui->parameter1Label->setStyleSheet(errorStyle);
+                                              /*ui->parameter1LineEdit->setStyleSheet(errorStyle)*/;}
+    if (ui->parameter2LineEdit->text()=="") { ui->parameter2Label->setStyleSheet(errorStyle);
+                                              /*ui->parameter2LineEdit->setStyleSheet(errorStyle)*/;}
 
 }
 

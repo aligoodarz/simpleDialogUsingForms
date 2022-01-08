@@ -26,3 +26,129 @@
     "space": "2D",
     "units": "m"
 }
+{
+    "model": "B",
+    "parameter1": "kj",
+    "parameter2": "k",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "22",
+    "parameter2": "42",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "22",
+    "parameter2": "42",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "22",
+    "parameter2": "42",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "90",
+    "parameter2": "23",
+    "space": "3D",
+    "units": "mm"
+}
+{
+    "model": "U",
+    "parameter1": "23",
+    "parameter2": "42",
+    "space": "2D",
+    "units": "mm"
+}
+{
+    "model": "U",
+    "parameter1": "23",
+    "parameter2": "32",
+    "space": "3D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "98",
+    "parameter2": "89",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "98",
+    "parameter2": "89",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "98",
+    "parameter2": "89",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "89",
+    "parameter2": "08",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "23",
+    "parameter2": "42",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "89",
+    "parameter2": "23",
+    "space": "3D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "23",
+    "parameter2": "41",
+    "space": "3D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "23",
+    "parameter2": "45",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "23",
+    "parameter2": "45",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "23",
+    "parameter2": "42",
+    "space": "2D",
+    "units": "m"
+}
+{
+    "model": "U",
+    "parameter1": "23",
+    "parameter2": "42",
+    "space": "2D",
+    "units": "m"
+}
