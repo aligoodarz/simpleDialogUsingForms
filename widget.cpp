@@ -77,14 +77,12 @@ void Widget::on_modelComboBox_currentIndexChanged(int index)
         ui->parameter2LineEdit->setPlaceholderText("Width");
         ui->orientationPictureLabel->setPixmap(tPixmap);
     }
-
-
-
 }
 
 void Widget::saveJson()
 {
-    // Set Everything to normal colors if they have been flagged as empty
+    /* Set Everything to normal colors if they have been flagged as empty
+       The labels specifically have to be turned back to normal */
     QString normalLabel = "color : black; font-weight: normal";
     ui->spaceLabel->setStyleSheet(normalLabel);
     ui->unitsLabel->setStyleSheet(normalLabel);
@@ -92,6 +90,7 @@ void Widget::saveJson()
     ui->parameter1Label->setStyleSheet(normalLabel);
     ui->parameter2Label->setStyleSheet(normalLabel);
 
+    //Proceed with handling the information and saving in the JSON file
     QJsonObject userSelection;
     userSelection.insert("model",modelSelection);
     userSelection.insert("space",spaceSelection);
@@ -137,6 +136,7 @@ void Widget::saveJson()
 
 void Widget::warnUser()
 {
+    // Set any field to red that has an empty entry and warn the user.
     QString errorStyle = "color : red; font-weight: bold";
 
     ui->emptyFieldLabel->setText("At Least One Field Is Empty, Fill out everything to proceed");

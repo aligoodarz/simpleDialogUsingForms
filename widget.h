@@ -43,7 +43,7 @@ private:
     QList <QString> selectionList;
     //Create Graphics
     void saveJson();
-    void warnUser();
+    void warnUser(); //Warns users if a field is empty
 
 };
 #endif // WIDGET_H
