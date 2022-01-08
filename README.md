@@ -6,9 +6,10 @@
 ![image](https://user-images.githubusercontent.com/72888089/147778371-314d0803-04a4-41c6-9641-07677f5d0655.png)
 - Please note the picure is static for now but it can be made dynamic by implementing OpenGL components into the program.
 - If one or more of the fiels is empty, the user will get a warning about it upon pressing save:
-![image](https://user-images.githubusercontent.com/72888089/147778398-bdbeabb3-76fe-4610-a5c5-ac2a6ac8fcb7.png)
-- If all the fields are full, then the input will be saved to a Json file in the same folder and the user will get a prompt indicating this
-![image](https://user-images.githubusercontent.com/72888089/147778441-972a6d3d-7d25-492a-b907-30e5f43ebb03.png)
+![image](https://user-images.githubusercontent.com/72888089/148657429-e0873062-951d-47de-b4dc-3e211b1bbfb5.png)
+- If all the fields are full, then the input will be saved to a Json file in the same folder and the user will get a prompt indicating this.
+- The prompt goes away after 4 seconds which allows for other entries.
+![image](https://user-images.githubusercontent.com/72888089/148657440-68f5277c-3719-41d5-94fa-57dbfd571b99.png)
 - The JSON file:
 ![image](https://user-images.githubusercontent.com/72888089/147417798-414b61ed-60d9-4ebd-b225-dc1ea202a6c9.png)
 - I have used a css stylesheet to set styles to the widget as desired
