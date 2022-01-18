@@ -10,9 +10,11 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
+    modelwindow.cpp \
     widget.cpp
 
 HEADERS += \
+    modelwindow.h \
     widget.h
 
 FORMS += \

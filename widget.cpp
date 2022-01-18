@@ -1,11 +1,21 @@
 #include "widget.h"
 #include "ui_widget.h"
+#include <QGraphicsScene>
+#include <QGraphicsItem>
+#include <QGraphicsView>
+#include "modelwindow.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+
+    ModelWindow* models = new ModelWindow(this);
+    ui->horizontalLayout_2->addWidget(models);
+
+
+
 }
 
 Widget::~Widget()
