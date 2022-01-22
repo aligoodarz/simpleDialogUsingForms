@@ -3,7 +3,6 @@
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QGraphicsView>
-#include "modelwindow.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -11,8 +10,11 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ModelWindow* models = new ModelWindow(this);
-    ui->horizontalLayout_2->addWidget(models);
+    QGraphicsScene * scene = new QGraphicsScene(this);
+
+    QGraphicsView* view = new QGraphicsView(this);
+    view->setScene(scene);
+    ui->horizontalLayout_2->addWidget(view);
 
 
 
@@ -71,21 +73,21 @@ void Widget::on_modelComboBox_currentIndexChanged(int index)
         ui->parameter1LineEdit->setPlaceholderText("Radius");
         ui->parameter2Label->setText("Height");
         ui->parameter2LineEdit->setPlaceholderText("Height");
-        ui->orientationPictureLabel->setPixmap(uPixmap);
+//        ui->orientationPictureLabel->setPixmap(uPixmap);
         break;
     case 2:
         ui->parameter1Label->setText("Radius");
         ui->parameter1LineEdit->setPlaceholderText("Radius");
         ui->parameter2Label->setText("Width");
         ui->parameter2LineEdit->setPlaceholderText("Width");
-        ui->orientationPictureLabel->setPixmap(bPixmap);
+//        ui->orientationPictureLabel->setPixmap(bPixmap);
         break;
     case 3:
         ui->parameter1Label->setText("Radius");
         ui->parameter1LineEdit->setPlaceholderText("Radius");
         ui->parameter2Label->setText("Width");
         ui->parameter2LineEdit->setPlaceholderText("Width");
-        ui->orientationPictureLabel->setPixmap(tPixmap);
+//        ui->orientationPictureLabel->setPixmap(tPixmap);
     }
 }
 
