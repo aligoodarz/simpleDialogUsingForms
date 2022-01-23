@@ -1,11 +1,20 @@
 #include "widget.h"
 #include "ui_widget.h"
 
+
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+
+    scene = new QGraphicsScene(this);
+    view = new QGraphicsView(this);
+    view->setScene(scene);
+    ui->horizontalLayout_2->addWidget(view);
+
+
+
 }
 
 Widget::~Widget()
@@ -22,6 +31,7 @@ void Widget::on_saveButton_clicked()
     modelSelection = ui->modelComboBox->currentText();
     parameter1Selection = ui->parameter1LineEdit->text();
     parameter2Selection = ui->parameter2LineEdit->text();
+
 
     //If any of the fields are empty show a message asking for input
     //If they are not empty, then invoke the saveJson method
@@ -47,9 +57,9 @@ void Widget::on_saveButton_clicked()
 void Widget::on_modelComboBox_currentIndexChanged(int index)
 {
     //Create pixmaps for the 3 orientations
-    QPixmap uPixmap(":/orientations/images/u_orientation.png");
-    QPixmap bPixmap(":/orientations/images/b_orientation.png");
-    QPixmap tPixmap(":/orientations/images/t_orientation.png");
+//    QPixmap uPixmap(":/orientations/images/u_orientation.png");
+//    QPixmap bPixmap(":/orientations/images/b_orientation.png");
+//    QPixmap tPixmap(":/orientations/images/t_orientation.png");
     //Change parameter 1 and parameter 2 fields based on selection
     //Also change the displayed figure based on the selection
     switch (ui->modelComboBox->currentIndex())
@@ -61,21 +71,24 @@ void Widget::on_modelComboBox_currentIndexChanged(int index)
         ui->parameter1LineEdit->setPlaceholderText("Radius");
         ui->parameter2Label->setText("Height");
         ui->parameter2LineEdit->setPlaceholderText("Height");
-        ui->orientationPictureLabel->setPixmap(uPixmap);
+        drawModel();
+//        ui->orientationPictureLabel->setPixmap(uPixmap);
         break;
     case 2:
         ui->parameter1Label->setText("Radius");
         ui->parameter1LineEdit->setPlaceholderText("Radius");
         ui->parameter2Label->setText("Width");
         ui->parameter2LineEdit->setPlaceholderText("Width");
-        ui->orientationPictureLabel->setPixmap(bPixmap);
+        drawModel();
+//        ui->orientationPictureLabel->setPixmap(bPixmap);
         break;
     case 3:
         ui->parameter1Label->setText("Radius");
         ui->parameter1LineEdit->setPlaceholderText("Radius");
         ui->parameter2Label->setText("Width");
         ui->parameter2LineEdit->setPlaceholderText("Width");
-        ui->orientationPictureLabel->setPixmap(tPixmap);
+        drawModel();
+//        ui->orientationPictureLabel->setPixmap(tPixmap);
     }
 }
 
@@ -152,6 +165,15 @@ void Widget::warnUser()
                                               /*ui->parameter1LineEdit->setStyleSheet(errorStyle)*/;}
     if (ui->parameter2LineEdit->text()=="") { ui->parameter2Label->setStyleSheet(errorStyle);
                                               /*ui->parameter2LineEdit->setStyleSheet(errorStyle)*/;}
+
+}
+
+void Widget::drawModel()
+{
+    //First check to see which box is selected
+    if (ui->modelComboBox->currentIndex()==1){
+
+    }
 
 }
 
