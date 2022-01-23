@@ -13,6 +13,9 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QGraphicsScene>
+#include <QGraphicsItem>
+#include <QGraphicsView>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -44,6 +47,10 @@ private:
     //Create Graphics
     void saveJson();
     void warnUser(); //Warns users if a field is empty
+    void drawModel(); //Draws model based on the selected model
+    QGraphicsView* view;
+    QGraphicsScene* scene;
+
 
 };
 #endif // WIDGET_H
