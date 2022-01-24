@@ -1,6 +1,8 @@
 #include "widget.h"
 #include "ui_widget.h"
 #include <QGraphicsEllipseItem>
+#include <QDebug>
+#include <QPen>
 
 
 Widget::Widget(QWidget *parent)
@@ -14,6 +16,7 @@ Widget::Widget(QWidget *parent)
     view = new QGraphicsView(this);
     view->setScene(scene);
     ui->horizontalLayout_2->addWidget(view);
+//    ui->horizontalLayout_2->addWidget(ui->visulizeButton);
 
 
 
@@ -172,16 +175,33 @@ void Widget::warnUser()
 
 void Widget::drawModel()
 {
-    scene->addLine(200,-100,200,600);
+
+
+}
+
+
+void Widget::on_visulizeButton_clicked()
+{
+//    spaceSelection = ui->spaceComboBox->currentText();
+//    unitsSelection = ui->unitsComboBox->currentText();
+//    modelSelection = ui->modelComboBox->currentText();
+    scene->clear();
+
+    double parameter1SelectionDouble = (ui->parameter1LineEdit->text()).toDouble();
+    double parameter2SelectionDouble = (ui->parameter2LineEdit->text()).toDouble();
+
+
+    double ratio = parameter2SelectionDouble/parameter1SelectionDouble; //This holds the ratio for height/width to radius
+    qDebug()<<ratio;
+//    scene->addLine(200,-100,200,600);
     //First check to see which box is selected
     if (ui->modelComboBox->currentIndex()==1){ // add a hypothetical cylinder to check everything
-        QGraphicsEllipseItem* ellipseItem = scene->addEllipse(150,100,100,30);
-        scene->addLine(150,115,150,300);
-        scene->addLine(250,115,250,300);
-        scene->addEllipse(150,285,100,30);
+        QGraphicsEllipseItem* ellipseItem = scene->addEllipse(150,40,100,30); //big radius is 100, and small radius is 30
+        scene->addLine(150,55,150,40+(100.0*ratio));
+        scene->addLine(250,55,250,40+(100.0*ratio));
+        scene->addEllipse(150,25+(100.0*ratio),100,30);
         ellipseItem->setFlag(QGraphicsItem::ItemIsMovable);
 
     }
-
 }
 

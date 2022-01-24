@@ -34,6 +34,8 @@ private slots:
 
     void on_modelComboBox_currentIndexChanged(int index);
 
+    void on_visulizeButton_clicked();
+
 private:
     Ui::Widget *ui;
     //Declare variables to hold the user selections
