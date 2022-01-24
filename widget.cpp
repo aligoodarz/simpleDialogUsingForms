@@ -174,7 +174,7 @@ void Widget::drawModel()
 {
     scene->addLine(200,-100,200,600);
     //First check to see which box is selected
-    if (ui->modelComboBox->currentIndex()==1){
+    if (ui->modelComboBox->currentIndex()==1){ // add a hypothetical cylinder to check everything
         QGraphicsEllipseItem* ellipseItem = scene->addEllipse(150,100,100,30);
         scene->addLine(150,115,150,300);
         scene->addLine(250,115,250,300);
