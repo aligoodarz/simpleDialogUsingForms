@@ -1,5 +1,6 @@
 #include "widget.h"
 #include "ui_widget.h"
+#include <QGraphicsEllipseItem>
 
 
 Widget::Widget(QWidget *parent)
@@ -9,6 +10,7 @@ Widget::Widget(QWidget *parent)
     ui->setupUi(this);
 
     scene = new QGraphicsScene(this);
+    scene->setSceneRect(0,0,400,400);
     view = new QGraphicsView(this);
     view->setScene(scene);
     ui->horizontalLayout_2->addWidget(view);
@@ -170,8 +172,14 @@ void Widget::warnUser()
 
 void Widget::drawModel()
 {
+    scene->addLine(200,-100,200,600);
     //First check to see which box is selected
     if (ui->modelComboBox->currentIndex()==1){
+        QGraphicsEllipseItem* ellipseItem = scene->addEllipse(150,100,100,30);
+        scene->addLine(150,115,150,300);
+        scene->addLine(250,115,250,300);
+        scene->addEllipse(150,285,100,30);
+        ellipseItem->setFlag(QGraphicsItem::ItemIsMovable);
 
     }
 
