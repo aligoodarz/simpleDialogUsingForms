@@ -1,8 +1,12 @@
 #include "widget.h"
 #include "ui_widget.h"
 #include <QGraphicsEllipseItem>
+#include <QGraphicsLineItem>
+#include <QGraphicsItemGroup>
+#include <QList>
 #include <QDebug>
 #include <QPen>
+#include <QPainterPath>
 
 
 Widget::Widget(QWidget *parent)
@@ -185,7 +189,7 @@ void Widget::on_visulizeButton_clicked()
 //    spaceSelection = ui->spaceComboBox->currentText();
 //    unitsSelection = ui->unitsComboBox->currentText();
 //    modelSelection = ui->modelComboBox->currentText();
-    scene->clear();
+    scene->clear(); //make sure everything there is deleted
 
     double parameter1SelectionDouble = (ui->parameter1LineEdit->text()).toDouble();
     double parameter2SelectionDouble = (ui->parameter2LineEdit->text()).toDouble();
@@ -193,15 +197,34 @@ void Widget::on_visulizeButton_clicked()
 
     double ratio = parameter2SelectionDouble/parameter1SelectionDouble; //This holds the ratio for height/width to radius
     qDebug()<<ratio;
-//    scene->addLine(200,-100,200,600);
+    scene->addLine(200,-100,200,600);
+    scene->addLine(0,200,600,200);
     //First check to see which box is selected
-    if (ui->modelComboBox->currentIndex()==1){ // add a hypothetical cylinder to check everything
-        QGraphicsEllipseItem* ellipseItem = scene->addEllipse(150,40,100,30); //big radius is 100, and small radius is 30
-        scene->addLine(150,55,150,40+(100.0*ratio));
-        scene->addLine(250,55,250,40+(100.0*ratio));
-        scene->addEllipse(150,25+(100.0*ratio),100,30);
-        ellipseItem->setFlag(QGraphicsItem::ItemIsMovable);
-
+    if (ui->modelComboBox->currentIndex()==1){
+        QGraphicsEllipseItem* topEllipse = scene->addEllipse(150,40,100,30); //big radius is 100, and small radius is 30
+        QGraphicsLineItem* leftLine =  scene->addLine(150,55,150,40+(100.0*ratio));
+        QGraphicsLineItem* rightLine = scene->addLine(250,55,250,40+(100.0*ratio));
+        QGraphicsEllipseItem* bottomEllipse = scene->addEllipse(150,25+(100.0*ratio),100,30);
+    }else if (ui->modelComboBox->currentIndex()==2){
+        QGraphicsEllipseItem* leftEllipse = scene->addEllipse(90,150,30,100);
+        QGraphicsLineItem* topLine =  scene->addLine(105,150,90+(100.0*ratio),150);
+        QGraphicsLineItem* bottomLine =  scene->addLine(105,250,90+(100.0*ratio),250);
+        QGraphicsEllipseItem* rightEllipse = scene->addEllipse(75+(100.0*ratio),150,30,100);
+    }else if (ui->modelComboBox->currentIndex()==3){
+        QGraphicsRectItem* square = scene->addRect(10,10,380,380);
+        QGraphicsEllipseItem* circle = scene->addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio));
+//        circle->moveBy(((380*ratio)/2)-540,
+//                      ((parameter1SelectionDouble*ratio)/2)-parameter1SelectionDouble);
     }
+
+    //This is an attempt to group everything together to do operations on
+//    QPainterPath selectionPath;
+//    selectionPath.addRect(0,0,600,600);
+//    scene->setSelectionArea(selectionPath);
+//    QGraphicsItemGroup* selectionGroup = scene->createItemGroup(scene->selectedItems());
+//    selectionGroup->moveBy(100,10);
+
+
+
 }
 
