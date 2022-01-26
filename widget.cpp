@@ -17,11 +17,15 @@ Widget::Widget(QWidget *parent)
     ui->setupUi(this);
 
     scene = new QGraphicsScene(this);
-
     scene->setSceneRect(0,0,400,400);
     view = new View(this);
     view->setScene(scene);
     ui->horizontalLayout_2->addWidget(view);
+
+    QGraphicsView* scaleView = new QGraphicsView(this);
+    view->setMaximumSize(100,400);
+    ui->horizontalLayout_2->addWidget(scaleView);
+
 //    ui->horizontalLayout_2->addWidget(ui->visulizeButton);
 
 
