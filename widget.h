@@ -28,6 +28,7 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+    friend class View;
 
 private slots:
     void on_saveButton_clicked();
@@ -52,6 +53,8 @@ private:
     void drawModel(); //Draws model based on the selected model
     QGraphicsView* view;
     QGraphicsScene* scene;
+    double ratio;
+
 
 
 };

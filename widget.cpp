@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QPen>
 #include <QPainterPath>
+#include "view.h"
 
 
 Widget::Widget(QWidget *parent)
@@ -17,7 +18,7 @@ Widget::Widget(QWidget *parent)
 
     scene = new QGraphicsScene(this);
     scene->setSceneRect(0,0,400,400);
-    view = new QGraphicsView(this);
+    view = new View(this);
     view->setScene(scene);
     ui->horizontalLayout_2->addWidget(view);
 //    ui->horizontalLayout_2->addWidget(ui->visulizeButton);
@@ -195,10 +196,10 @@ void Widget::on_visulizeButton_clicked()
     double parameter2SelectionDouble = (ui->parameter2LineEdit->text()).toDouble();
 
 
-    double ratio = parameter2SelectionDouble/parameter1SelectionDouble; //This holds the ratio for height/width to radius
+    ratio = parameter2SelectionDouble/parameter1SelectionDouble; //This holds the ratio for height/width to radius
     qDebug()<<ratio;
-    scene->addLine(200,-100,200,600);
-    scene->addLine(0,200,600,200);
+//    scene->addLine(200,-100,200,600); //added to have a reference coordinate
+//    scene->addLine(0,200,600,200);
     //First check to see which box is selected
     if (ui->modelComboBox->currentIndex()==1){
         QGraphicsEllipseItem* topEllipse = scene->addEllipse(150,40,100,30); //big radius is 100, and small radius is 30
@@ -213,8 +214,6 @@ void Widget::on_visulizeButton_clicked()
     }else if (ui->modelComboBox->currentIndex()==3){
         QGraphicsRectItem* square = scene->addRect(10,10,380,380);
         QGraphicsEllipseItem* circle = scene->addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio));
-//        circle->moveBy(((380*ratio)/2)-540,
-//                      ((parameter1SelectionDouble*ratio)/2)-parameter1SelectionDouble);
     }
 
     //This is an attempt to group everything together to do operations on
