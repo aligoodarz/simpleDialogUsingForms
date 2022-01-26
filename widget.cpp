@@ -178,12 +178,6 @@ void Widget::warnUser()
 
 }
 
-void Widget::drawModel()
-{
-
-
-}
-
 
 void Widget::on_visulizeButton_clicked()
 {
