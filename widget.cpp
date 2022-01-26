@@ -201,19 +201,19 @@ void Widget::on_visulizeButton_clicked()
 //    scene->addLine(200,-100,200,600); //added to have a reference coordinate
 //    scene->addLine(0,200,600,200);
     //First check to see which box is selected
-    if (ui->modelComboBox->currentIndex()==1){
-        QGraphicsEllipseItem* topEllipse = scene->addEllipse(150,40,100,30); //big radius is 100, and small radius is 30
-        QGraphicsLineItem* leftLine =  scene->addLine(150,55,150,40+(100.0*ratio));
-        QGraphicsLineItem* rightLine = scene->addLine(250,55,250,40+(100.0*ratio));
-        QGraphicsEllipseItem* bottomEllipse = scene->addEllipse(150,25+(100.0*ratio),100,30);
-    }else if (ui->modelComboBox->currentIndex()==2){
-        QGraphicsEllipseItem* leftEllipse = scene->addEllipse(90,150,30,100);
-        QGraphicsLineItem* topLine =  scene->addLine(105,150,90+(100.0*ratio),150);
-        QGraphicsLineItem* bottomLine =  scene->addLine(105,250,90+(100.0*ratio),250);
-        QGraphicsEllipseItem* rightEllipse = scene->addEllipse(75+(100.0*ratio),150,30,100);
-    }else if (ui->modelComboBox->currentIndex()==3){
-        QGraphicsRectItem* square = scene->addRect(10,10,380,380);
-        QGraphicsEllipseItem* circle = scene->addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio));
+    if (ui->modelComboBox->currentIndex()==1){ //U orientation
+        scene->addEllipse(150,40,100,30); //big radius is 100, and small radius is 30, top ellipse
+        scene->addLine(150,55,150,40+(100.0*ratio)); //left line
+        scene->addLine(250,55,250,40+(100.0*ratio)); //right line
+        scene->addEllipse(150,25+(100.0*ratio),100,30); //bottom ellipse
+    }else if (ui->modelComboBox->currentIndex()==2){ //B orientation
+        scene->addEllipse(90,150,30,100); //left ellipse
+        scene->addLine(105,150,90+(100.0*ratio),150); //top line
+        scene->addLine(105,250,90+(100.0*ratio),250); //bottom line
+        scene->addEllipse(75+(100.0*ratio),150,30,100); //right ellipse
+    }else if (ui->modelComboBox->currentIndex()==3){ //T orientation
+        scene->addRect(10,10,380,380); //Square
+        scene->addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio)); //circle
     }
 
     //This is an attempt to group everything together to do operations on
