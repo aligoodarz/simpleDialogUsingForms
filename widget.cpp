@@ -17,6 +17,7 @@ Widget::Widget(QWidget *parent)
     ui->setupUi(this);
 
     scene = new QGraphicsScene(this);
+
     scene->setSceneRect(0,0,400,400);
     view = new View(this);
     view->setScene(scene);
@@ -81,7 +82,6 @@ void Widget::on_modelComboBox_currentIndexChanged(int index)
         ui->parameter1LineEdit->setPlaceholderText("Radius");
         ui->parameter2Label->setText("Height");
         ui->parameter2LineEdit->setPlaceholderText("Height");
-        drawModel();
 //        ui->orientationPictureLabel->setPixmap(uPixmap);
         break;
     case 2:
@@ -89,7 +89,6 @@ void Widget::on_modelComboBox_currentIndexChanged(int index)
         ui->parameter1LineEdit->setPlaceholderText("Radius");
         ui->parameter2Label->setText("Width");
         ui->parameter2LineEdit->setPlaceholderText("Width");
-        drawModel();
 //        ui->orientationPictureLabel->setPixmap(bPixmap);
         break;
     case 3:
@@ -97,7 +96,6 @@ void Widget::on_modelComboBox_currentIndexChanged(int index)
         ui->parameter1LineEdit->setPlaceholderText("Radius");
         ui->parameter2Label->setText("Width");
         ui->parameter2LineEdit->setPlaceholderText("Width");
-        drawModel();
 //        ui->orientationPictureLabel->setPixmap(tPixmap);
     }
 }
@@ -193,7 +191,8 @@ void Widget::on_visulizeButton_clicked()
     ratio = parameter2SelectionDouble/parameter1SelectionDouble; //This holds the ratio for height/width to radius
     qDebug()<<ratio;
 //    scene->addLine(200,-100,200,600); //added to have a reference coordinate
-//    scene->addLine(0,200,600,200);
+//      QGraphicsLineItem* line = scene->addLine(0,200,600,200);
+//      line->setFlag(QGraphicsItem::ItemIgnoresTransformations);
     //First check to see which box is selected
     if (ui->modelComboBox->currentIndex()==1){ //U orientation
         scene->addEllipse(150,40,100,30); //big radius is 100, and small radius is 30, top ellipse
