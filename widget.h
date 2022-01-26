@@ -28,7 +28,6 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
-    friend class View;
 
 private slots:
     void on_saveButton_clicked();

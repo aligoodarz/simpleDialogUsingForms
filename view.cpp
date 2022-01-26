@@ -8,7 +8,10 @@ View::View(QWidget *parent)
 
 void View::wheelEvent(QWheelEvent *event)
 {
-
+    if (event->delta() > 0)
+        scale(1.1,1.1);
+    else
+        scale(0.9,0.9);
 }
 
 void View::keyPressEvent(QKeyEvent *event)
