@@ -21,4 +21,3 @@ void View::keyPressEvent(QKeyEvent *event)
     else if(event->key() == Qt::Key_Right)
         rotate(1);
 }
-
