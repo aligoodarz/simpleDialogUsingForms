@@ -22,9 +22,9 @@ Widget::Widget(QWidget *parent)
     view->setScene(scene);
     ui->horizontalLayout_2->addWidget(view);
 
-    QGraphicsView* scaleView = new QGraphicsView(this);
-    view->setMaximumSize(100,400);
-    ui->horizontalLayout_2->addWidget(scaleView);
+//    QGraphicsView* scaleView = new QGraphicsView(this);
+//    view->setMaximumSize(25,600);
+//    ui->horizontalLayout_2->addWidget(scaleView);
 
 //    ui->horizontalLayout_2->addWidget(ui->visulizeButton);
 
