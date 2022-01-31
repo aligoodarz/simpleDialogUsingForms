@@ -43,13 +43,7 @@ Widget::~Widget()
 
 void Widget::on_saveButton_clicked()
 {
-    //Save the user selections in the variables defined in the header file
-    spaceSelection = ui->spaceComboBox->currentText();
-    unitsSelection = ui->unitsComboBox->currentText();
-    modelSelection = ui->modelComboBox->currentText();
-    parameter1Selection = ui->parameter1LineEdit->text();
-    parameter2Selection = ui->parameter2LineEdit->text();
-
+    storeSelection(); //This stores all the fields in respective variables
 
     //If any of the fields are empty show a message asking for input
     //If they are not empty, then invoke the saveJson method
@@ -115,8 +109,8 @@ void Widget::saveJson()
     userSelection.insert("model",modelSelection);
     userSelection.insert("space",spaceSelection);
     userSelection.insert("units",unitsSelection);
-    userSelection.insert("parameter1",parameter1Selection);
-    userSelection.insert("parameter2",parameter2Selection);
+    userSelection.insert("parameter1",parameter1SelectionDouble);
+    userSelection.insert("parameter2",parameter2SelectionDouble);
 
     QJsonDocument jsonDocument;
     jsonDocument.setObject(userSelection);
@@ -184,21 +178,26 @@ void Widget::warnUser()
 
 }
 
+void Widget::storeSelection()
+{
+    //Save the user selections in the variables defined in the header file
+    spaceSelection = ui->spaceComboBox->currentText();
+    unitsSelection = ui->unitsComboBox->currentText();
+    modelSelection = ui->modelComboBox->currentText();
+    parameter1Selection = ui->parameter1LineEdit->text();
+    parameter2Selection = ui->parameter2LineEdit->text();
+    parameter1SelectionDouble = ui->parameter1LineEdit->text().toDouble();
+    parameter2SelectionDouble = ui->parameter2LineEdit->text().toDouble();
+}
+
 
 void Widget::on_visulizeButton_clicked()
 {
-//    spaceSelection = ui->spaceComboBox->currentText();
-//    unitsSelection = ui->unitsComboBox->currentText();
-//    modelSelection = ui->modelComboBox->currentText();
+
     scene->clear(); //make sure everything there is deleted
-
-    double parameter1SelectionDouble = (ui->parameter1LineEdit->text()).toDouble();
-    double parameter2SelectionDouble = (ui->parameter2LineEdit->text()).toDouble();
-
+    storeSelection(); //This stores all the fields in respective variable
     double ratio = parameter2SelectionDouble/parameter1SelectionDouble;
-//    scene->addLine(200,-100,200,600); //added to have a reference coordinate
-//      QGraphicsLineItem* line = scene->addLine(0,200,600,200);
-//      line->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+
     //First check to see which box is selected
     if (ui->spaceComboBox->currentIndex()==0 ||
         ui->unitsComboBox->currentIndex()==0 ||
