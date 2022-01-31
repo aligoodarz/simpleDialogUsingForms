@@ -42,11 +42,7 @@ void Widget::on_saveButton_clicked()
 
     if (!fieldIsEmpty()){
        saveJson();
-       ui->emptyFieldLabel->setText("Specimen Info Has Been Successfully Saved.");
-       ui->emptyFieldLabel->setStyleSheet("color:green; font-weight:bold");
-       QTimer::singleShot(4000,this,[=](){ui->emptyFieldLabel->setText("");});
     }
-
 }
 
 
@@ -105,6 +101,9 @@ void Widget::saveJson()
         {
             qDebug() << "file open failed";
         }
+    ui->emptyFieldLabel->setText("Specimen Info Has Been Successfully Saved.");
+    ui->emptyFieldLabel->setStyleSheet("color:green; font-weight:bold");
+    QTimer::singleShot(4000,this,[=](){ui->emptyFieldLabel->setText("");});
 }
 
 bool Widget::fieldIsEmpty()
