@@ -36,6 +36,7 @@ void View::mousePressEvent(QMouseEvent *event)
     {
         ShowContextMenu(event->pos());
     }
+    QGraphicsView::mousePressEvent(event);
 }
 
 void View::ShowContextMenu(const QPoint &pos)
