@@ -44,15 +44,12 @@ private:
     QString modelSelection;
     QString parameter1Selection;
     QString parameter2Selection;
-    //Declare a list to hold the final selections
-    QList <QString> selectionList;
     //Create Graphics
     void saveJson();
     void warnUser(); //Warns users if a field is empty
     void drawModel(); //Draws model based on the selected model
     QGraphicsView* view;
     QGraphicsScene* scene;
-    double ratio;
 
 
 
