@@ -48,7 +48,7 @@ private:
     double parameter2SelectionDouble;
     //Create Graphics
     void saveJson();
-    void warnUser(); //Warns users if a field is empty
+    bool fieldIsEmpty(); //Warns users if a field is empty
     void drawModel(); //Draws model based on the selected model
     void storeSelection();
     QGraphicsView* view;

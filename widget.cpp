@@ -25,14 +25,6 @@ Widget::Widget(QWidget *parent)
     ui->horizontalLayout_5->addWidget(ui->saveButton);
     ui->horizontalLayout_5->addWidget(ui->visulizeButton);
 
-//    QGraphicsView* scaleView = new QGraphicsView(this);
-//    view->setMaximumSize(25,600);
-//    ui->horizontalLayout_2->addWidget(scaleView);
-
-//    ui->horizontalLayout_2->addWidget(ui->visulizeButton);
-
-
-
 }
 
 Widget::~Widget()
@@ -47,20 +39,12 @@ void Widget::on_saveButton_clicked()
 
     //If any of the fields are empty show a message asking for input
     //If they are not empty, then invoke the saveJson method
-    if (ui->spaceComboBox->currentIndex()==0 ||
-        ui->unitsComboBox->currentIndex()==0 ||
-        ui->modelComboBox->currentIndex()==0 ||
-        ui->parameter1LineEdit->text()==""   ||
-        ui->parameter2LineEdit->text()=="")
-    {
-        warnUser();
-    }else
-    {
+
+    if (!fieldIsEmpty()){
        saveJson();
        ui->emptyFieldLabel->setText("Specimen Info Has Been Successfully Saved.");
        ui->emptyFieldLabel->setStyleSheet("color:green; font-weight:bold");
        QTimer::singleShot(4000,this,[=](){ui->emptyFieldLabel->setText("");});
-
     }
 
 }
@@ -68,12 +52,6 @@ void Widget::on_saveButton_clicked()
 
 void Widget::on_modelComboBox_currentIndexChanged(int index)
 {
-    //Create pixmaps for the 3 orientations
-//    QPixmap uPixmap(":/orientations/images/u_orientation.png");
-//    QPixmap bPixmap(":/orientations/images/b_orientation.png");
-//    QPixmap tPixmap(":/orientations/images/t_orientation.png");
-    //Change parameter 1 and parameter 2 fields based on selection
-    //Also change the displayed figure based on the selection
     switch (ui->modelComboBox->currentIndex())
     {
     case 0:
@@ -127,29 +105,21 @@ void Widget::saveJson()
         {
             qDebug() << "file open failed";
         }
-
-    /* failed attempt to save th json file
-    QFile file("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/specimenInfo.json");
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    QJsonParseError jsonParseError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(file.readAll(),&jsonParseError);
-    file.close();
-
-    QJsonObject rootObject = jsonDocument.object();
-    QJsonValueRef ref = rootObject.find("space").value();
-    QJsonObject m_addvalue = ref.toObject();
-    m_addvalue.insert("space",spaceSelection);//set the value you want to modify
-    ref=m_addvalue; //assign the modified object to reference
-    jsonDocument.setObject(rootObject); // set to json document
-    file.open(QFile::WriteOnly | QFile::Text | QFile::Truncate);
-    file.write(jsonDocument.toJson());
-    file.close();
-    */
-
 }
 
-void Widget::warnUser()
+bool Widget::fieldIsEmpty()
 {
+    //returns true if any field is empty and returns false if no field is empty
+    bool isEmpty = false;
+    if (ui->spaceComboBox->currentIndex()==0 ||
+        ui->unitsComboBox->currentIndex()==0 ||
+        ui->modelComboBox->currentIndex()==0 ||
+        ui->parameter1LineEdit->text()==""   ||
+        ui->parameter2LineEdit->text()=="")
+    {
+        isEmpty = true;
+    }
+
     /* Set Everything to normal colors if they have been flagged as empty
        The labels specifically have to be turned back to normal */
     QString normalLabel = "color : black; font-weight: normal";
@@ -176,6 +146,8 @@ void Widget::warnUser()
     if (ui->parameter2LineEdit->text()=="") { ui->parameter2Label->setStyleSheet(errorStyle);
                                               /*ui->parameter2LineEdit->setStyleSheet(errorStyle)*/;}
 
+    return isEmpty;
+
 }
 
 void Widget::storeSelection()
@@ -199,41 +171,22 @@ void Widget::on_visulizeButton_clicked()
     double ratio = parameter2SelectionDouble/parameter1SelectionDouble;
 
     //First check to see which box is selected
-    if (ui->spaceComboBox->currentIndex()==0 ||
-        ui->unitsComboBox->currentIndex()==0 ||
-        ui->modelComboBox->currentIndex()==0 ||
-        ui->parameter1LineEdit->text()==""   ||
-        ui->parameter2LineEdit->text()=="")
-    {
-        warnUser();
-    }
-    else{
-            if (ui->modelComboBox->currentIndex()==1){ //U orientation
-                scene->addEllipse(150,40,100,30); //big radius is 100, and small radius is 30, top ellipse
-                scene->addLine(150,55,150,40+(100.0*ratio)); //left line
-                scene->addLine(250,55,250,40+(100.0*ratio)); //right line
-                scene->addEllipse(150,25+(100.0*ratio),100,30); //bottom ellipse
-            }else if (ui->modelComboBox->currentIndex()==2){ //B orientation
-                scene->addEllipse(90,150,30,100); //left ellipse
-                scene->addLine(105,150,90+(100.0*ratio),150); //top line
-                scene->addLine(105,250,90+(100.0*ratio),250); //bottom line
-                scene->addEllipse(75+(100.0*ratio),150,30,100); //right ellipse
-            }else if (ui->modelComboBox->currentIndex()==3){ //T orientation
-                scene->addRect(10,10,380,380); //Square
-                scene->addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio)); //circle
-            }
+    if (!fieldIsEmpty()){
+        if (ui->modelComboBox->currentIndex()==1){ //U orientation
+            scene->addEllipse(150,40,100,30); //big radius is 100, and small radius is 30, top ellipse
+            scene->addLine(150,55,150,40+(100.0*ratio)); //left line
+            scene->addLine(250,55,250,40+(100.0*ratio)); //right line
+            scene->addEllipse(150,25+(100.0*ratio),100,30); //bottom ellipse
+        }else if (ui->modelComboBox->currentIndex()==2){ //B orientation
+            scene->addEllipse(90,150,30,100); //left ellipse
+            scene->addLine(105,150,90+(100.0*ratio),150); //top line
+            scene->addLine(105,250,90+(100.0*ratio),250); //bottom line
+            scene->addEllipse(75+(100.0*ratio),150,30,100); //right ellipse
+        }else if (ui->modelComboBox->currentIndex()==3){ //T orientation
+            scene->addRect(10,10,380,380); //Square
+            scene->addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio)); //circle
         }
-
-
-
-    //This is an attempt to group everything together to do operations on
-//    QPainterPath selectionPath;
-//    selectionPath.addRect(0,0,600,600);
-//    scene->setSelectionArea(selectionPath);
-//    QGraphicsItemGroup* selectionGroup = scene->createItemGroup(scene->selectedItems());
-//    selectionGroup->moveBy(100,10);
-
-
-
+    }
 }
+
 
