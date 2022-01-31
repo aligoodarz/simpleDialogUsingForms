@@ -22,6 +22,9 @@ Widget::Widget(QWidget *parent)
     view->setScene(scene);
     ui->horizontalLayout_2->addWidget(view);
 
+    ui->horizontalLayout_5->addWidget(ui->saveButton);
+    ui->horizontalLayout_5->addWidget(ui->visulizeButton);
+
 //    QGraphicsView* scaleView = new QGraphicsView(this);
 //    view->setMaximumSize(25,600);
 //    ui->horizontalLayout_2->addWidget(scaleView);
@@ -106,14 +109,6 @@ void Widget::on_modelComboBox_currentIndexChanged(int index)
 
 void Widget::saveJson()
 {
-    /* Set Everything to normal colors if they have been flagged as empty
-       The labels specifically have to be turned back to normal */
-    QString normalLabel = "color : black; font-weight: normal";
-    ui->spaceLabel->setStyleSheet(normalLabel);
-    ui->unitsLabel->setStyleSheet(normalLabel);
-    ui->modelLabel->setStyleSheet(normalLabel);
-    ui->parameter1Label->setStyleSheet(normalLabel);
-    ui->parameter2Label->setStyleSheet(normalLabel);
 
     //Proceed with handling the information and saving in the JSON file
     QJsonObject userSelection;
@@ -161,6 +156,15 @@ void Widget::saveJson()
 
 void Widget::warnUser()
 {
+    /* Set Everything to normal colors if they have been flagged as empty
+       The labels specifically have to be turned back to normal */
+    QString normalLabel = "color : black; font-weight: normal";
+    ui->spaceLabel->setStyleSheet(normalLabel);
+    ui->unitsLabel->setStyleSheet(normalLabel);
+    ui->modelLabel->setStyleSheet(normalLabel);
+    ui->parameter1Label->setStyleSheet(normalLabel);
+    ui->parameter2Label->setStyleSheet(normalLabel);
+
     // Set any field to red that has an empty entry and warn the user.
     QString errorStyle = "color : red; font-weight: bold";
 
@@ -191,27 +195,37 @@ void Widget::on_visulizeButton_clicked()
     double parameter1SelectionDouble = (ui->parameter1LineEdit->text()).toDouble();
     double parameter2SelectionDouble = (ui->parameter2LineEdit->text()).toDouble();
 
-
-    ratio = parameter2SelectionDouble/parameter1SelectionDouble; //This holds the ratio for height/width to radius
-    qDebug()<<ratio;
+    double ratio = parameter2SelectionDouble/parameter1SelectionDouble;
 //    scene->addLine(200,-100,200,600); //added to have a reference coordinate
 //      QGraphicsLineItem* line = scene->addLine(0,200,600,200);
 //      line->setFlag(QGraphicsItem::ItemIgnoresTransformations);
     //First check to see which box is selected
-    if (ui->modelComboBox->currentIndex()==1){ //U orientation
-        scene->addEllipse(150,40,100,30); //big radius is 100, and small radius is 30, top ellipse
-        scene->addLine(150,55,150,40+(100.0*ratio)); //left line
-        scene->addLine(250,55,250,40+(100.0*ratio)); //right line
-        scene->addEllipse(150,25+(100.0*ratio),100,30); //bottom ellipse
-    }else if (ui->modelComboBox->currentIndex()==2){ //B orientation
-        scene->addEllipse(90,150,30,100); //left ellipse
-        scene->addLine(105,150,90+(100.0*ratio),150); //top line
-        scene->addLine(105,250,90+(100.0*ratio),250); //bottom line
-        scene->addEllipse(75+(100.0*ratio),150,30,100); //right ellipse
-    }else if (ui->modelComboBox->currentIndex()==3){ //T orientation
-        scene->addRect(10,10,380,380); //Square
-        scene->addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio)); //circle
+    if (ui->spaceComboBox->currentIndex()==0 ||
+        ui->unitsComboBox->currentIndex()==0 ||
+        ui->modelComboBox->currentIndex()==0 ||
+        ui->parameter1LineEdit->text()==""   ||
+        ui->parameter2LineEdit->text()=="")
+    {
+        warnUser();
     }
+    else{
+            if (ui->modelComboBox->currentIndex()==1){ //U orientation
+                scene->addEllipse(150,40,100,30); //big radius is 100, and small radius is 30, top ellipse
+                scene->addLine(150,55,150,40+(100.0*ratio)); //left line
+                scene->addLine(250,55,250,40+(100.0*ratio)); //right line
+                scene->addEllipse(150,25+(100.0*ratio),100,30); //bottom ellipse
+            }else if (ui->modelComboBox->currentIndex()==2){ //B orientation
+                scene->addEllipse(90,150,30,100); //left ellipse
+                scene->addLine(105,150,90+(100.0*ratio),150); //top line
+                scene->addLine(105,250,90+(100.0*ratio),250); //bottom line
+                scene->addEllipse(75+(100.0*ratio),150,30,100); //right ellipse
+            }else if (ui->modelComboBox->currentIndex()==3){ //T orientation
+                scene->addRect(10,10,380,380); //Square
+                scene->addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio)); //circle
+            }
+        }
+
+
 
     //This is an attempt to group everything together to do operations on
 //    QPainterPath selectionPath;
