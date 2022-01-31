@@ -110,14 +110,6 @@ bool Widget::fieldIsEmpty()
 {
     //returns true if any field is empty and returns false if no field is empty
     bool isEmpty = false;
-    if (ui->spaceComboBox->currentIndex()==0 ||
-        ui->unitsComboBox->currentIndex()==0 ||
-        ui->modelComboBox->currentIndex()==0 ||
-        ui->parameter1LineEdit->text()==""   ||
-        ui->parameter2LineEdit->text()=="")
-    {
-        isEmpty = true;
-    }
 
     /* Set Everything to normal colors if they have been flagged as empty
        The labels specifically have to be turned back to normal */
@@ -127,12 +119,21 @@ bool Widget::fieldIsEmpty()
     ui->modelLabel->setStyleSheet(normalLabel);
     ui->parameter1Label->setStyleSheet(normalLabel);
     ui->parameter2Label->setStyleSheet(normalLabel);
+    ui->emptyFieldLabel->clear(); //clear the error field since all fields are full
 
     // Set any field to red that has an empty entry and warn the user.
     QString errorStyle = "color : red; font-weight: bold";
 
-    ui->emptyFieldLabel->setText("At Least One Field Is Empty, Fill out everything to proceed");
-    ui->emptyFieldLabel->setStyleSheet(errorStyle);
+    if (ui->spaceComboBox->currentIndex()==0 ||
+        ui->unitsComboBox->currentIndex()==0 ||
+        ui->modelComboBox->currentIndex()==0 ||
+        ui->parameter1LineEdit->text()==""   ||
+        ui->parameter2LineEdit->text()=="")
+    {
+        isEmpty = true;
+        ui->emptyFieldLabel->setText("At Least One Field Is Empty, Fill out everything to proceed");
+        ui->emptyFieldLabel->setStyleSheet(errorStyle);
+    }
 
     if (ui->spaceComboBox->currentIndex()==0) { ui->spaceLabel->setStyleSheet(errorStyle);
                                                 /*ui->spaceComboBox->setStyleSheet(errorStyle);*/}
@@ -185,6 +186,7 @@ void Widget::on_visulizeButton_clicked()
             scene->addRect(10,10,380,380); //Square
             scene->addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio)); //circle
         }
+
     }
 }
 
