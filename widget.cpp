@@ -48,7 +48,7 @@ void Widget::on_saveButton_clicked()
 
 void Widget::on_modelComboBox_currentIndexChanged(int index)
 {
-    switch (ui->modelComboBox->currentIndex())
+    switch (index)
     {
     case 0:
         break;
@@ -57,21 +57,18 @@ void Widget::on_modelComboBox_currentIndexChanged(int index)
         ui->parameter1LineEdit->setPlaceholderText("Radius");
         ui->parameter2Label->setText("Height");
         ui->parameter2LineEdit->setPlaceholderText("Height");
-//        ui->orientationPictureLabel->setPixmap(uPixmap);
         break;
     case 2:
         ui->parameter1Label->setText("Radius");
         ui->parameter1LineEdit->setPlaceholderText("Radius");
         ui->parameter2Label->setText("Width");
         ui->parameter2LineEdit->setPlaceholderText("Width");
-//        ui->orientationPictureLabel->setPixmap(bPixmap);
         break;
     case 3:
         ui->parameter1Label->setText("Radius");
         ui->parameter1LineEdit->setPlaceholderText("Radius");
         ui->parameter2Label->setText("Width");
         ui->parameter2LineEdit->setPlaceholderText("Width");
-//        ui->orientationPictureLabel->setPixmap(tPixmap);
     }
 }
 
@@ -168,7 +165,7 @@ void Widget::on_visulizeButton_clicked()
 
     scene->clear(); //make sure everything there is deleted
     storeSelection(); //This stores all the fields in respective variable
-    double ratio = parameter2SelectionDouble/parameter1SelectionDouble;
+    double ratio = parameter2SelectionDouble/parameter1SelectionDouble; //This holds the ratio needed to make the figures
 
     //First check to see which box is selected
     if (!fieldIsEmpty()){
