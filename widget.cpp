@@ -20,8 +20,9 @@ Widget::Widget(QWidget *parent)
     scene->setSceneRect(0,0,400,400);
     view = new View(this);
     view->setScene(scene);
-    ui->horizontalLayout_2->addWidget(view);
+    ui->horizontalLayout_2->addWidget(view); //This adds the view that creates the shapes
 
+    //This puts the save and visualize in a horizontal layout together for a cleaner look
     ui->horizontalLayout_5->addWidget(ui->saveButton);
     ui->horizontalLayout_5->addWidget(ui->visulizeButton);
 
