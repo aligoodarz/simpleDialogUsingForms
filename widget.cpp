@@ -186,7 +186,6 @@ void Widget::on_visulizeButton_clicked()
             scene->addRect(10,10,380,380); //Square
             scene->addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio)); //circle
         }
-
     }
 }
 
