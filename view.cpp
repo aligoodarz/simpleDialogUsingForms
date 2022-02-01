@@ -10,8 +10,10 @@ View::View(QWidget *parent)
 {
     setDragMode(QGraphicsView::ScrollHandDrag);
     this->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)),
-            this, SLOT(ShowContextMenu(const QPoint &)));
+    //This connects the request for a context menu to an actual context menu
+    connect(this, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(ShowContextMenu(QPoint)));
+
 }
 
 void View::wheelEvent(QWheelEvent *event)
@@ -43,9 +45,16 @@ void View::ShowContextMenu(const QPoint &pos)
 {
     QMenu contextMenu(tr("Context Menu"),this);
 
-    QAction action1("Clear", this);
+    //This includes the code for clearing the screen
+    QAction action1(tr("Clear"), this);
     connect(&action1, SIGNAL(triggered()),this, SLOT(clearView()));
     contextMenu.addAction(&action1);
+
+    //This is the code for annotating the figures
+    QAction action2(tr("Annotate"),this);
+    connect(&action2, SIGNAL(triggered()), this, SLOT(annotate(pos)));
+    contextMenu.addAction(&action1);
+
 
     contextMenu.exec(mapToGlobal(pos));
 }
@@ -53,4 +62,9 @@ void View::ShowContextMenu(const QPoint &pos)
 void View::clearView()
 {
     this->scene()->clear();
+}
+
+void View::annotate(const QPoint &pos)
+{
+    this->scene()->addText("Hello");
 }

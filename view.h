@@ -32,7 +32,9 @@ protected:
 
 private slots:
     void clearView();
+    void annotate(const QPoint &pos);
     void ShowContextMenu(const QPoint &pos);
+
 };
 
 #endif // VIEW_H
