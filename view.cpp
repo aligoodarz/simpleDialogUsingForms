@@ -52,8 +52,8 @@ void View::ShowContextMenu(const QPoint &pos)
 
     //This is the code for annotating the figures
     QAction action2(tr("Annotate"),this);
-    connect(&action2, SIGNAL(triggered()), this, SLOT(annotate(pos)));
-    contextMenu.addAction(&action1);
+    connect(&action2, SIGNAL(triggered()), this, SLOT(annotate()));
+    contextMenu.addAction(&action2);
 
 
     contextMenu.exec(mapToGlobal(pos));
@@ -64,7 +64,7 @@ void View::clearView()
     this->scene()->clear();
 }
 
-void View::annotate(const QPoint &pos)
+void View::annotate()
 {
     this->scene()->addText("Hello");
 }
