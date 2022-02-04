@@ -46,13 +46,16 @@ private:
     QString parameter2Selection;
     double parameter1SelectionDouble;
     double parameter2SelectionDouble;
+
+    QGraphicsView* view;
+    QGraphicsScene* scene;
+
     //Create Graphics
     void saveJson();
     bool fieldIsEmpty(); //Warns users if a field is empty
     void drawModel(); //Draws model based on the selected model
     void storeSelection();
-    QGraphicsView* view;
-    QGraphicsScene* scene;
+
 
 
 
