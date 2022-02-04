@@ -67,4 +67,6 @@ void View::clearView()
 void View::annotate()
 {
     this->scene()->addText("Hello");
+    //Can add a painting function here
+    this->scene()->addRect(100,100,100,100);
 }
