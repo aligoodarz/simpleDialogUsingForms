@@ -13,7 +13,10 @@ public:
 signals:
 
 private:
-    QWidget* myWidget = new QWidget(this);
+    Widget* myWidget = new Widget(this);
+
+public slots:
+    void saveJson();
 
 };
 

@@ -52,11 +52,13 @@ private:
     QGraphicsScene* scene;
 
     //Create Graphics
-    void saveJson();
-    bool fieldIsEmpty(); //Warns users if a field is empty
-    void drawModel(); //Draws model based on the selected model
-    void storeSelection();
 
+    void drawModel(); //Draws model based on the selected model
+
+public slots:
+    void saveJson();
+    void storeSelection();
+    bool fieldIsEmpty(); //Warns users if a field is empty
 
 
 

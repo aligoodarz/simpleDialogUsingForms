@@ -28,8 +28,6 @@ int main(int argc, char *argv[])
     }
 
     MainWindow myWindow;
-    Widget* myWidget = new Widget();
-    myWindow.setCentralWidget(myWidget);
     myWindow.show();
     return a.exec();
 }
