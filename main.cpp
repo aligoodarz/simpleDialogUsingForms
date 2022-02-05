@@ -1,4 +1,5 @@
 #include "widget.h"
+#include "mainwindow.h"
 
 #include <QApplication>
 #include <QFile>
@@ -26,8 +27,10 @@ int main(int argc, char *argv[])
        qDebug ()<<"Failed to find the css file";
     }
 
-    Widget w;
-    w.show();
+    MainWindow myWindow;
+    Widget* myWidget = new Widget();
+    myWindow.setCentralWidget(myWidget);
+    myWindow.show();
     return a.exec();
 }
 
