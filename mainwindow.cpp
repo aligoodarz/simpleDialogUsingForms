@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
 //    toolbar->addAction("New File");
 //    toolbar->addAction("Open File");
 //    toolbar->addSeparator();
+    statusBar()->showMessage("ready");
+
     this->setCentralWidget(myWidget);
 
     auto* quit = new QAction ("&Quit",this);
@@ -19,9 +21,13 @@ MainWindow::MainWindow(QWidget *parent)
     file->addAction(quit);
     connect (quit, &QAction::triggered, qApp, QApplication::quit);
 
-    auto* save = new QAction("Save",this);
-    file->addAction(save);
-    connect(save, SIGNAL(triggered()),myWidget, SLOT(saveJson()));
+    auto* saveJsonFile = new QAction("Save",this);
+    file->addAction(saveJsonFile);
+    connect(saveJsonFile, SIGNAL(triggered()),myWidget, SLOT(saveJson()));
+
+    auto* clearJsonFile = new QAction("Clear JSON File",this);
+    file->addAction(clearJsonFile);
+    connect(clearJsonFile,SIGNAL(triggered()),myWidget, SLOT(clearJson()));
 }
 
 

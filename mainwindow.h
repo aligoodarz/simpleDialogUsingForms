@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "widget.h"
+#include <QStatusBar>
 
 class MainWindow : public QMainWindow
 {

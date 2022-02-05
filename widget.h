@@ -45,9 +45,11 @@ private:
     QString parameter2Selection;
     double parameter1SelectionDouble;
     double parameter2SelectionDouble;
-
+    QJsonObject userSelection;
+    QJsonDocument jsonDocument;
     QGraphicsView* view;
     QGraphicsScene* scene;
+    QFile file; //Json file to be used for storing
 
     //Create Graphics
 
@@ -57,6 +59,7 @@ public slots:
     void saveJson();
     void storeSelection();
     bool fieldIsEmpty(); //Warns users if a field is empty
+    void clearJson();
 
 
 

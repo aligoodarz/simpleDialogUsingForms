@@ -28,6 +28,9 @@ Widget::Widget(QWidget *parent)
 
     connect(ui->saveButton, SIGNAL(clicked()),this, SLOT(saveJson()));//Connect the save button to the saveJson slot
 
+    file.setFileName(("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/specimenInfo.json")); //Set destination to JsonFile
+
+
 }
 
 Widget::~Widget()
@@ -73,7 +76,6 @@ void Widget::saveJson()
 
     if (!fieldIsEmpty()){
 
-        QJsonObject userSelection;
         userSelection.insert("model",modelSelection);
         userSelection.insert("space",spaceSelection);
         userSelection.insert("units",unitsSelection);
@@ -83,7 +85,6 @@ void Widget::saveJson()
         QJsonDocument jsonDocument;
         jsonDocument.setObject(userSelection);
         QByteArray bytes = jsonDocument.toJson(QJsonDocument::Indented);
-        QFile file("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/specimenInfo.json");
         if( file.open( QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append ) )
             {
                 QTextStream iStream( &file );
@@ -143,6 +144,13 @@ bool Widget::fieldIsEmpty()
 
     return isEmpty;
 
+}
+
+void Widget::clearJson()
+{
+    if (file.resize(0)){
+        this->setStatusTip("File Emptied Successfully");
+    }
 }
 
 void Widget::storeSelection()
