@@ -16,6 +16,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QGraphicsView>
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
