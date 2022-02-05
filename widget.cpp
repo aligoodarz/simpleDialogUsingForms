@@ -91,14 +91,13 @@ void Widget::saveJson()
                 iStream.setCodec( "utf-8" );
                 iStream << bytes;
                 file.close();
+                this->setStatusTip("Info Saved Succesfully");
             }
         else
             {
                 qDebug() << "file open failed";
             }
-        ui->emptyFieldLabel->setText("Specimen Info Has Been Successfully Saved.");
-        ui->emptyFieldLabel->setStyleSheet("color:green; font-weight:bold");
-        QTimer::singleShot(4000,this,[=](){ui->emptyFieldLabel->setText("");});
+
     }
 }
 
