@@ -26,24 +26,13 @@ Widget::Widget(QWidget *parent)
     ui->horizontalLayout_5->addWidget(ui->saveButton);
     ui->horizontalLayout_5->addWidget(ui->visulizeButton);
 
+    connect(ui->saveButton, SIGNAL(clicked()),this, SLOT(saveJson()));//Connect the save button to the saveJson slot
+
 }
 
 Widget::~Widget()
 {
     delete ui;
-}
-
-
-void Widget::on_saveButton_clicked()
-{
-    storeSelection(); //This stores all the fields in respective variables
-
-    //If any of the fields are empty show a message asking for input
-    //If they are not empty, then invoke the saveJson method
-
-    if (!fieldIsEmpty()){
-       saveJson();
-    }
 }
 
 
@@ -77,31 +66,39 @@ void Widget::saveJson()
 {
 
     //Proceed with handling the information and saving in the JSON file
-    QJsonObject userSelection;
-    userSelection.insert("model",modelSelection);
-    userSelection.insert("space",spaceSelection);
-    userSelection.insert("units",unitsSelection);
-    userSelection.insert("parameter1",parameter1SelectionDouble);
-    userSelection.insert("parameter2",parameter2SelectionDouble);
+    storeSelection(); //This stores all the fields in respective variables
 
-    QJsonDocument jsonDocument;
-    jsonDocument.setObject(userSelection);
-    QByteArray bytes = jsonDocument.toJson(QJsonDocument::Indented);
-    QFile file("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/specimenInfo.json");
-    if( file.open( QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append ) )
-        {
-            QTextStream iStream( &file );
-            iStream.setCodec( "utf-8" );
-            iStream << bytes;
-            file.close();
-        }
-    else
-        {
-            qDebug() << "file open failed";
-        }
-    ui->emptyFieldLabel->setText("Specimen Info Has Been Successfully Saved.");
-    ui->emptyFieldLabel->setStyleSheet("color:green; font-weight:bold");
-    QTimer::singleShot(4000,this,[=](){ui->emptyFieldLabel->setText("");});
+    //If any of the fields are empty show a message asking for input
+    //If they are not empty, then invoke the saveJson method
+
+    if (!fieldIsEmpty()){
+
+        QJsonObject userSelection;
+        userSelection.insert("model",modelSelection);
+        userSelection.insert("space",spaceSelection);
+        userSelection.insert("units",unitsSelection);
+        userSelection.insert("parameter1",parameter1SelectionDouble);
+        userSelection.insert("parameter2",parameter2SelectionDouble);
+
+        QJsonDocument jsonDocument;
+        jsonDocument.setObject(userSelection);
+        QByteArray bytes = jsonDocument.toJson(QJsonDocument::Indented);
+        QFile file("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/specimenInfo.json");
+        if( file.open( QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append ) )
+            {
+                QTextStream iStream( &file );
+                iStream.setCodec( "utf-8" );
+                iStream << bytes;
+                file.close();
+            }
+        else
+            {
+                qDebug() << "file open failed";
+            }
+        ui->emptyFieldLabel->setText("Specimen Info Has Been Successfully Saved.");
+        ui->emptyFieldLabel->setStyleSheet("color:green; font-weight:bold");
+        QTimer::singleShot(4000,this,[=](){ui->emptyFieldLabel->setText("");});
+    }
 }
 
 bool Widget::fieldIsEmpty()

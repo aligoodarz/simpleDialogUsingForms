@@ -31,8 +31,6 @@ public:
     ~Widget();
 
 private slots:
-    void on_saveButton_clicked();
-
     void on_modelComboBox_currentIndexChanged(int index);
 
     void on_visulizeButton_clicked();

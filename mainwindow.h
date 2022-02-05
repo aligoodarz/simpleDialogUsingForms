@@ -16,7 +16,6 @@ private:
     Widget* myWidget = new Widget(this);
 
 public slots:
-    void saveJson();
 
 };
 
