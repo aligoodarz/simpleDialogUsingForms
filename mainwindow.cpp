@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    toolbar->addAction("New File");
 //    toolbar->addAction("Open File");
 //    toolbar->addSeparator();
-    statusBar()->showMessage("ready");
+    statusBar()->showMessage(""); //Initialize the statusBar
 
     this->setCentralWidget(myWidget);
 
@@ -28,6 +28,11 @@ MainWindow::MainWindow(QWidget *parent)
     auto* clearJsonFile = new QAction("Clear JSON File",this);
     file->addAction(clearJsonFile);
     connect(clearJsonFile,SIGNAL(triggered()),myWidget, SLOT(clearJson()));
+}
+
+void MainWindow::createMenuBar()
+{
+
 }
 
 
