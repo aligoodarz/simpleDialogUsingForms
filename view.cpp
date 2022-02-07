@@ -20,18 +20,19 @@ void View::setupView()
     //This connects the request for a context menu to an actual context menu
     connect(this, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(ShowContextMenu(QPoint)));
-
-//    this->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     createToolbar();
 }
 
 void View::createToolbar()
 {
+    //Create Toolbar
     auto tb = new QToolBar();
-    tb->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    //Create actions and connect to respective slots
     auto zoomIn = tb->addAction("Zoom In");
-    auto zoomOut = tb->addAction("Zoom Out");
     connect(zoomIn, &QAction::triggered,this, &View::zoomIn);
+
+    auto zoomOut = tb->addAction("Zoom Out");
+    connect(zoomOut, &QAction::triggered,this, &View::zoomOut);
 
 
     auto dockLayout = new QVBoxLayout();
