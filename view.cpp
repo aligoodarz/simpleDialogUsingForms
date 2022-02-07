@@ -3,6 +3,8 @@
 #include <QMouseEvent>
 #include <QMenu>
 #include <QPoint>
+#include <QToolBar>
+#include <QVBoxLayout>
 
 
 View::View(QWidget *parent)
@@ -18,6 +20,17 @@ void View::setupView()
     //This connects the request for a context menu to an actual context menu
     connect(this, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(ShowContextMenu(QPoint)));
+    createToolbar();
+}
+
+void View::createToolbar()
+{
+    auto tb = new QToolBar();
+    tb->addAction("hi");
+    tb->addAction("hello");
+    auto dockLayout = new QVBoxLayout();
+    dockLayout->setMenuBar(tb); //
+    this->setLayout(dockLayout);
 }
 
 void View::wheelEvent(QWheelEvent *event)

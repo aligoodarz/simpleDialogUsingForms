@@ -11,8 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
     this->setCentralWidget(myWidget);
     createMenuBar(); //Creates the menuBar and adds actions to it
     createStatusBar(); //Initializes the statusBar
-
-
 }
 
 

@@ -41,6 +41,7 @@ public slots:
 protected:
     void drawForeground(QPainter *painter, const QRectF &rect) override;
     void setupView();
+    void createToolbar();
 };
 
 #endif // VIEW_H

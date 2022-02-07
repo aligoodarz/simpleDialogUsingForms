@@ -31,6 +31,7 @@ void Widget::initUi()
     scene = new CustomScene(this);
     view = new View(this);
     view->setScene(scene);
+    ui->horizontalLayout_2->addWidget(view);
 
     // -----Create Toolbar and add actions
     createToolbar();
@@ -45,13 +46,13 @@ void Widget::initUi()
 
 void Widget::createToolbar()
 {
-    auto tb = new QToolBar();
-    tb->addAction("hi");
-    tb->addAction("hello");
-    auto dockLayout = new QVBoxLayout();
-    dockLayout->setMenuBar(tb); //
-    view->setLayout(dockLayout);
-    ui->horizontalLayout_2->addWidget(view);
+//    auto tb = new QToolBar();
+//    tb->addAction("hi");
+//    tb->addAction("hello");
+//    auto dockLayout = new QVBoxLayout();
+//    dockLayout->setMenuBar(tb); //
+//    view->setLayout(dockLayout);
+//    ui->horizontalLayout_2->addWidget(view);
 }
 
 
