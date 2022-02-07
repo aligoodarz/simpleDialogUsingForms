@@ -20,22 +20,34 @@ void View::setupView()
     //This connects the request for a context menu to an actual context menu
     connect(this, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(ShowContextMenu(QPoint)));
+
+//    this->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     createToolbar();
 }
 
 void View::createToolbar()
 {
     auto tb = new QToolBar();
-    tb->addAction("hi");
-    tb->addAction("hello");
+    tb->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    auto zoomIn = tb->addAction("Zoom In");
+    auto zoomOut = tb->addAction("Zoom Out");
+    connect(zoomIn, &QAction::triggered,this, &View::zoomIn);
+
+
     auto dockLayout = new QVBoxLayout();
     dockLayout->setMenuBar(tb); //
     this->setLayout(dockLayout);
 }
 
+QSize View::sizeHint() const
+{
+    return QSize(400,600);
+}
+
 void View::wheelEvent(QWheelEvent *event)
 {
-    zoom(event->delta());
+    if (event->delta()> 0) zoomIn();
+    else zoomOut();
 }
 
 void View::keyPressEvent(QKeyEvent *event)
@@ -73,13 +85,16 @@ void View::ShowContextMenu(const QPoint &pos)
     contextMenu.exec(mapToGlobal(pos));
 }
 
-void View::zoom(const int &delta)
+void View::zoomIn()
 {
-    if (delta > 0)
-        scale(1.1,1.1);
-    else
-        scale(0.9,0.9);
+    scale(1.1,1.1);
 }
+
+void View::zoomOut()
+{
+    scale (0.9,0.9);
+}
+
 
 void View::drawForeground(QPainter *painter, const QRectF &rect)
 {

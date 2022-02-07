@@ -19,13 +19,10 @@ public:
     explicit View(QWidget *parent = nullptr);
 
 signals:
-
-
     // QWidget interface
 protected:
     void wheelEvent(QWheelEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
-
 
     // QWidget interface
 protected:
@@ -34,14 +31,18 @@ protected:
 public slots:
     void annotate();
     void ShowContextMenu(const QPoint &pos);
-    void zoom(const int &delta);
-
+    void zoomIn();
+    void zoomOut();
 
     // QGraphicsView interface
 protected:
     void drawForeground(QPainter *painter, const QRectF &rect) override;
     void setupView();
     void createToolbar();
+
+    // QWidget interface
+public:
+    QSize sizeHint() const override;
 };
 
 #endif // VIEW_H
