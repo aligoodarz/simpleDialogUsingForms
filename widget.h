@@ -51,9 +51,8 @@ private:
     QGraphicsScene* scene;
     QFile file; //Json file to be used for storing
 
-    //Create Graphics
-
     void drawModel(); //Draws model based on the selected model
+    void initUi();
 
 public slots:
     void saveJson();

@@ -16,16 +16,25 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    initUi(); //This adds the necessary elemnts to the UI of the application
+}
 
+Widget::~Widget()
+{
+    delete ui;
+}
+
+
+void Widget::initUi()
+{
     scene = new QGraphicsScene(this);
     scene->setSceneRect(0,0,400,400);
     view = new View(this);
     view->setScene(scene);
     //Test
-    CustomScene* custScene = new CustomScene(this);
-    custScene->setSceneRect(0,0,400,400);
+//    CustomScene* custScene = new CustomScene(this);
+//    custScene->setSceneRect(0,0,400,400);
 //    view->setScene(custScene);
-
     //Test Finish
     ui->horizontalLayout_2->addWidget(view); //This adds the view that creates the shapes
 
@@ -36,13 +45,6 @@ Widget::Widget(QWidget *parent)
     connect(ui->saveButton, SIGNAL(clicked()),this, SLOT(saveJson()));//Connect the save button to the saveJson slot
 
     file.setFileName(("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/specimenInfo.json")); //Set destination to JsonFile
-
-
-}
-
-Widget::~Widget()
-{
-    delete ui;
 }
 
 
@@ -197,5 +199,7 @@ void Widget::on_visulizeButton_clicked()
         }
     }
 }
+
+
 
 
