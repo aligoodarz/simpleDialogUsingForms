@@ -9,6 +9,7 @@
 #include <QGraphicsRectItem>
 #include <QKeyEvent>
 #include <QWheelEvent>
+#include <QPoint>
 #include "widget.h"
 
 class View : public QGraphicsView
@@ -34,6 +35,7 @@ private slots:
     void clearView();
     void annotate();
     void ShowContextMenu(const QPoint &pos);
+    void zoom(const int &delta);
 
 
     // QGraphicsView interface

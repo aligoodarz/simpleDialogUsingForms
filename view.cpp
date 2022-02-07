@@ -22,10 +22,7 @@ void View::setupView()
 
 void View::wheelEvent(QWheelEvent *event)
 {
-    if (event->delta() > 0)
-        scale(1.1,1.1);
-    else
-        scale(0.9,0.9);
+    zoom(event->delta());
 }
 
 void View::keyPressEvent(QKeyEvent *event)
@@ -61,6 +58,14 @@ void View::ShowContextMenu(const QPoint &pos)
 
 
     contextMenu.exec(mapToGlobal(pos));
+}
+
+void View::zoom(const int &delta)
+{
+    if (delta > 0)
+        scale(1.1,1.1);
+    else
+        scale(0.9,0.9);
 }
 
 void View::drawForeground(QPainter *painter, const QRectF &rect)
