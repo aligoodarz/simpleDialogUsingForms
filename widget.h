@@ -60,6 +60,7 @@ private:
     QFile file; //Json file to be used for storing
     void drawModel(); //Draws model based on the selected model
     void initUi();
+    void createToolbar();
 
 public slots:
     void saveJson();

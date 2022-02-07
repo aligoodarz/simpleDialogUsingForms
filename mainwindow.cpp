@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
+
 void MainWindow::createMenuBar()
 {
     //Create the file menu
