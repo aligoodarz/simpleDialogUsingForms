@@ -39,6 +39,7 @@ private slots:
     // QGraphicsView interface
 protected:
     void drawForeground(QPainter *painter, const QRectF &rect) override;
+    void setupView();
 };
 
 #endif // VIEW_H

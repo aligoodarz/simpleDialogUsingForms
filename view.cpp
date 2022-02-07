@@ -8,12 +8,16 @@
 View::View(QWidget *parent)
     : QGraphicsView{parent}
 {
+    setupView();
+}
+
+void View::setupView()
+{
     setDragMode(QGraphicsView::ScrollHandDrag);
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     //This connects the request for a context menu to an actual context menu
     connect(this, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(ShowContextMenu(QPoint)));
-
 }
 
 void View::wheelEvent(QWheelEvent *event)
@@ -61,8 +65,9 @@ void View::ShowContextMenu(const QPoint &pos)
 
 void View::drawForeground(QPainter *painter, const QRectF &rect)
 {
-//    painter->drawRect(20,20,20,20);
+    //    painter->drawRect(20,20,20,20);
 }
+
 
 void View::clearView()
 {
