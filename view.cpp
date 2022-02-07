@@ -59,6 +59,11 @@ void View::ShowContextMenu(const QPoint &pos)
     contextMenu.exec(mapToGlobal(pos));
 }
 
+void View::drawForeground(QPainter *painter, const QRectF &rect)
+{
+//    painter->drawRect(20,20,20,20);
+}
+
 void View::clearView()
 {
     this->scene()->clear();

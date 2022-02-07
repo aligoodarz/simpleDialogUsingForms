@@ -35,6 +35,10 @@ private slots:
     void annotate();
     void ShowContextMenu(const QPoint &pos);
 
+
+    // QGraphicsView interface
+protected:
+    void drawForeground(QPainter *painter, const QRectF &rect) override;
 };
 
 #endif // VIEW_H
