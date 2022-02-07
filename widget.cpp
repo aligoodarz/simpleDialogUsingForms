@@ -8,6 +8,7 @@
 #include <QPen>
 #include <QPainterPath>
 #include "view.h"
+#include "customscene.h"
 
 
 Widget::Widget(QWidget *parent)
@@ -20,6 +21,12 @@ Widget::Widget(QWidget *parent)
     scene->setSceneRect(0,0,400,400);
     view = new View(this);
     view->setScene(scene);
+    //Test
+    CustomScene* custScene = new CustomScene(this);
+    custScene->setSceneRect(0,0,400,400);
+//    view->setScene(custScene);
+
+    //Test Finish
     ui->horizontalLayout_2->addWidget(view); //This adds the view that creates the shapes
 
     //This puts the save and visualize in a horizontal layout together for a cleaner look
