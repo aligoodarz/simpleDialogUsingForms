@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include "widget.h"
 #include <QStatusBar>
+#include "widget.h"
+#include "view.h"
+#include "customscene.h"
 
 class MainWindow : public QMainWindow
 {
@@ -17,6 +20,8 @@ private:
     Widget* myWidget = new Widget(this);
     void createMenuBar();
     void createStatusBar();
+
+
 
 public slots:
 

@@ -3,8 +3,7 @@
 #include <QApplication>
 #include <QMenu>
 #include <QMenuBar>
-#include "widget.h"
-#include "view.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow{parent}
@@ -12,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setCentralWidget(myWidget);
     createMenuBar(); //Creates the menuBar and adds actions to it
     createStatusBar(); //Initializes the statusBar
+
 
 }
 
@@ -41,7 +41,7 @@ void MainWindow::createMenuBar()
     //Create clear view action
     auto* clearView = new QAction ("Clear View",this);
     viewMenu->addAction(clearView);
-    connect(clearView, SIGNAL(triggered()),myWidget->parent(),SLOT(clearView()));
+    connect(clearView, SIGNAL(triggered()),myWidget->scene,SLOT(clear()));
 
 
 }

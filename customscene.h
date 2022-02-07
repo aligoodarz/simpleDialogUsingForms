@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QGraphicsScene>
+#include "widget.h"
 
 class CustomScene : public QGraphicsScene
 {
@@ -10,12 +11,13 @@ class CustomScene : public QGraphicsScene
 public:
     explicit CustomScene(QWidget *parent = nullptr);
 
+public:
+    void initScene();//This initializies what needs to be done for the scene
+    void createUModel(const double ratio);
+    void createBModel(const double ratio);
+    void createTModel(const double ratio);
 signals:
 
-
-    // QGraphicsScene interface
-protected:
-    void drawForeground(QPainter *painter, const QRectF &rect) override;
 };
 
 #endif // CUSTOMSCENE_H

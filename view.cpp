@@ -48,7 +48,7 @@ void View::ShowContextMenu(const QPoint &pos)
 
     //This includes the code for clearing the screen
     QAction action1(tr("Clear"), this);
-    connect(&action1, SIGNAL(triggered()),this->scene(), SLOT(clearScene()));
+    connect(&action1, SIGNAL(triggered()),this->scene(), SLOT(clear()));
     contextMenu.addAction(&action1);
 
     //This is the code for annotating the figures

@@ -17,6 +17,12 @@
 #include <QGraphicsItem>
 #include <QGraphicsView>
 #include <QMainWindow>
+#include "view.h"
+#include "customscene.h"
+
+//Declare custom classes for the compiler
+class View;
+class CustomScene;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -29,6 +35,8 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+    void storeSelection();
+    CustomScene* scene;
 
 private slots:
     void on_modelComboBox_currentIndexChanged(int index);
@@ -45,21 +53,18 @@ private:
     QString parameter2Selection;
     double parameter1SelectionDouble;
     double parameter2SelectionDouble;
+    double ratio;
     QJsonObject userSelection;
     QJsonDocument jsonDocument;
-    QGraphicsView* view;
-    QGraphicsScene* scene;
+    View* view;
     QFile file; //Json file to be used for storing
-
     void drawModel(); //Draws model based on the selected model
     void initUi();
 
 public slots:
     void saveJson();
-    void storeSelection();
     bool fieldIsEmpty(); //Warns users if a field is empty
     void clearJson();
-    void clearScene();
 //    void fitToExtents();
 
 

@@ -27,15 +27,9 @@ Widget::~Widget()
 
 void Widget::initUi()
 {
-    scene = new QGraphicsScene(this);
-    scene->setSceneRect(0,0,400,400);
+    scene = new CustomScene(this);
     view = new View(this);
     view->setScene(scene);
-    //Test
-//    CustomScene* custScene = new CustomScene(this);
-//    custScene->setSceneRect(0,0,400,400);
-//    view->setScene(custScene);
-    //Test Finish
     ui->horizontalLayout_2->addWidget(view); //This adds the view that creates the shapes
 
     //This puts the save and visualize in a horizontal layout together for a cleaner look
@@ -135,8 +129,7 @@ bool Widget::fieldIsEmpty()
         ui->parameter2LineEdit->text()=="")
     {
         isEmpty = true;
-        ui->emptyFieldLabel->setText("At Least One Field Is Empty, Fill out everything to proceed");
-        ui->emptyFieldLabel->setStyleSheet(errorStyle);
+        this->setStatusTip("At Least One Field Is Empty, Fill out everything to proceed");
     }
 
     if (ui->spaceComboBox->currentIndex()==0) { ui->spaceLabel->setStyleSheet(errorStyle);
@@ -161,12 +154,6 @@ void Widget::clearJson()
     }
 }
 
-void Widget::clearScene()
-{
-    scene->clear();
-    this->setStatusTip("Scene Emptied Successfully");
-}
-
 void Widget::storeSelection()
 {
     //Save the user selections in the variables defined in the header file
@@ -177,32 +164,23 @@ void Widget::storeSelection()
     parameter2Selection = ui->parameter2LineEdit->text();
     parameter1SelectionDouble = ui->parameter1LineEdit->text().toDouble();
     parameter2SelectionDouble = ui->parameter2LineEdit->text().toDouble();
+    ratio = parameter2SelectionDouble/parameter1SelectionDouble; //This holds the ratio needed to make the figures
 }
 
 
 void Widget::on_visulizeButton_clicked()
 {
-
-    scene->clear(); //make sure everything there is deleted
     storeSelection(); //This stores all the fields in respective variable
-    double ratio = parameter2SelectionDouble/parameter1SelectionDouble; //This holds the ratio needed to make the figures
-
     //First check to see which box is selected
     if (!fieldIsEmpty()){
         if (ui->modelComboBox->currentIndex()==1){ //U orientation
-            scene->addEllipse(150,40,100,30); //big radius is 100, and small radius is 30, top ellipse
-            scene->addLine(150,55,150,40+(100.0*ratio)); //left line
-            scene->addLine(250,55,250,40+(100.0*ratio)); //right line
-            scene->addEllipse(150,25+(100.0*ratio),100,30); //bottom ellipse
+            scene->createUModel(ratio);
         }else if (ui->modelComboBox->currentIndex()==2){ //B orientation
-            scene->addEllipse(90,150,30,100); //left ellipse
-            scene->addLine(105,150,90+(100.0*ratio),150); //top line
-            scene->addLine(105,250,90+(100.0*ratio),250); //bottom line
-            scene->addEllipse(75+(100.0*ratio),150,30,100); //right ellipse
+            scene->createBModel(ratio);
         }else if (ui->modelComboBox->currentIndex()==3){ //T orientation
-            scene->addRect(10,10,380,380); //Square
-            scene->addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio)); //circle
+            scene->createTModel(ratio);
         }
+        this->setStatusTip("Visualization Successfull");
     }
 }
 
