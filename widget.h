@@ -59,6 +59,8 @@ public slots:
     void storeSelection();
     bool fieldIsEmpty(); //Warns users if a field is empty
     void clearJson();
+    void clearScene();
+//    void fitToExtents();
 
 
 

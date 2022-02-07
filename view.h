@@ -31,8 +31,7 @@ protected:
 protected:
     void mousePressEvent(QMouseEvent *event) override;
 
-private slots:
-    void clearView();
+public slots:
     void annotate();
     void ShowContextMenu(const QPoint &pos);
     void zoom(const int &delta);

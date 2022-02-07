@@ -4,6 +4,7 @@
 #include <QMenu>
 #include <QMenuBar>
 #include "widget.h"
+#include "view.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow{parent}
@@ -37,9 +38,10 @@ void MainWindow::createMenuBar()
     //Create a view menu
     QMenu* viewMenu = menuBar()->addMenu("View");
 
-    //Create fit to extents action
-    auto* fitToExtents = new QAction ("Fit To Extents",this);
-    viewMenu->addAction(quit);
+    //Create clear view action
+    auto* clearView = new QAction ("Clear View",this);
+    viewMenu->addAction(clearView);
+    connect(clearView, SIGNAL(triggered()),myWidget->parent(),SLOT(clearView()));
 
 
 }

@@ -161,6 +161,12 @@ void Widget::clearJson()
     }
 }
 
+void Widget::clearScene()
+{
+    scene->clear();
+    this->setStatusTip("Scene Emptied Successfully");
+}
+
 void Widget::storeSelection()
 {
     //Save the user selections in the variables defined in the header file
@@ -199,6 +205,8 @@ void Widget::on_visulizeButton_clicked()
         }
     }
 }
+
+
 
 
 
