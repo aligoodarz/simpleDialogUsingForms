@@ -33,26 +33,12 @@ void Widget::initUi()
     view->setScene(scene);
     ui->horizontalLayout_2->addWidget(view);
 
-    // -----Create Toolbar and add actions
-    createToolbar();
-
     //This puts the save and visualize in a horizontal layout together for a cleaner look
     ui->horizontalLayout_5->addWidget(ui->saveButton);
     ui->horizontalLayout_5->addWidget(ui->visulizeButton);
     connect(ui->saveButton, SIGNAL(clicked()),this, SLOT(saveJson()));//Connect the save button to the saveJson slot
 
     file.setFileName(("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/specimenInfo.json")); //Set destination to JsonFile
-}
-
-void Widget::createToolbar()
-{
-//    auto tb = new QToolBar();
-//    tb->addAction("hi");
-//    tb->addAction("hello");
-//    auto dockLayout = new QVBoxLayout();
-//    dockLayout->setMenuBar(tb); //
-//    view->setLayout(dockLayout);
-//    ui->horizontalLayout_2->addWidget(view);
 }
 
 
