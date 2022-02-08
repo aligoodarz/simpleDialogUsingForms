@@ -30,6 +30,7 @@ void View::createToolbar()
     //Load pixmaps
     QPixmap zoomInPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomIn.png");
     QPixmap zoomOutPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomOut.png");
+    QPixmap zoomToFitPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomToFit.png");
     //Create Toolbar
     auto tb = new QToolBar();
     //Create actions and connect to respective slots
@@ -38,6 +39,9 @@ void View::createToolbar()
 
     auto zoomOut = tb->addAction(QIcon(zoomOutPixmap),"Zoom Out");
     connect(zoomOut, &QAction::triggered,this, &View::zoomOut);
+
+    auto fitToExtents = tb->addAction(QIcon(zoomToFitPixmap),"Fit To Extents");
+    connect(fitToExtents, &QAction::triggered,this, &View::fitToExtents);
 
 
     auto dockLayout = new QVBoxLayout();
@@ -82,18 +86,13 @@ void View::ShowContextMenu(const QPoint &pos)
     connect(&action1, SIGNAL(triggered()),this->scene(), SLOT(clear()));
     contextMenu.addAction(&action1);
 
-    //This is the code for annotating the figures
-    QAction action2(tr("Annotate"),this);
-    connect(&action2, SIGNAL(triggered()), this, SLOT(annotate()));
-    contextMenu.addAction(&action2);
-
-
     contextMenu.exec(mapToGlobal(pos));
 }
 
 void View::zoomIn()
 {
     scale(1.1,1.1);
+
 }
 
 void View::zoomOut()
@@ -101,16 +100,7 @@ void View::zoomOut()
     scale (0.9,0.9);
 }
 
-
-void View::drawForeground(QPainter *painter, const QRectF &rect)
+void View::fitToExtents()
 {
-    //    painter->drawRect(20,20,20,20);
-}
-
-
-void View::annotate()
-{
-    this->scene()->addText("Hello");
-    //Can add a painting function here
-    this->scene()->addRect(100,100,100,100);
+    fitInView(scene()->sceneRect(), Qt::KeepAspectRatio);
 }

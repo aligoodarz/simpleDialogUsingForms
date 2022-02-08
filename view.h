@@ -29,14 +29,13 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
 public slots:
-    void annotate();
     void ShowContextMenu(const QPoint &pos);
     void zoomIn();
     void zoomOut();
+    void fitToExtents();
 
     // QGraphicsView interface
 protected:
-    void drawForeground(QPainter *painter, const QRectF &rect) override;
     void setupView();
     void createToolbar();
 
