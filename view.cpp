@@ -54,6 +54,12 @@ QSize View::sizeHint() const
     return QSize(400,600);
 }
 
+void View::drawForeground(QPainter *painter, const QRectF &rect)
+{
+    painter->resetTransform();
+    painter->drawText(100,100,"Hello");
+}
+
 void View::wheelEvent(QWheelEvent *event)
 {
     if (event->delta()> 0) zoomIn();

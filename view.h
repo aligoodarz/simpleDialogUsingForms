@@ -42,6 +42,10 @@ protected:
     // QWidget interface
 public:
     QSize sizeHint() const override;
+
+    // QGraphicsView interface
+protected:
+    void drawForeground(QPainter *painter, const QRectF &rect) override;
 };
 
 #endif // VIEW_H
