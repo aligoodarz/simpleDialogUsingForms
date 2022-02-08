@@ -5,6 +5,8 @@
 #include <QPoint>
 #include <QToolBar>
 #include <QVBoxLayout>
+#include <QPixmap>
+#include <QIcon>
 
 
 View::View(QWidget *parent)
@@ -25,13 +27,16 @@ void View::setupView()
 
 void View::createToolbar()
 {
+    //Load pixmaps
+    QPixmap zoomInPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomIn.png");
+    QPixmap zoomOutPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomOut.png");
     //Create Toolbar
     auto tb = new QToolBar();
     //Create actions and connect to respective slots
-    auto zoomIn = tb->addAction("Zoom In");
+    auto zoomIn = tb->addAction(QIcon(zoomInPixmap),"Zoom In");
     connect(zoomIn, &QAction::triggered,this, &View::zoomIn);
 
-    auto zoomOut = tb->addAction("Zoom Out");
+    auto zoomOut = tb->addAction(QIcon(zoomOutPixmap),"Zoom Out");
     connect(zoomOut, &QAction::triggered,this, &View::zoomOut);
 
 
