@@ -57,9 +57,10 @@ QSize View::sizeHint() const
 
 void View::drawForeground(QPainter *painter, const QRectF &rect)
 {
+    Q_UNUSED(rect);
     painter->resetTransform();
-    painter->drawText(100,100,"Units: ");
-    painter->drawText(150,100,units);
+    painter->drawText(300,460,"Units: ");
+    painter->drawText(329,460,units);
 }
 
 void View::wheelEvent(QWheelEvent *event)
