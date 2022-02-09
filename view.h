@@ -10,6 +10,7 @@
 #include <QKeyEvent>
 #include <QWheelEvent>
 #include <QPoint>
+#include <QString>
 #include "widget.h"
 
 class View : public QGraphicsView
@@ -23,10 +24,10 @@ signals:
 protected:
     void wheelEvent(QWheelEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
-
-    // QWidget interface
-protected:
     void mousePressEvent(QMouseEvent *event) override;
+    void setupView();
+    void createToolbar();
+    void drawForeground(QPainter *painter, const QRectF &rect) override;
 
 public slots:
     void ShowContextMenu(const QPoint &pos);
@@ -34,18 +35,12 @@ public slots:
     void zoomOut();
     void fitToExtents();
 
-    // QGraphicsView interface
-protected:
-    void setupView();
-    void createToolbar();
-
-    // QWidget interface
 public:
     QSize sizeHint() const override;
+    QString units; //Unit of the drawing
 
-    // QGraphicsView interface
-protected:
-    void drawForeground(QPainter *painter, const QRectF &rect) override;
+
+
 };
 
 #endif // VIEW_H
