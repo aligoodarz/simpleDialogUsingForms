@@ -5,6 +5,7 @@
 #include <QPoint>
 #include <QToolBar>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QPixmap>
 #include <QIcon>
 
@@ -57,7 +58,7 @@ QSize View::sizeHint() const
 void View::drawForeground(QPainter *painter, const QRectF &rect)
 {
     painter->resetTransform();
-    painter->drawText(100,100,"Hello");
+//    painter->drawText(100,100,"Hello");
 }
 
 void View::wheelEvent(QWheelEvent *event)
@@ -98,7 +99,6 @@ void View::ShowContextMenu(const QPoint &pos)
 void View::zoomIn()
 {
     scale(1.1,1.1);
-
 }
 
 void View::zoomOut()
