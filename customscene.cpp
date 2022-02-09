@@ -10,7 +10,7 @@ CustomScene::CustomScene(QWidget *parent)
 
 void CustomScene::initScene()
 {
-    this->setSceneRect(0,0,380,410);
+    this->setSceneRect(0,0,400,400);
 }
 
 void CustomScene::createUModel(const double ratio)
