@@ -26,6 +26,7 @@ private:
 
 public slots:
 
+
 };
 
 #endif // MAINWINDOW_H
