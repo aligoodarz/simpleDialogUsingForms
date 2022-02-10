@@ -8,22 +8,28 @@
 #include <QHBoxLayout>
 #include <QPixmap>
 #include <QIcon>
+#include <QMouseEvent>
+#include <QDebug>
+#include <QGraphicsSceneMouseEvent>
+#include <QApplication>
 
 
 View::View(QWidget *parent)
-    : QGraphicsView{parent}
+    : QGraphicsView{parent}, tool(Cursor),
+      drawing(false)
 {
     setupView();
 }
 
 void View::setupView()
 {
-    setDragMode(QGraphicsView::ScrollHandDrag);
+//    setDragMode(QGraphicsView::ScrollHandDrag);
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     //This connects the request for a context menu to an actual context menu
     connect(this, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(ShowContextMenu(QPoint)));
     createToolbar();
+    this->setFrameShape(QGraphicsView::NoFrame);
 }
 
 void View::createToolbar()
@@ -44,6 +50,21 @@ void View::createToolbar()
     auto fitToExtents = tb->addAction(QIcon(zoomToFitPixmap),"Fit To Extents");
     connect(fitToExtents, &QAction::triggered,this, &View::fitToExtents);
 
+    auto penActive = tb->addAction("Pen");
+    connect(penActive, &QAction::triggered,[this](){
+        tool = Pen;
+        setDragMode(QGraphicsView::NoDrag);
+        setStatusTip("Pen Selected");
+    });
+
+    auto cursorActive = tb->addAction("Cursor");
+    connect(cursorActive, &QAction::triggered,[this](){
+        tool = Cursor;
+        setDragMode(QGraphicsView::ScrollHandDrag);
+        setStatusTip("Cursor Selected");
+    });
+
+
 
     auto dockLayout = new QVBoxLayout();
     dockLayout->setMenuBar(tb); //
@@ -53,6 +74,57 @@ void View::createToolbar()
 QSize View::sizeHint() const
 {
     return QSize(400,600);
+}
+
+void View::mouseReleaseEvent(QMouseEvent *event)
+{
+    if ((event->button() == Qt::LeftButton) && drawing){
+        if (tool == ToolType::Pen){
+            lineGroup = nullptr;
+            drawing = false;
+        }else
+            QGraphicsView::mouseReleaseEvent(event);
+    }
+    QGraphicsView::mouseReleaseEvent(event);
+}
+
+void View::mouseMoveEvent(QMouseEvent *event)
+{
+    if ((event->buttons() & Qt::LeftButton) && drawing){
+        if (tool == ToolType::Pen){
+            drawLineTo(event->pos());
+        }
+    }else
+        QGraphicsView::mouseMoveEvent(event);
+}
+
+void View::drawLineTo(const QPointF &endPoint)
+{
+    if (!lineGroup){
+        lineGroup = new QGraphicsItemGroup();
+        lineGroup->setFlags(QGraphicsItem::ItemIsMovable /*| QGraphicsItem::ItemIsSelectable*/);
+        this->scene()->addItem(lineGroup);
+        lastPenPoint = startingPoint;
+    }
+    auto localLine = new QGraphicsLineItem(QLineF(lastPenPoint,endPoint));
+    QPen mPen;
+    mPen.setWidth(3);
+    mPen.setColor(Qt::red);
+    localLine->setPen(mPen);
+    lineGroup->addToGroup(localLine);
+
+    lastPenPoint = endPoint;
+}
+
+
+View::ToolType View::getTool() const
+{
+    return tool;
+}
+
+void View::setTool(ToolType newTool)
+{
+    tool = newTool;
 }
 
 void View::drawForeground(QPainter *painter, const QRectF &rect)
@@ -75,15 +147,25 @@ void View::keyPressEvent(QKeyEvent *event)
         rotate(-1);
     else if(event->key() == Qt::Key_Right)
         rotate(1);
+    else
+        QGraphicsView::keyPressEvent(event);
 }
 
 void View::mousePressEvent(QMouseEvent *event)
 {
+//    s
     if (event->button()==Qt::RightButton)
     {
         ShowContextMenu(event->pos());
+    }if(event->button() == Qt::LeftButton){
+        if (tool == ToolType::Pen){
+            startingPoint = event->pos();
+            drawing = true;
+        }
+
     }
     QGraphicsView::mousePressEvent(event);
+
 }
 
 void View::ShowContextMenu(const QPoint &pos)

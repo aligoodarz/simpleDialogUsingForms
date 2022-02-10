@@ -11,6 +11,8 @@
 #include <QWheelEvent>
 #include <QPoint>
 #include <QString>
+#include <QPointF>
+#include <QGraphicsItemGroup>
 #include "widget.h"
 
 class View : public QGraphicsView
@@ -18,6 +20,13 @@ class View : public QGraphicsView
     Q_OBJECT
 public:
     explicit View(QWidget *parent = nullptr);
+    enum ToolType{
+        Cursor,
+        Pen,
+        Rect,
+        Ellipse,
+        Eraser
+    };
 
 signals:
     // QWidget interface
@@ -39,8 +48,22 @@ public:
     QSize sizeHint() const override;
     QString units; //Unit of the drawing
 
+    // QWidget interface
+    ToolType getTool() const;
+    void setTool(ToolType newTool);
+
+protected:
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 
 
+private:
+    void drawLineTo(const QPointF &endPoint);
+    bool drawing;
+    ToolType tool;
+    QGraphicsItemGroup* lineGroup;
+    QPointF startingPoint;
+    QPointF lastPenPoint;
 };
 
 #endif // VIEW_H
