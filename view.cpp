@@ -1,5 +1,4 @@
 #include "view.h"
-#include "customscene.h"
 #include <QPoint>
 #include <QMouseEvent>
 #include <QMenu>
@@ -16,11 +15,9 @@
 #include <customscene.h>
 
 
-
 View::View(QWidget *parent)
-    : QGraphicsView{parent},
-      drawing(false),
-      tool(Cursor)
+    : QGraphicsView{parent}, tool(Cursor),
+      drawing(false)
 {
     setupView();
 }
@@ -56,14 +53,14 @@ void View::createToolbar()
     auto fitToExtents = tb->addAction(QIcon(zoomToFitPixmap),"Fit To Extents");
     connect(fitToExtents, &QAction::triggered,this, &View::fitToExtents);
 
-    auto penActive = tb->addAction(QIcon(drawPixmap),"Draw");
+    auto penActive = tb->addAction("Pen");
     connect(penActive, &QAction::triggered,[this](){
         tool = Pen;
         setDragMode(QGraphicsView::NoDrag);
         setStatusTip("Pen Selected");
     });
 
-    auto cursorActive = tb->addAction(QIcon(mousePixmap),"Move");
+    auto cursorActive = tb->addAction("Cursor");
     connect(cursorActive, &QAction::triggered,[this](){
         tool = Cursor;
         setDragMode(QGraphicsView::ScrollHandDrag);
@@ -98,7 +95,7 @@ void View::mouseMoveEvent(QMouseEvent *event)
 {
     if ((event->buttons() & Qt::LeftButton) && drawing){
         if (tool == ToolType::Pen){
-            drawLineTo(event->pos());
+            drawLineTo(mapToScene(event->pos()));
         }
     }else
         QGraphicsView::mouseMoveEvent(event);
@@ -106,9 +103,9 @@ void View::mouseMoveEvent(QMouseEvent *event)
 
 void View::drawLineTo(const QPointF &endPoint)
 {
-    if (lineGroup == nullptr){
+    if (!lineGroup){
         lineGroup = new QGraphicsItemGroup();
-        lineGroup->setFlag(QGraphicsItem::ItemIsMovable /*| QGraphicsItem::ItemIsSelectable*/);
+        lineGroup->setFlags(QGraphicsItem::ItemIsMovable /*| QGraphicsItem::ItemIsSelectable*/);
         this->scene()->addItem(lineGroup);
         lastPenPoint = startingPoint;
     }
@@ -122,10 +119,22 @@ void View::drawLineTo(const QPointF &endPoint)
     lastPenPoint = endPoint;
 }
 
+
+View::ToolType View::getTool() const
+{
+    return tool;
+}
+
+void View::setTool(ToolType newTool)
+{
+    tool = newTool;
+}
+
 void View::drawForeground(QPainter *painter, const QRectF &rect)
 {
     Q_UNUSED(rect);
     painter->resetTransform();
+
     painter->drawText(300,460,"Units: ");
     painter->drawText(329,460,units);
 }
@@ -148,12 +157,13 @@ void View::keyPressEvent(QKeyEvent *event)
 
 void View::mousePressEvent(QMouseEvent *event)
 {
+//    s
     if (event->button()==Qt::RightButton)
     {
         ShowContextMenu(event->pos());
     }if(event->button() == Qt::LeftButton){
         if (tool == ToolType::Pen){
-            startingPoint = event->pos();
+            startingPoint = mapToScene(event->pos());
             drawing = true;
         }
 
