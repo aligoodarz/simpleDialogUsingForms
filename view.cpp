@@ -41,6 +41,8 @@ void View::createToolbar()
     QPixmap zoomInPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomIn.png");
     QPixmap zoomOutPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomOut.png");
     QPixmap zoomToFitPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomToFit.png");
+    QPixmap drawPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/draw.png");
+    QPixmap mousePixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/mouse_pointer.png");
     //Create Toolbar
     auto tb = new QToolBar();
     //Create actions and connect to respective slots
@@ -53,14 +55,14 @@ void View::createToolbar()
     auto fitToExtents = tb->addAction(QIcon(zoomToFitPixmap),"Fit To Extents");
     connect(fitToExtents, &QAction::triggered,this, &View::fitToExtents);
 
-    auto penActive = tb->addAction("Pen");
+    auto penActive = tb->addAction(QIcon(drawPixmap),"Draw");
     connect(penActive, &QAction::triggered,[this](){
         tool = Pen;
         setDragMode(QGraphicsView::NoDrag);
         setStatusTip("Pen Selected");
     });
 
-    auto cursorActive = tb->addAction("Cursor");
+    auto cursorActive = tb->addAction(QIcon(mousePixmap),"Move");
     connect(cursorActive, &QAction::triggered,[this](){
         tool = Cursor;
         setDragMode(QGraphicsView::ScrollHandDrag);
@@ -96,7 +98,6 @@ void View::mouseMoveEvent(QMouseEvent *event)
     if ((event->buttons() & Qt::LeftButton) && drawing){
         if (tool == ToolType::Pen){
             drawLineTo(event->pos());
-            qDebug()<<"After";
         }
     }else
         QGraphicsView::mouseMoveEvent(event);
@@ -104,15 +105,10 @@ void View::mouseMoveEvent(QMouseEvent *event)
 
 void View::drawLineTo(const QPointF &endPoint)
 {
-    qDebug()<<"Before if";
     if (lineGroup == nullptr){
-        qDebug()<<"Before first";
         lineGroup = new QGraphicsItemGroup();
-        qDebug()<<"Before second";
         lineGroup->setFlag(QGraphicsItem::ItemIsMovable /*| QGraphicsItem::ItemIsSelectable*/);
-        qDebug()<<"Before adding to scene";
         this->scene()->addItem(lineGroup);
-        qDebug()<<"Line Group Initialized";
         lastPenPoint = startingPoint;
     }
     auto localLine = new QGraphicsLineItem(QLineF(lastPenPoint,endPoint));
@@ -121,7 +117,6 @@ void View::drawLineTo(const QPointF &endPoint)
     mPen.setColor(Qt::red);
     localLine->setPen(mPen);
     lineGroup->addToGroup(localLine);
-    qDebug()<<"Rest of code";
 
     lastPenPoint = endPoint;
 }
@@ -170,7 +165,6 @@ void View::mousePressEvent(QMouseEvent *event)
         if (tool == ToolType::Pen){
             startingPoint = event->pos();
             drawing = true;
-            qDebug()<<"Mouse Pressed";
         }
 
     }
