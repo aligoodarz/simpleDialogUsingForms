@@ -121,17 +121,6 @@ void View::drawLineTo(const QPointF &endPoint)
     lastPenPoint = endPoint;
 }
 
-
-View::ToolType View::getTool() const
-{
-    return tool;
-}
-
-void View::setTool(ToolType newTool)
-{
-    tool = newTool;
-}
-
 void View::drawForeground(QPainter *painter, const QRectF &rect)
 {
     Q_UNUSED(rect);
