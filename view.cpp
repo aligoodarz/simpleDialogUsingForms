@@ -39,8 +39,6 @@ void View::createToolbar()
     QPixmap zoomInPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomIn.png");
     QPixmap zoomOutPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomOut.png");
     QPixmap zoomToFitPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomToFit.png");
-    QPixmap drawPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/draw.png");
-    QPixmap mousePixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/mouse_pointer.png");
     //Create Toolbar
     auto tb = new QToolBar();
     //Create actions and connect to respective slots
