@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QApplication>
+#include <customscene.h>
 
 
 

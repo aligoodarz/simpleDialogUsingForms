@@ -43,7 +43,7 @@ public:
 private slots:
     void on_modelComboBox_currentIndexChanged(int index);
     void on_visulizeButton_clicked();
-    void on_unitsComboBox_currentIndexChanged(int index);
+//    void on_unitsComboBox_currentIndexChanged(int index);
 
 private:
     Ui::Widget *ui;

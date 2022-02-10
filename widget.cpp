@@ -28,10 +28,12 @@ Widget::~Widget()
 
 void Widget::initUi()
 {
-    scene = new CustomScene(this);
-    view = new View(this);
-    view->setScene(scene);
-    ui->horizontalLayout_2->addWidget(view);
+      scene = new CustomScene(this);
+      ui->graphicsView->setScene(scene);
+//    view = new View(this);
+//    view->setScene(scene);
+//    ui->horizontalLayout_2->addWidget(view);
+//    ui->dockWidget(view);
 
     //This puts the save and visualize in a horizontal layout together for a cleaner look
     ui->horizontalLayout_5->addWidget(ui->saveButton);
@@ -186,14 +188,15 @@ void Widget::on_visulizeButton_clicked()
 
 
 
-void Widget::on_unitsComboBox_currentIndexChanged(int index)
-{
-    Q_UNUSED(index);
-    //This is used to pass on the units to the view
-    //It can be done in a better way but the current architecture does not allow for it.
-    view->units = ui->unitsComboBox->currentText();
-    //The normal update function would not update immediately so viewport had to be used
-    auto vp = view->viewport();
-    vp->update();
-}
+//void Widget::on_unitsComboBox_currentIndexChanged(int index)
+//{
+//    Q_UNUSED(index);
+//    //This is used to pass on the units to the view
+//    //It can be done in a better way but the current architecture does not allow for it.
+//    view->units = ui->unitsComboBox->currentText();
+//    //The normal update function would not update immediately so viewport had to be used
+//    auto vp = view->viewport();
+//    vp->update();
+
+//}
 
