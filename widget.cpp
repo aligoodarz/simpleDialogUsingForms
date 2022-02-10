@@ -32,7 +32,7 @@ void Widget::initUi()
     scene = new CustomScene(this);
     ui->graphicsView->setScene(scene);
 
-    connect(ui->saveButton, SIGNAL(clicked()),this, SLOT(saveJson()));//Connect the save button to the saveJson slot
+    connect(ui->saveButton, &QPushButton::clicked,this, &Widget::saveJson);//Connect the save button to the saveJson slot
 
     file.setFileName(("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/specimenInfo.json")); //Set destination to JsonFile
 }
@@ -191,6 +191,5 @@ void Widget::on_visulizeButton_clicked()
 //    //The normal update function would not update immediately so viewport had to be used
 //    auto vp = view->viewport();
 //    vp->update();
-
 //}
 

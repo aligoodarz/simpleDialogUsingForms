@@ -15,6 +15,7 @@
 #include <QJsonObject>
 #include <QGraphicsScene>
 #include <QGraphicsItem>
+#include <QComboBox>
 #include <QGraphicsView>
 #include <QMainWindow>
 #include "view.h"
@@ -37,8 +38,6 @@ public:
     ~Widget();
     void storeSelection();
     CustomScene* scene;
-
-    const QString &getModelSelection() const;
 
 private slots:
     void on_modelComboBox_currentIndexChanged(int index);
