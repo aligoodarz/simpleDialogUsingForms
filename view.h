@@ -61,7 +61,7 @@ private:
     void drawLineTo(const QPointF &endPoint);
     bool drawing;
     ToolType tool;
-    QGraphicsItemGroup* lineGroup;
+    QGraphicsItemGroup* lineGroup = nullptr;
     QPointF startingPoint;
     QPointF lastPenPoint;
 };

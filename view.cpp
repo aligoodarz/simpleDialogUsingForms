@@ -1,4 +1,5 @@
 #include "view.h"
+#include "customscene.h"
 #include <QPoint>
 #include <QMouseEvent>
 #include <QMenu>
@@ -14,9 +15,11 @@
 #include <QApplication>
 
 
+
 View::View(QWidget *parent)
-    : QGraphicsView{parent}, tool(Cursor),
-      drawing(false)
+    : QGraphicsView{parent},
+      drawing(false),
+      tool(Cursor)
 {
     setupView();
 }
@@ -93,6 +96,7 @@ void View::mouseMoveEvent(QMouseEvent *event)
     if ((event->buttons() & Qt::LeftButton) && drawing){
         if (tool == ToolType::Pen){
             drawLineTo(event->pos());
+            qDebug()<<"After";
         }
     }else
         QGraphicsView::mouseMoveEvent(event);
@@ -100,10 +104,15 @@ void View::mouseMoveEvent(QMouseEvent *event)
 
 void View::drawLineTo(const QPointF &endPoint)
 {
-    if (!lineGroup){
+    qDebug()<<"Before if";
+    if (lineGroup == nullptr){
+        qDebug()<<"Before first";
         lineGroup = new QGraphicsItemGroup();
-        lineGroup->setFlags(QGraphicsItem::ItemIsMovable /*| QGraphicsItem::ItemIsSelectable*/);
+        qDebug()<<"Before second";
+        lineGroup->setFlag(QGraphicsItem::ItemIsMovable /*| QGraphicsItem::ItemIsSelectable*/);
+        qDebug()<<"Before adding to scene";
         this->scene()->addItem(lineGroup);
+        qDebug()<<"Line Group Initialized";
         lastPenPoint = startingPoint;
     }
     auto localLine = new QGraphicsLineItem(QLineF(lastPenPoint,endPoint));
@@ -112,6 +121,7 @@ void View::drawLineTo(const QPointF &endPoint)
     mPen.setColor(Qt::red);
     localLine->setPen(mPen);
     lineGroup->addToGroup(localLine);
+    qDebug()<<"Rest of code";
 
     lastPenPoint = endPoint;
 }
@@ -153,7 +163,6 @@ void View::keyPressEvent(QKeyEvent *event)
 
 void View::mousePressEvent(QMouseEvent *event)
 {
-//    s
     if (event->button()==Qt::RightButton)
     {
         ShowContextMenu(event->pos());
@@ -161,6 +170,7 @@ void View::mousePressEvent(QMouseEvent *event)
         if (tool == ToolType::Pen){
             startingPoint = event->pos();
             drawing = true;
+            qDebug()<<"Mouse Pressed";
         }
 
     }
