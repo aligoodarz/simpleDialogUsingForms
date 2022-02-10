@@ -12,6 +12,7 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QApplication>
+#include <customscene.h>
 
 
 View::View(QWidget *parent)
