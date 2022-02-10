@@ -54,12 +54,14 @@ void View::createToolbar()
     connect(penActive, &QAction::triggered,[this](){
         tool = Pen;
         setDragMode(QGraphicsView::NoDrag);
+        setStatusTip("Pen Selected");
     });
 
     auto cursorActive = tb->addAction("Cursor");
     connect(cursorActive, &QAction::triggered,[this](){
         tool = Cursor;
         setDragMode(QGraphicsView::ScrollHandDrag);
+        setStatusTip("Cursor Selected");
     });
 
 
