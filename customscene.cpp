@@ -1,5 +1,9 @@
 #include "customscene.h"
 #include <QPainter>
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsLineItem>
+#include <QGraphicsEllipseItem>
+#include <QPen>
 
 
 CustomScene::CustomScene(QWidget *parent)
@@ -10,7 +14,7 @@ CustomScene::CustomScene(QWidget *parent)
 
 void CustomScene::initScene()
 {
-    this->setSceneRect(0,0,380,410);
+    this->setSceneRect(0,0,400,400);
 }
 
 void CustomScene::createUModel(const double ratio)
@@ -25,7 +29,7 @@ void CustomScene::createUModel(const double ratio)
 void CustomScene::createBModel(const double ratio)
 {
     this->clear(); //make sure everything there is deleted
-    this->addEllipse(90,150,30,100); //left ellipse
+    auto parentItem = this->addEllipse(90,150,30,100); //left ellipse
     this->addLine(105,150,90+(100.0*ratio),150); //top line
     this->addLine(105,250,90+(100.0*ratio),250); //bottom line
     this->addEllipse(75+(100.0*ratio),150,30,100); //right ellipse
@@ -38,6 +42,12 @@ void CustomScene::createTModel(const double ratio)
     this->addRect(10,10,380,380); //Square
     this->addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio)); //circle
 }
+
+
+
+
+
+
 
 
 
