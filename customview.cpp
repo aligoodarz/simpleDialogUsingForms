@@ -57,14 +57,14 @@ void CustomView::createToolbar()
     connect(fitToExtents, &QAction::triggered,this, &CustomView::fitToExtents);
 
     auto penActive = tb->addAction(drawPixmap,"Pen");
-    connect(penActive, &QAction::triggered,[this](){
+    connect(penActive, &QAction::triggered,this,[this](){
         tool = Pen;
         setDragMode(QGraphicsView::NoDrag);
         setStatusTip("Pen Selected");
     });
 
     auto cursorActive = tb->addAction(mousePixmap,"Cursor");
-    connect(cursorActive, &QAction::triggered,[this](){
+    connect(cursorActive, &QAction::triggered,this,[this](){
         tool = Cursor;
         setDragMode(QGraphicsView::ScrollHandDrag);
         setStatusTip("Cursor Selected");
