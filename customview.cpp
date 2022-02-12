@@ -37,11 +37,13 @@ void CustomView::setupView()
 void CustomView::createToolbar()
 {
     //Load pixmaps
-    QPixmap zoomInPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomIn.png");
-    QPixmap zoomOutPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomOut.png");
-    QPixmap zoomToFitPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomToFit.png");
-    QPixmap drawPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/draw.png");
-    QPixmap mousePixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/mouse_pointer.png");
+    QString defaultDir = "C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/";
+    QPixmap zoomInPixmap(defaultDir+"zoomIn.png");
+    QPixmap zoomOutPixmap(defaultDir+"zoomOut.png");
+    QPixmap zoomToFitPixmap(defaultDir+"zoomToFit.png");
+    QPixmap drawPixmap(defaultDir+"draw.png");
+    QPixmap mousePixmap(defaultDir+"mouse_pointer.png");
+    QPixmap eraserPixmap(defaultDir+"eraser.png");
     //Create Toolbar
     auto tb = new QToolBar();
     //Create actions and connect to respective slots
@@ -68,7 +70,7 @@ void CustomView::createToolbar()
         setStatusTip("Cursor Selected");
     });
 
-    auto eraserActive = tb->addAction("Eraser");
+    auto eraserActive = tb->addAction(eraserPixmap,"Eraser");
     connect(eraserActive, &QAction::triggered,[this](){
         tool = Eraser;
         setStatusTip("Eraser Selected");
