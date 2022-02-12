@@ -64,15 +64,16 @@ void CustomView::createToolbar()
     });
 
     auto cursorActive = tb->addAction(mousePixmap,"Cursor");
-    connect(cursorActive, &QAction::triggered,this,[this](){
+    connect(cursorActive, &QAction::triggered,this.[this](){
         tool = Cursor;
         setDragMode(QGraphicsView::ScrollHandDrag);
         setStatusTip("Cursor Selected");
     });
 
     auto eraserActive = tb->addAction(eraserPixmap,"Eraser");
-    connect(eraserActive, &QAction::triggered,[this](){
+    connect(eraserActive, &QAction::triggered,this,[this](){
         tool = Eraser;
+        setDragMode(QGraphicsView::NoDrag);
         setStatusTip("Eraser Selected");
     });
 
@@ -175,16 +176,6 @@ void CustomView::eraseStrokesUnder(QGraphicsEllipseItem *item)
 }
 
 
-CustomView::ToolType CustomView::getTool() const
-{
-    return tool;
-}
-
-void CustomView::setTool(ToolType newTool)
-{
-    tool = newTool;
-}
-
 void CustomView::drawForeground(QPainter *painter, const QRectF &rect)
 {
     Q_UNUSED(rect);
@@ -220,9 +211,8 @@ void CustomView::mousePressEvent(QMouseEvent *event)
         if (tool == ToolType::Pen || tool == ToolType::Eraser){
             startingPoint = mapToScene(event->pos());
             drawing = true;
-        }else{
-            QGraphicsView::mousePressEvent(event);
         }
+
     }
     QGraphicsView::mousePressEvent(event);
 
