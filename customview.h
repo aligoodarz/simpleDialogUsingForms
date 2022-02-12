@@ -13,6 +13,7 @@
 #include <QString>
 #include <QPointF>
 #include <QGraphicsItemGroup>
+#include <QGraphicsEllipseItem>
 #include "widget.h"
 
 class CustomView : public QGraphicsView
@@ -64,6 +65,11 @@ private:
     QGraphicsItemGroup* lineGroup = nullptr;
     QPointF startingPoint;
     QPointF lastPenPoint;
+
+    QGraphicsEllipseItem* lastEraserCircle = nullptr;
+    void drawEraserAt(const QPointF &endPoint);
+    void eraseStrokesUnder(QGraphicsEllipseItem* item);
+
 };
 
 #endif // CUSTOMVIEW_H
