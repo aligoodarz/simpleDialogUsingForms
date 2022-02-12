@@ -318,7 +318,7 @@
       </widget>
      </item>
      <item>
-      <widget class="View" name="graphicsView"/>
+      <widget class="CustomView" name="graphicsView"/>
      </item>
     </layout>
    </item>
@@ -326,9 +326,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>View</class>
+   <class>CustomView</class>
    <extends>QGraphicsView</extends>
-   <header location="global">view.h</header>
+   <header location="global">customview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

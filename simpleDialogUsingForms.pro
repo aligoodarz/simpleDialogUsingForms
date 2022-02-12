@@ -10,15 +10,15 @@ CONFIG += c++11
 
 SOURCES += \
     customscene.cpp \
+    customview.cpp \
     main.cpp \
     mainwindow.cpp \
-    view.cpp \
     widget.cpp
 
 HEADERS += \
     customscene.h \
+    customview.h \
     mainwindow.h \
-    view.h \
     widget.h
 
 FORMS += \

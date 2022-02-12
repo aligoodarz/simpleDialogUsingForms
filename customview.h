@@ -1,5 +1,5 @@
-#ifndef VIEW_H
-#define VIEW_H
+#ifndef CUSTOMVIEW_H
+#define CUSTOMVIEW_H
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
@@ -15,11 +15,11 @@
 #include <QGraphicsItemGroup>
 #include "widget.h"
 
-class View : public QGraphicsView
+class CustomView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit View(QWidget *parent = nullptr);
+    explicit CustomView(QWidget *parent = nullptr);
     enum ToolType{
         Cursor,
         Pen,
@@ -66,4 +66,4 @@ private:
     QPointF lastPenPoint;
 };
 
-#endif // VIEW_H
+#endif // CUSTOMVIEW_H

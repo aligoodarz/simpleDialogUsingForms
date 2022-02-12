@@ -18,11 +18,11 @@
 #include <QComboBox>
 #include <QGraphicsView>
 #include <QMainWindow>
-#include "view.h"
+#include "customview.h"
 #include "customscene.h"
 
 //Declare custom classes for the compiler
-class View;
+class CustomView;
 class CustomScene;
 
 QT_BEGIN_NAMESPACE
@@ -57,7 +57,7 @@ private:
     double ratio;
     QJsonObject userSelection;
     QJsonDocument jsonDocument;
-    View* view;
+    CustomView* view;
     QFile file; //Json file to be used for storing
     void drawModel(); //Draws model based on the selected model
     void initUi();

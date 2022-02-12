@@ -1,4 +1,4 @@
-#include "view.h"
+#include "customview.h"
 #include <QPoint>
 #include <QMouseEvent>
 #include <QMenu>
@@ -15,14 +15,14 @@
 #include <customscene.h>
 
 
-View::View(QWidget *parent)
+CustomView::CustomView(QWidget *parent)
     : QGraphicsView{parent}, tool(Cursor),
       drawing(false)
 {
     setupView();
 }
 
-void View::setupView()
+void CustomView::setupView()
 {
 //    setDragMode(QGraphicsView::ScrollHandDrag);
     this->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -33,7 +33,7 @@ void View::setupView()
     this->setFrameShape(QGraphicsView::NoFrame);
 }
 
-void View::createToolbar()
+void CustomView::createToolbar()
 {
     //Load pixmaps
     QPixmap zoomInPixmap("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/images/zoomIn.png");
@@ -45,13 +45,13 @@ void View::createToolbar()
     auto tb = new QToolBar();
     //Create actions and connect to respective slots
     auto zoomIn = tb->addAction(QIcon(zoomInPixmap),"Zoom In");
-    connect(zoomIn, &QAction::triggered,this, &View::zoomIn);
+    connect(zoomIn, &QAction::triggered,this, &CustomView::zoomIn);
 
     auto zoomOut = tb->addAction(QIcon(zoomOutPixmap),"Zoom Out");
-    connect(zoomOut, &QAction::triggered,this, &View::zoomOut);
+    connect(zoomOut, &QAction::triggered,this, &CustomView::zoomOut);
 
     auto fitToExtents = tb->addAction(QIcon(zoomToFitPixmap),"Fit To Extents");
-    connect(fitToExtents, &QAction::triggered,this, &View::fitToExtents);
+    connect(fitToExtents, &QAction::triggered,this, &CustomView::fitToExtents);
 
     auto penActive = tb->addAction(drawPixmap,"Pen");
     connect(penActive, &QAction::triggered,[this](){
@@ -74,12 +74,12 @@ void View::createToolbar()
     this->setLayout(dockLayout);
 }
 
-QSize View::sizeHint() const
+QSize CustomView::sizeHint() const
 {
     return QSize(400,600);
 }
 
-void View::mouseReleaseEvent(QMouseEvent *event)
+void CustomView::mouseReleaseEvent(QMouseEvent *event)
 {
     if ((event->button() == Qt::LeftButton) && drawing){
         if (tool == ToolType::Pen){
@@ -91,7 +91,7 @@ void View::mouseReleaseEvent(QMouseEvent *event)
     QGraphicsView::mouseReleaseEvent(event);
 }
 
-void View::mouseMoveEvent(QMouseEvent *event)
+void CustomView::mouseMoveEvent(QMouseEvent *event)
 {
     if ((event->buttons() & Qt::LeftButton) && drawing){
         if (tool == ToolType::Pen){
@@ -101,7 +101,7 @@ void View::mouseMoveEvent(QMouseEvent *event)
         QGraphicsView::mouseMoveEvent(event);
 }
 
-void View::drawLineTo(const QPointF &endPoint)
+void CustomView::drawLineTo(const QPointF &endPoint)
 {
     if (!lineGroup){
         lineGroup = new QGraphicsItemGroup();
@@ -120,17 +120,17 @@ void View::drawLineTo(const QPointF &endPoint)
 }
 
 
-View::ToolType View::getTool() const
+CustomView::ToolType CustomView::getTool() const
 {
     return tool;
 }
 
-void View::setTool(ToolType newTool)
+void CustomView::setTool(ToolType newTool)
 {
     tool = newTool;
 }
 
-void View::drawForeground(QPainter *painter, const QRectF &rect)
+void CustomView::drawForeground(QPainter *painter, const QRectF &rect)
 {
     Q_UNUSED(rect);
     painter->resetTransform();
@@ -139,13 +139,13 @@ void View::drawForeground(QPainter *painter, const QRectF &rect)
     painter->drawText(329,460,units);
 }
 
-void View::wheelEvent(QWheelEvent *event)
+void CustomView::wheelEvent(QWheelEvent *event)
 {
     if (event->delta()> 0) zoomIn();
     else zoomOut();
 }
 
-void View::keyPressEvent(QKeyEvent *event)
+void CustomView::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Left)
         rotate(-1);
@@ -155,7 +155,7 @@ void View::keyPressEvent(QKeyEvent *event)
         QGraphicsView::keyPressEvent(event);
 }
 
-void View::mousePressEvent(QMouseEvent *event)
+void CustomView::mousePressEvent(QMouseEvent *event)
 {
 //    s
     if (event->button()==Qt::RightButton)
@@ -172,7 +172,7 @@ void View::mousePressEvent(QMouseEvent *event)
 
 }
 
-void View::ShowContextMenu(const QPoint &pos)
+void CustomView::ShowContextMenu(const QPoint &pos)
 {
     QMenu contextMenu(tr("Context Menu"),this);
 
@@ -184,17 +184,17 @@ void View::ShowContextMenu(const QPoint &pos)
     contextMenu.exec(mapToGlobal(pos));
 }
 
-void View::zoomIn()
+void CustomView::zoomIn()
 {
     scale(1.1,1.1);
 }
 
-void View::zoomOut()
+void CustomView::zoomOut()
 {
     scale (0.9,0.9);
 }
 
-void View::fitToExtents()
+void CustomView::fitToExtents()
 {
     fitInView(scene()->sceneRect(), Qt::KeepAspectRatio);
 }

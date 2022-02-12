@@ -5,7 +5,7 @@
 #include "widget.h"
 #include <QStatusBar>
 #include "widget.h"
-#include "view.h"
+#include "customview.h"
 #include "customscene.h"
 
 class MainWindow : public QMainWindow
