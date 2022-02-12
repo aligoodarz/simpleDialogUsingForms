@@ -12,6 +12,7 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QApplication>
+#include <QList>
 #include <customscene.h>
 
 
@@ -67,6 +68,12 @@ void CustomView::createToolbar()
         setStatusTip("Cursor Selected");
     });
 
+    auto eraserActive = tb->addAction("Eraser");
+    connect(eraserActive, &QAction::triggered,[this](){
+        tool = Eraser;
+        setStatusTip("Eraser Selected");
+    });
+
 
 
     auto dockLayout = new QVBoxLayout();
@@ -84,8 +91,14 @@ void CustomView::mouseReleaseEvent(QMouseEvent *event)
     if ((event->button() == Qt::LeftButton) && drawing){
         if (tool == ToolType::Pen){
             lineGroup = nullptr;
+            drawing = false;   
+        }if(tool == ToolType::Eraser){
+            scene()->removeItem(lastEraserCircle);
+            delete lastEraserCircle;
+            lastEraserCircle = nullptr;
             drawing = false;
-        }else
+        }
+        else
             QGraphicsView::mouseReleaseEvent(event);
     }
     QGraphicsView::mouseReleaseEvent(event);
@@ -96,6 +109,8 @@ void CustomView::mouseMoveEvent(QMouseEvent *event)
     if ((event->buttons() & Qt::LeftButton) && drawing){
         if (tool == ToolType::Pen){
             drawLineTo(mapToScene(event->pos()));
+        }else if ( tool == ToolType::Eraser){
+            drawEraserAt(mapToScene(event->pos()));
         }
     }else
         QGraphicsView::mouseMoveEvent(event);
@@ -117,6 +132,44 @@ void CustomView::drawLineTo(const QPointF &endPoint)
     lineGroup->addToGroup(localLine);
 
     lastPenPoint = endPoint;
+}
+
+void CustomView::drawEraserAt(const QPointF &endPoint)
+{
+    if (lastEraserCircle == nullptr){
+        lastEraserCircle = this->scene()->addEllipse(0,0,20,20);
+    }
+    lastEraserCircle->setPos(endPoint - QPointF(lastEraserCircle->boundingRect().width()/2,
+                                                lastEraserCircle->boundingRect().height()/2));
+    eraseStrokesUnder(lastEraserCircle);
+}
+
+void CustomView::eraseStrokesUnder(QGraphicsEllipseItem *item)
+{
+    QList<QGraphicsItem *> itemsToErase = item->collidingItems();
+    QList<QGraphicsItemGroup *> groupItems;
+
+    foreach (QGraphicsItem* myItem, itemsToErase){
+        QGraphicsItemGroup* group = dynamic_cast<QGraphicsItemGroup *>(myItem);
+        if (group){
+            groupItems.append(group);
+        }
+
+        //Cast o QGraphicsLineItem
+        QGraphicsLineItem* line = dynamic_cast<QGraphicsLineItem *>(myItem);
+        if(line){
+            this->scene()->removeItem(line);
+            delete line;
+        }
+    }
+    //Remove the group items without any children
+    foreach(QGraphicsItemGroup* group, groupItems){
+        if( group->childItems().count()==0){
+            scene()->removeItem(group);
+            delete group;
+        }
+    }
+
 }
 
 
@@ -162,11 +215,12 @@ void CustomView::mousePressEvent(QMouseEvent *event)
     {
         ShowContextMenu(event->pos());
     }if(event->button() == Qt::LeftButton){
-        if (tool == ToolType::Pen){
+        if (tool == ToolType::Pen || tool == ToolType::Eraser){
             startingPoint = mapToScene(event->pos());
             drawing = true;
+        }else{
+            QGraphicsView::mousePressEvent(event);
         }
-
     }
     QGraphicsView::mousePressEvent(event);
 
