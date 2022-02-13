@@ -177,6 +177,7 @@ void Widget::on_visulizeButton_clicked()
         }else if (ui->modelComboBox->currentIndex()==3){ //T orientation
             scene->createTModel(ratio);
         }
+        ui->graphicsView->fitToExtents();
         this->setStatusTip("Visualization Successfull");
     }
 }

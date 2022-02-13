@@ -188,14 +188,14 @@ void CustomView::eraseStrokesUnder(QGraphicsEllipseItem *item)
 }
 
 
-void CustomView::drawForeground(QPainter *painter, const QRectF &rect)
-{
-    Q_UNUSED(rect);
-    painter->resetTransform();
+//void CustomView::drawForeground(QPainter *painter, const QRectF &rect)
+//{
+//    Q_UNUSED(rect);
+//    painter->resetTransform();
 
-    painter->drawText(300,460,"Units: ");
-    painter->drawText(329,460,units);
-}
+//    painter->drawText(300,460,"Units: ");
+//    painter->drawText(329,460,units);
+//}
 
 void CustomView::wheelEvent(QWheelEvent *event)
 {
@@ -262,5 +262,8 @@ void CustomView::fitToExtents()
 void CustomView::fitToItem()
 {
     QGraphicsItemGroup * selectedGroup = scene()->createItemGroup(scene()->selectedItems());
+    selectedGroup->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
     fitInView(selectedGroup->boundingRect(),Qt::KeepAspectRatio);
+    scene()->destroyItemGroup(selectedGroup);
+
 }

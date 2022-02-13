@@ -14,7 +14,7 @@ CustomScene::CustomScene(QWidget *parent)
 
 void CustomScene::initScene()
 {
-    this->setSceneRect(0,0,400,400);
+    this->setSceneRect(-30,-30,10000,10000);
 }
 
 void CustomScene::createUModel(const double ratio)
@@ -24,12 +24,13 @@ void CustomScene::createUModel(const double ratio)
     this->addLine(150,55,150,40+(100.0*ratio)); //left line
     this->addLine(250,55,250,40+(100.0*ratio)); //right line
     this->addEllipse(150,25+(100.0*ratio),100,30); //bottom ellipse
+
 }
 
 void CustomScene::createBModel(const double ratio)
 {
     this->clear(); //make sure everything there is deleted
-    auto parentItem = this->addEllipse(90,150,30,100); //left ellipse
+    this->addEllipse(90,150,30,100); //left ellipse
     this->addLine(105,150,90+(100.0*ratio),150); //top line
     this->addLine(105,250,90+(100.0*ratio),250); //bottom line
     this->addEllipse(75+(100.0*ratio),150,30,100); //right ellipse

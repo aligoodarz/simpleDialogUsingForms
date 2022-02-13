@@ -37,7 +37,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void setupView();
     void createToolbar();
-    void drawForeground(QPainter *painter, const QRectF &rect) override;
+//    void drawForeground(QPainter *painter, const QRectF &rect) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
 
