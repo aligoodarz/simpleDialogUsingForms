@@ -1,9 +1,4 @@
 #include "mainwindow.h"
-#include <QToolBar>
-#include <QApplication>
-#include <QMenu>
-#include <QMenuBar>
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow{parent}
@@ -27,12 +22,12 @@ void MainWindow::createMenuBar()
     //Create the save action and add into file menu
     auto* saveJsonFile = new QAction("Save",this);
     fileMenu->addAction(saveJsonFile);
-    connect(saveJsonFile, SIGNAL(triggered()),myWidget, SLOT(saveJson()));
+    connect(saveJsonFile, &QAction::triggered,myWidget, &Widget::saveJson);
 
     //Create the clearJson action and into file menu
     auto* clearJsonFile = new QAction("Clear JSON File",this);
     fileMenu->addAction(clearJsonFile);
-    connect(clearJsonFile,SIGNAL(triggered()),myWidget, SLOT(clearJson()));
+    connect(clearJsonFile,&QAction::triggered,myWidget, &Widget::clearJson);
 
     //Create a view menu
     QMenu* viewMenu = menuBar()->addMenu("View");
@@ -40,14 +35,14 @@ void MainWindow::createMenuBar()
     //Create clear view action
     auto* clearView = new QAction ("Clear View",this);
     viewMenu->addAction(clearView);
-    connect(clearView, SIGNAL(triggered()),myWidget->scene,SLOT(clear()));
+    connect(clearView, &QAction::triggered,myWidget->scene,&CustomScene::clear);
 
 
 }
 
 void MainWindow::createStatusBar()
 {
-    statusBar()->showMessage(""); //Initialize the statusBar
+    statusBar()->showMessage(""); //Initialize the empty statusBar
 }
 
 
