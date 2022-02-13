@@ -47,6 +47,7 @@ public slots:
     void zoomOut();
     void fitToExtents();
     void fitToItem();
+    void deleteSelectedItems();
 
 public:
     QSize sizeHint() const override;

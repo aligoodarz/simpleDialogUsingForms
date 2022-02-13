@@ -66,6 +66,8 @@ void CustomView::createToolbar()
     auto fitToItem = tb->addAction(QIcon(zoomToItemPixmap),"Fit To Item");
     connect(fitToItem, &QAction::triggered,this, &CustomView::fitToItem);
 
+    auto deleteSelection = tb->addAction("Delete Selection");
+    connect(deleteSelection, &QAction::triggered,this,&CustomView::deleteSelectedItems);
 
     auto penActive = tb->addAction(drawPixmap,"Pen");
     connect(penActive, &QAction::triggered,this,[this](){
@@ -265,5 +267,11 @@ void CustomView::fitToItem()
     selectedGroup->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
     fitInView(selectedGroup->boundingRect(),Qt::KeepAspectRatio);
     scene()->destroyItemGroup(selectedGroup);
+}
 
+void CustomView::deleteSelectedItems()
+{
+    QGraphicsItemGroup * selectedGroup = scene()->createItemGroup(scene()->selectedItems());
+    scene()->removeItem(selectedGroup);
+    scene()->destroyItemGroup(selectedGroup);
 }
