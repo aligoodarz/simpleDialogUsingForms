@@ -38,12 +38,15 @@ protected:
     void setupView();
     void createToolbar();
     void drawForeground(QPainter *painter, const QRectF &rect) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 
 public slots:
     void ShowContextMenu(const QPoint &pos);
     void zoomIn();
     void zoomOut();
     void fitToExtents();
+    void fitToItem();
 
 public:
     QSize sizeHint() const override;
@@ -53,9 +56,6 @@ public:
     ToolType getTool() const;
     void setTool(ToolType newTool);
 
-protected:
-    void mouseReleaseEvent(QMouseEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
 
 
 private:
@@ -69,6 +69,7 @@ private:
     QGraphicsEllipseItem* lastEraserCircle = nullptr;
     void drawEraserAt(const QPointF &endPoint);
     void eraseStrokesUnder(QGraphicsEllipseItem* item);
+
 
 };
 

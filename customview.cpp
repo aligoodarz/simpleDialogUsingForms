@@ -13,12 +13,15 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QApplication>
 #include <QList>
+#include <QGraphicsTextItem>
+#include <QString>
 #include <customscene.h>
 
 
 CustomView::CustomView(QWidget *parent)
-    : QGraphicsView{parent}, tool(Cursor),
-      drawing(false)
+    : QGraphicsView{parent},
+      drawing(false),
+      tool(Cursor)
 {
     setupView();
 }
@@ -41,9 +44,11 @@ void CustomView::createToolbar()
     QPixmap zoomInPixmap(defaultDir+"zoomIn.png");
     QPixmap zoomOutPixmap(defaultDir+"zoomOut.png");
     QPixmap zoomToFitPixmap(defaultDir+"zoomToFit.png");
+    QPixmap zoomToItemPixmap(defaultDir+"fitToItem.png");
     QPixmap drawPixmap(defaultDir+"draw.png");
     QPixmap mousePixmap(defaultDir+"mouse_pointer.png");
     QPixmap eraserPixmap(defaultDir+"eraser.png");
+
     //Create Toolbar
     auto tb = new QToolBar();
     //Create actions and connect to respective slots
@@ -56,6 +61,10 @@ void CustomView::createToolbar()
     auto fitToExtents = tb->addAction(QIcon(zoomToFitPixmap),"Fit To Extents");
     connect(fitToExtents, &QAction::triggered,this, &CustomView::fitToExtents);
 
+    auto fitToItem = tb->addAction(QIcon(zoomToItemPixmap),"Fit To Item");
+    connect(fitToItem, &QAction::triggered,this, &CustomView::fitToItem);
+
+
     auto penActive = tb->addAction(drawPixmap,"Pen");
     connect(penActive, &QAction::triggered,this,[this](){
         tool = Pen;
@@ -64,7 +73,7 @@ void CustomView::createToolbar()
     });
 
     auto cursorActive = tb->addAction(mousePixmap,"Cursor");
-    connect(cursorActive, &QAction::triggered,this.[this](){
+    connect(cursorActive, &QAction::triggered,this,[this](){
         tool = Cursor;
         setDragMode(QGraphicsView::ScrollHandDrag);
         setStatusTip("Cursor Selected");
@@ -123,7 +132,7 @@ void CustomView::drawLineTo(const QPointF &endPoint)
 {
     if (!lineGroup){
         lineGroup = new QGraphicsItemGroup();
-        lineGroup->setFlags(QGraphicsItem::ItemIsMovable /*| QGraphicsItem::ItemIsSelectable*/);
+        lineGroup->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
         this->scene()->addItem(lineGroup);
         lastPenPoint = startingPoint;
     }
@@ -242,5 +251,13 @@ void CustomView::zoomOut()
 
 void CustomView::fitToExtents()
 {
-    fitInView(scene()->sceneRect(), Qt::KeepAspectRatio);
+    fitInView(scene()->itemsBoundingRect(), Qt::KeepAspectRatio);
+
+    qDebug()<<scene()->itemsBoundingRect();
+}
+
+void CustomView::fitToItem()
+{
+    fitInView(scene()->selectionArea().boundingRect(),Qt::KeepAspectRatio);
+    qDebug()<<scene()->selectionArea().boundingRect();
 }

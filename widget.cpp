@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QPen>
 #include <QPainterPath>
+#include <QLabel>
 #include "customview.h"
 #include "customscene.h"
 #include <QToolBar>
