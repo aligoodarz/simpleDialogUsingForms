@@ -1,17 +1,5 @@
 #include "widget.h"
 #include "ui_widget.h"
-#include <QGraphicsEllipseItem>
-#include <QGraphicsLineItem>
-#include <QGraphicsItemGroup>
-#include <QList>
-#include <QDebug>
-#include <QPen>
-#include <QPainterPath>
-#include <QLabel>
-#include "customview.h"
-#include "customscene.h"
-#include <QToolBar>
-
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -31,16 +19,18 @@ void Widget::initUi()
 {
     //Create the scene and add it to the View
     scene = new CustomScene(this);
-    ui->graphicsView->setScene(scene);
+    ui->graphicsView->setScene(scene); //GraphicsView is of type CustomView
 
     connect(ui->saveButton, &QPushButton::clicked,this, &Widget::saveJson);//Connect the save button to the saveJson slot
+    connect(ui->modelComboBox, &QComboBox::currentTextChanged, this, &Widget::setModel);
 
     file.setFileName(("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/specimenInfo.json")); //Set destination to JsonFile
 }
 
 
-void Widget::on_modelComboBox_currentIndexChanged(int index)
+void Widget::setModel()
 {
+    int index = ui->modelComboBox->currentIndex();
     switch (index)
     {
     case 0:

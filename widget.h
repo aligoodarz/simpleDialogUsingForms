@@ -9,7 +9,6 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QPixmap>
-
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -18,10 +17,22 @@
 #include <QComboBox>
 #include <QGraphicsView>
 #include <QMainWindow>
+#include <QGraphicsEllipseItem>
+#include <QGraphicsLineItem>
+#include <QGraphicsItemGroup>
+#include <QList>
+#include <QDebug>
+#include <QPen>
+#include <QPainterPath>
+#include <QLabel>
+#include <QToolBar>
+
 #include "customview.h"
 #include "customscene.h"
 
 //Declare custom classes for the compiler
+//This is necessary because of circular inclusions and bad dependencies
+//It should be avoided in future design
 class CustomView;
 class CustomScene;
 
@@ -33,18 +44,12 @@ class Widget : public QWidget
 {
     Q_OBJECT
 
-public:
-    Widget(QWidget *parent = nullptr);
-    ~Widget();
-    void storeSelection();
+public: //variables
+    //These are variables so they can be accessed in mainwindow and have their slots assigned
+    CustomView* view;
     CustomScene* scene;
 
-private slots:
-    void on_modelComboBox_currentIndexChanged(int index);
-    void on_visulizeButton_clicked();
-//    void on_unitsComboBox_currentIndexChanged(int index);
-
-private:
+private: //variables
     Ui::Widget *ui;
     //Declare variables to hold the user selections
     QString spaceSelection;
@@ -57,18 +62,27 @@ private:
     double ratio;
     QJsonObject userSelection;
     QJsonDocument jsonDocument;
-    CustomView* view;
     QFile file; //Json file to be used for storing
+
+public: //methods
+    Widget(QWidget *parent = nullptr);
+    ~Widget();
+
+
+private: //methods
     void drawModel(); //Draws model based on the selected model
-    void initUi();
+    void initUi(); //Does the necessary steps to get the Ui running
+    void storeSelection(); //Stores info the user has entered
+
+private slots:
+    void setModel();
+    void on_visulizeButton_clicked();
+
 
 public slots:
-    void saveJson();
+    void saveJson(); //Saves the user inputs in the JSON format
     bool fieldIsEmpty(); //Warns users if a field is empty
-    void clearJson();
-//    void fitToExtents();
-
-
+    void clearJson(); //Clears the JSON file
 
 };
 #endif // WIDGET_H
