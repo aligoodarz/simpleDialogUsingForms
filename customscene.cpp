@@ -1,10 +1,4 @@
 #include "customscene.h"
-#include <QPainter>
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsLineItem>
-#include <QGraphicsEllipseItem>
-#include <QGraphicsItemGroup>
-#include <QPen>
 
 
 CustomScene::CustomScene(QWidget *parent)

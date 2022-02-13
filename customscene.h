@@ -5,6 +5,13 @@
 #include <QGraphicsScene>
 #include <QPointF>
 #include <QRectF>
+#include <QPainter>
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsLineItem>
+#include <QGraphicsEllipseItem>
+#include <QGraphicsItemGroup>
+#include <QPen>
+
 #include "widget.h"
 
 
