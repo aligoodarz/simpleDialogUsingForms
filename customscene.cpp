@@ -15,7 +15,7 @@ CustomScene::CustomScene(QWidget *parent)
 
 void CustomScene::initScene()
 {
-    this->setSceneRect(-150,-150,10000,10000);
+    this->setSceneRect(-400,-400,10000,10000);//These are set so the scene is pannable everywhere
 }
 
 void CustomScene::createUModel(const double ratio)
@@ -47,7 +47,6 @@ void CustomScene::createTModel(const double ratio)
 {
     this->clear(); //make sure everything there is deleted
     QGraphicsItemGroup* group = new QGraphicsItemGroup();
-
     group->addToGroup(addRect(10,10,380,380)); //Square
     group->addToGroup(addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio))); //circle
     this->addItem(group);

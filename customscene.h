@@ -7,29 +7,17 @@
 #include <QRectF>
 #include "widget.h"
 
+
 class CustomScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
     explicit CustomScene(QWidget *parent = nullptr);
 
-
     void initScene();//This initializies what needs to be done for the scene
     void createUModel(const double ratio);
     void createBModel(const double ratio);
     void createTModel(const double ratio);
-
-
-signals:
-
-
-
-
-private:
-    void drawLineTo(const QPointF &endPoint);
-    void drawRectTo(const QPointF &endPoint, bool ellipse = false);
-    void eraseUnder(const QPointF &topLeft);
-
 
 };
 
