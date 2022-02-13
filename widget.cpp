@@ -21,6 +21,7 @@ void Widget::initUi()
     scene = new CustomScene(this);
     ui->graphicsView->setScene(scene); //GraphicsView is of type CustomView
 
+    //Create the necessary connections
     connect(ui->saveButton, &QPushButton::clicked,this, &Widget::saveJson);//Connect the save button to the saveJson slot
     connect(ui->modelComboBox, &QComboBox::currentTextChanged, this, &Widget::setModel);
     connect(ui->visulizeButton, &QPushButton::clicked,this, &Widget::visualize);
