@@ -76,7 +76,7 @@ private: //methods
 
 private slots:
     void setModel();
-    void on_visulizeButton_clicked();
+    void visualize();
 
 
 public slots:

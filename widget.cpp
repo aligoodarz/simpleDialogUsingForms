@@ -23,6 +23,7 @@ void Widget::initUi()
 
     connect(ui->saveButton, &QPushButton::clicked,this, &Widget::saveJson);//Connect the save button to the saveJson slot
     connect(ui->modelComboBox, &QComboBox::currentTextChanged, this, &Widget::setModel);
+    connect(ui->visulizeButton, &QPushButton::clicked,this, &Widget::visualize);
 
     file.setFileName(("C:/Users/gooda/OneDrive/Desktop/QtApp/simpleDialogUsingForms/specimenInfo.json")); //Set destination to JsonFile
 }
@@ -155,7 +156,7 @@ void Widget::storeSelection()
 }
 
 
-void Widget::on_visulizeButton_clicked()
+void Widget::visualize()
 {
     storeSelection(); //This stores all the fields in respective variable
     //First check to see which box is selected
