@@ -30,11 +30,13 @@ void CustomView::setupView()
 {
 //    setDragMode(QGraphicsView::ScrollHandDrag);
     this->setContextMenuPolicy(Qt::CustomContextMenu);
+    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     //This connects the request for a context menu to an actual context menu
     connect(this, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(ShowContextMenu(QPoint)));
     createToolbar();
-    this->setFrameShape(QGraphicsView::NoFrame);
+//    this->setFrameShape(QGraphicsView::NoFrame);
 }
 
 void CustomView::createToolbar()
@@ -76,6 +78,7 @@ void CustomView::createToolbar()
     connect(cursorActive, &QAction::triggered,this,[this](){
         tool = Cursor;
         setDragMode(QGraphicsView::ScrollHandDrag);
+
         setStatusTip("Cursor Selected");
     });
 
@@ -258,6 +261,6 @@ void CustomView::fitToExtents()
 
 void CustomView::fitToItem()
 {
-    fitInView(scene()->selectionArea().boundingRect(),Qt::KeepAspectRatio);
-    qDebug()<<scene()->selectionArea().boundingRect();
+    QGraphicsItemGroup * selectedGroup = scene()->createItemGroup(scene()->selectedItems());
+    fitInView(selectedGroup->boundingRect(),Qt::KeepAspectRatio);
 }
