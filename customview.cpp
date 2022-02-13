@@ -50,6 +50,7 @@ void CustomView::createToolbar()
     QPixmap drawPixmap(defaultDir+"draw.png");
     QPixmap mousePixmap(defaultDir+"mouse_pointer.png");
     QPixmap eraserPixmap(defaultDir+"eraser.png");
+    QPixmap deleteSelectionPixmap (defaultDir+"deleteSelection.png");
 
     //Create Toolbar
     auto tb = new QToolBar();
@@ -66,7 +67,7 @@ void CustomView::createToolbar()
     auto fitToItem = tb->addAction(QIcon(zoomToItemPixmap),"Fit To Item");
     connect(fitToItem, &QAction::triggered,this, &CustomView::fitToItem);
 
-    auto deleteSelection = tb->addAction("Delete Selection");
+    auto deleteSelection = tb->addAction(QIcon(deleteSelectionPixmap),"Delete Selection");
     connect(deleteSelection, &QAction::triggered,this,&CustomView::deleteSelectedItems);
 
     auto penActive = tb->addAction(drawPixmap,"Pen");
@@ -223,9 +224,13 @@ void CustomView::mousePressEvent(QMouseEvent *event)
         ShowContextMenu(event->pos());
     }if(event->button() == Qt::LeftButton){
         if (tool == ToolType::Pen || tool == ToolType::Eraser){
+            setInteractive(false);
             startingPoint = mapToScene(event->pos());
             drawing = true;
+        }else{
+            setInteractive(true);
         }
+
 
     }
     QGraphicsView::mousePressEvent(event);
