@@ -69,8 +69,15 @@ void CustomView::createToolbar()
     auto cursorActive = tb->addAction(mousePixmap,"Cursor");
     connect(cursorActive, &QAction::triggered,this,[this](){
         tool = Cursor;
-        setDragMode(QGraphicsView::ScrollHandDrag);
+        setDragMode(QGraphicsView::RubberBandDrag);
         setStatusTip("Cursor Selected");
+    });
+
+    auto panActive = tb->addAction("Pan");
+    connect(panActive, &QAction::triggered,this,[this](){
+        tool = Pan;
+        setDragMode(QGraphicsView::ScrollHandDrag);
+        setStatusTip("Pan Tool Selected");
     });
 
     auto eraserActive = tb->addAction(eraserPixmap,"Eraser");
@@ -195,7 +202,7 @@ void CustomView::eraseStrokesUnder(QGraphicsEllipseItem *item)
         }
 
         //Cast o QGraphicsLineItem
-        QGraphicsItem* line = dynamic_cast<QGraphicsItem *>(myItem);
+        QGraphicsLineItem* line = dynamic_cast<QGraphicsLineItem *>(myItem);
         if(line){
             this->scene()->removeItem(line);
             delete line;

@@ -45,7 +45,8 @@ public: //methods
         Pen,
         Rect,
         Ellipse,
-        Eraser
+        Eraser,
+        Pan
     };
 
 private: //methods
