@@ -90,9 +90,10 @@ void CustomView::mousePressEvent(QMouseEvent *event)
     {
         ShowContextMenu(event->pos()); //Show context menu
     }if(event->button() == Qt::LeftButton){
-        if (tool == ToolType::Pen || tool == ToolType::Eraser){
+        if (tool == ToolType::Pen || tool == ToolType::Eraser
+                || tool == Rect || tool == Ellipse){
             setInteractive(false); //Added to disable selection when drawing
-            startingPoint = mapToScene(event->pos());
+            startingPoint = mapToScene(event->pos()); //Pick the starting position
             drawing = true;
         }else{
             setInteractive(true); //Added to enable selection when not drawing

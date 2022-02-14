@@ -60,6 +60,7 @@ private: //variables
     QPointF startingPoint;
     QPointF lastPenPoint;
     QGraphicsEllipseItem* lastEraserCircle = nullptr;
+    QGraphicsItem* lastItem = nullptr;
 
 protected: //methods
     void setupView();
@@ -77,10 +78,6 @@ public slots:
     void fitToExtents();
     void fitToItem();
     void deleteSelectedItems();
-
-
-
-
 };
 
 #endif // CUSTOMVIEW_H
