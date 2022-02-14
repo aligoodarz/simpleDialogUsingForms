@@ -14,13 +14,32 @@
 #include <QPointF>
 #include <QGraphicsItemGroup>
 #include <QGraphicsEllipseItem>
+#include <QPoint>
+#include <QMouseEvent>
+#include <QMenu>
+#include <QPoint>
+#include <QToolBar>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QPixmap>
+#include <QIcon>
+#include <QMouseEvent>
+#include <QDebug>
+#include <QGraphicsSceneMouseEvent>
+#include <QApplication>
+#include <QList>
+#include <QGraphicsTextItem>
+#include <QString>
 #include "widget.h"
+
+
 
 class CustomView : public QGraphicsView
 {
     Q_OBJECT
-public:
+public: //methods
     explicit CustomView(QWidget *parent = nullptr);
+    QSize sizeHint() const override;
     enum ToolType{
         Cursor,
         Pen,
@@ -29,17 +48,27 @@ public:
         Eraser
     };
 
-signals:
-    // QWidget interface
-protected:
+private: //methods
+    void drawLineTo(const QPointF &endPoint);
+    void drawEraserAt(const QPointF &endPoint);
+    void eraseStrokesUnder(QGraphicsEllipseItem* item);
+
+private: //variables
+    bool drawing;
+    ToolType tool;
+    QGraphicsItemGroup* lineGroup = nullptr;
+    QPointF startingPoint;
+    QPointF lastPenPoint;
+    QGraphicsEllipseItem* lastEraserCircle = nullptr;
+
+protected: //methods
+    void setupView();
+    void createToolbar();
     void wheelEvent(QWheelEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
-    void setupView();
-    void createToolbar();
-//    void drawForeground(QPainter *painter, const QRectF &rect) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 public slots:
     void ShowContextMenu(const QPoint &pos);
@@ -49,27 +78,7 @@ public slots:
     void fitToItem();
     void deleteSelectedItems();
 
-public:
-    QSize sizeHint() const override;
-    QString units; //Unit of the drawing
 
-    // QWidget interface
-    ToolType getTool() const;
-    void setTool(ToolType newTool);
-
-
-
-private:
-    void drawLineTo(const QPointF &endPoint);
-    bool drawing;
-    ToolType tool;
-    QGraphicsItemGroup* lineGroup = nullptr;
-    QPointF startingPoint;
-    QPointF lastPenPoint;
-
-    QGraphicsEllipseItem* lastEraserCircle = nullptr;
-    void drawEraserAt(const QPointF &endPoint);
-    void eraseStrokesUnder(QGraphicsEllipseItem* item);
 
 
 };

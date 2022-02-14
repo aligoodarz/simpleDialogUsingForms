@@ -1,20 +1,4 @@
 #include "customview.h"
-#include <QPoint>
-#include <QMouseEvent>
-#include <QMenu>
-#include <QPoint>
-#include <QToolBar>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPixmap>
-#include <QIcon>
-#include <QMouseEvent>
-#include <QDebug>
-#include <QGraphicsSceneMouseEvent>
-#include <QApplication>
-#include <QList>
-#include <QGraphicsTextItem>
-#include <QString>
 #include <customscene.h>
 
 
@@ -28,15 +12,13 @@ CustomView::CustomView(QWidget *parent)
 
 void CustomView::setupView()
 {
-//    setDragMode(QGraphicsView::ScrollHandDrag);
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     //This connects the request for a context menu to an actual context menu
-    connect(this, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(ShowContextMenu(QPoint)));
-    createToolbar();
-//    this->setFrameShape(QGraphicsView::NoFrame);
+//    connect(this, SIGNAL(customContextMenuRequested(QPoint)),
+//            this, SLOT(ShowContextMenu(QPoint)));
+    createToolbar(); //Create the toolbar and add actions to it
 }
 
 void CustomView::createToolbar()
@@ -81,7 +63,6 @@ void CustomView::createToolbar()
     connect(cursorActive, &QAction::triggered,this,[this](){
         tool = Cursor;
         setDragMode(QGraphicsView::ScrollHandDrag);
-
         setStatusTip("Cursor Selected");
     });
 
@@ -92,8 +73,7 @@ void CustomView::createToolbar()
         setStatusTip("Eraser Selected");
     });
 
-
-
+    //add menu to the view
     auto dockLayout = new QVBoxLayout();
     dockLayout->setMenuBar(tb); //
     this->setLayout(dockLayout);
@@ -102,6 +82,35 @@ void CustomView::createToolbar()
 QSize CustomView::sizeHint() const
 {
     return QSize(400,600);
+}
+
+void CustomView::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button()==Qt::RightButton)
+    {
+        ShowContextMenu(event->pos()); //Show context menu
+    }if(event->button() == Qt::LeftButton){
+        if (tool == ToolType::Pen || tool == ToolType::Eraser){
+            setInteractive(false); //Added to disable selection when drawing
+            startingPoint = mapToScene(event->pos());
+            drawing = true;
+        }else{
+            setInteractive(true); //Added to enable selection when not drawing
+        }
+    }
+    QGraphicsView::mousePressEvent(event);
+}
+
+void CustomView::mouseMoveEvent(QMouseEvent *event)
+{
+    if ((event->buttons() & Qt::LeftButton) && drawing){
+        if (tool == ToolType::Pen){
+            drawLineTo(mapToScene(event->pos()));
+        }else if ( tool == ToolType::Eraser){
+            drawEraserAt(mapToScene(event->pos()));
+        }
+    }else
+        QGraphicsView::mouseMoveEvent(event);
 }
 
 void CustomView::mouseReleaseEvent(QMouseEvent *event)
@@ -122,17 +131,6 @@ void CustomView::mouseReleaseEvent(QMouseEvent *event)
     QGraphicsView::mouseReleaseEvent(event);
 }
 
-void CustomView::mouseMoveEvent(QMouseEvent *event)
-{
-    if ((event->buttons() & Qt::LeftButton) && drawing){
-        if (tool == ToolType::Pen){
-            drawLineTo(mapToScene(event->pos()));
-        }else if ( tool == ToolType::Eraser){
-            drawEraserAt(mapToScene(event->pos()));
-        }
-    }else
-        QGraphicsView::mouseMoveEvent(event);
-}
 
 void CustomView::drawLineTo(const QPointF &endPoint)
 {
@@ -191,15 +189,6 @@ void CustomView::eraseStrokesUnder(QGraphicsEllipseItem *item)
 }
 
 
-//void CustomView::drawForeground(QPainter *painter, const QRectF &rect)
-//{
-//    Q_UNUSED(rect);
-//    painter->resetTransform();
-
-//    painter->drawText(300,460,"Units: ");
-//    painter->drawText(329,460,units);
-//}
-
 void CustomView::wheelEvent(QWheelEvent *event)
 {
     if (event->delta()> 0) zoomIn();
@@ -216,26 +205,6 @@ void CustomView::keyPressEvent(QKeyEvent *event)
         QGraphicsView::keyPressEvent(event);
 }
 
-void CustomView::mousePressEvent(QMouseEvent *event)
-{
-//    s
-    if (event->button()==Qt::RightButton)
-    {
-        ShowContextMenu(event->pos());
-    }if(event->button() == Qt::LeftButton){
-        if (tool == ToolType::Pen || tool == ToolType::Eraser){
-            setInteractive(false);
-            startingPoint = mapToScene(event->pos());
-            drawing = true;
-        }else{
-            setInteractive(true);
-        }
-
-
-    }
-    QGraphicsView::mousePressEvent(event);
-
-}
 
 void CustomView::ShowContextMenu(const QPoint &pos)
 {
