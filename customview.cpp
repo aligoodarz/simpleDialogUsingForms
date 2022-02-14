@@ -30,7 +30,8 @@ void CustomView::createToolbar()
     QPixmap zoomToFitPixmap(defaultDir+"zoomToFit.png");
     QPixmap zoomToItemPixmap(defaultDir+"fitToItem.png");
     QPixmap drawPixmap(defaultDir+"draw.png");
-    QPixmap mousePixmap(defaultDir+"mouse_pointer.png");
+    QPixmap mouseSelectionPixmap(defaultDir+"mouse_selection.png");
+    QPixmap panIcon(defaultDir+"pan.png");
     QPixmap eraserPixmap(defaultDir+"eraser.png");
     QPixmap deleteSelectionPixmap (defaultDir+"deleteSelection.png");
     QPixmap rectanglePixmap (defaultDir+"rectangle.png");
@@ -66,14 +67,14 @@ void CustomView::createToolbar()
         setStatusTip("Rect Selected");
     });
 
-    auto cursorActive = tb->addAction(mousePixmap,"Cursor");
+    auto cursorActive = tb->addAction(mouseSelectionPixmap,"Cursor");
     connect(cursorActive, &QAction::triggered,this,[this](){
         tool = Cursor;
         setDragMode(QGraphicsView::RubberBandDrag);
         setStatusTip("Cursor Selected");
     });
 
-    auto panActive = tb->addAction("Pan");
+    auto panActive = tb->addAction(panIcon,"Pan");
     connect(panActive, &QAction::triggered,this,[this](){
         tool = Pan;
         setDragMode(QGraphicsView::ScrollHandDrag);
