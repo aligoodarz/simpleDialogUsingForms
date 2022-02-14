@@ -33,7 +33,7 @@ void CustomView::createToolbar()
     QPixmap mousePixmap(defaultDir+"mouse_pointer.png");
     QPixmap eraserPixmap(defaultDir+"eraser.png");
     QPixmap deleteSelectionPixmap (defaultDir+"deleteSelection.png");
-
+    QPixmap rectanglePixmap (defaultDir+"rectangle.png");
     //Create Toolbar
     auto tb = new QToolBar();
     //Create actions and connect to respective slots
@@ -59,7 +59,7 @@ void CustomView::createToolbar()
         setStatusTip("Pen Selected");
     });
 
-    auto drawRect = tb->addAction("Draw Rect");
+    auto drawRect = tb->addAction(rectanglePixmap,"Draw Rect");
     connect(drawRect, &QAction::triggered, this,[this](){
         tool = Rect;
         setDragMode(QGraphicsView::NoDrag);
@@ -195,7 +195,7 @@ void CustomView::eraseStrokesUnder(QGraphicsEllipseItem *item)
         }
 
         //Cast o QGraphicsLineItem
-        QGraphicsLineItem* line = dynamic_cast<QGraphicsLineItem *>(myItem);
+        QGraphicsItem* line = dynamic_cast<QGraphicsItem *>(myItem);
         if(line){
             this->scene()->removeItem(line);
             delete line;
