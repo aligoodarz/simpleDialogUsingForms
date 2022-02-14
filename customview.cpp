@@ -59,6 +59,13 @@ void CustomView::createToolbar()
         setStatusTip("Pen Selected");
     });
 
+    auto drawRect = tb->addAction("Draw Rect");
+    connect(drawRect, &QAction::triggered, this,[this](){
+        tool = Rect;
+        setDragMode(QGraphicsView::NoDrag);
+        setStatusTip("Rect Selected");
+    });
+
     auto cursorActive = tb->addAction(mousePixmap,"Cursor");
     connect(cursorActive, &QAction::triggered,this,[this](){
         tool = Cursor;
@@ -109,6 +116,8 @@ void CustomView::mouseMoveEvent(QMouseEvent *event)
             drawLineTo(mapToScene(event->pos()));
         }else if ( tool == ToolType::Eraser){
             drawEraserAt(mapToScene(event->pos()));
+        }else if (tool == ToolType::Rect) {
+            drawShapeTo(mapToScene(event->pos()));
         }
     }else
         QGraphicsView::mouseMoveEvent(event);
@@ -120,10 +129,23 @@ void CustomView::mouseReleaseEvent(QMouseEvent *event)
         if (tool == ToolType::Pen){
             lineGroup = nullptr;
             drawing = false;   
+
         }if(tool == ToolType::Eraser){
             scene()->removeItem(lastEraserCircle);
             delete lastEraserCircle;
             lastEraserCircle = nullptr;
+            drawing = false;
+
+        }if (lastItem && (tool == Rect)){
+            this->scene()->removeItem(lastItem);
+            delete lastItem; //Free memory
+
+        }if (tool == Rect) {
+            QGraphicsRectItem* mRect = new QGraphicsRectItem();
+            mRect->setRect(QRectF(startingPoint, mapToScene(event->pos())).normalized());
+            mRect->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+            this->scene()->addItem(mRect);
+            lastItem = nullptr;
             drawing = false;
         }
         else
@@ -187,6 +209,23 @@ void CustomView::eraseStrokesUnder(QGraphicsEllipseItem *item)
         }
     }
 
+}
+
+void CustomView::drawShapeTo(const QPointF &endPoint)
+{
+    if (lastItem){
+       this->scene()->removeItem(lastItem); //remove the lastItem from the scene
+       delete lastItem; //Free up the memory
+    }
+    QRectF itemRect(startingPoint, endPoint); //Bounding Rect of various shapes
+
+    if (tool == Rect){
+        QGraphicsRectItem* mRect = new QGraphicsRectItem();
+        mRect->setRect(itemRect.normalized());
+        this->scene()->addItem(mRect);
+        mRect->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+        lastItem = mRect;
+    }
 }
 
 

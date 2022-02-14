@@ -52,6 +52,7 @@ private: //methods
     void drawLineTo(const QPointF &endPoint);
     void drawEraserAt(const QPointF &endPoint);
     void eraseStrokesUnder(QGraphicsEllipseItem* item);
+    void drawShapeTo(const QPointF &endPoint);
 
 private: //variables
     bool drawing;
