@@ -21,6 +21,10 @@ private:
     Widget* myWidget = new Widget(this);
     void createMenuBar();
     void createStatusBar();
+
+    // QWidget interface
+public:
+    QSize sizeHint() const override;
 };
 
 #endif // MAINWINDOW_H

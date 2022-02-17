@@ -4,6 +4,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow{parent}
 {
     this->setCentralWidget(myWidget);
+    this->setFixedSize(800,550);
     createMenuBar(); //Creates the menuBar and adds actions to it
     createStatusBar(); //Initializes the statusBar
 }
@@ -43,6 +44,11 @@ void MainWindow::createMenuBar()
 void MainWindow::createStatusBar()
 {
     statusBar()->showMessage(""); //Initialize the empty statusBar
+}
+
+QSize MainWindow::sizeHint() const
+{
+    return QSize(800,500);
 }
 
 
