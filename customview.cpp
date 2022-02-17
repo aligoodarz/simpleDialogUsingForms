@@ -249,6 +249,8 @@ void CustomView::keyPressEvent(QKeyEvent *event)
         rotate(-1);
     else if(event->key() == Qt::Key_Right)
         rotate(1);
+    else if (event->key() == Qt::Key_Delete) //Delete button can delete selected items
+        deleteSelectedItems();
     else
         QGraphicsView::keyPressEvent(event);
 }
