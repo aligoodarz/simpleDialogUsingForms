@@ -297,5 +297,5 @@ void CustomView::deleteSelectedItems()
 {
     QGraphicsItemGroup * selectedGroup = scene()->createItemGroup(scene()->selectedItems());
     scene()->removeItem(selectedGroup);
-    scene()->destroyItemGroup(selectedGroup);
+//    scene()->destroyItemGroup(selectedGroup);
 }
