@@ -281,8 +281,6 @@ void CustomView::zoomOut()
 void CustomView::fitToExtents()
 {
     fitInView(scene()->itemsBoundingRect(), Qt::KeepAspectRatio);
-
-    qDebug()<<scene()->itemsBoundingRect();
 }
 
 void CustomView::fitToItem()
