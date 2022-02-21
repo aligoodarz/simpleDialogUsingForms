@@ -1,4 +1,4 @@
-#include "commands.h"
+#include "addcommand.h"
 
 AddCommand::AddCommand(QGraphicsItem * item, QGraphicsScene * scene) : mItem (item) , mScene(scene)
 {

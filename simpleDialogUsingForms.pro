@@ -9,7 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    commands.cpp \
+    addcommand.cpp \
     customscene.cpp \
     customview.cpp \
     main.cpp \
@@ -17,7 +17,7 @@ SOURCES += \
     widget.cpp
 
 HEADERS += \
-    commands.h \
+    addcommand.h \
     customscene.h \
     customview.h \
     mainwindow.h \

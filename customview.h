@@ -32,7 +32,7 @@
 #include <QString>
 #include <QUndoStack>
 
-#include "commands.h"
+#include "addcommand.h"
 #include "widget.h"
 
 

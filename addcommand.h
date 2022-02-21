@@ -1,5 +1,5 @@
-#ifndef COMMANDS_H
-#define COMMANDS_H
+#ifndef ADDCOMMAND_H
+#define ADDCOMMAND_H
 
 #include <QUndoCommand>
 #include <QGraphicsItem>
@@ -19,4 +19,4 @@ private:
 
 };
 
-#endif // COMMANDS_H
+#endif // ADDCOMMAND_H
