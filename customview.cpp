@@ -304,6 +304,7 @@ void CustomView::deleteSelectedItems()
 void CustomView::copy()
 {
     QList <QGraphicsItem*> selItems = this->scene()->selectedItems();
+    qDebug()<< selItems;
     if (selItems.size() == 0){
         //Nothing is selected
         return;
@@ -315,8 +316,11 @@ void CustomView::copy()
     if (rectItem){ //if not null it is a rectItem
         QRectF size = rectItem->rect();
         QGraphicsItem* newRect = this->scene()->addRect(size);
+        newRect->moveBy(15,15);
         newRect->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
+        return;
     }
+
 
 
 }
