@@ -295,5 +295,20 @@ void CustomView::deleteSelectedItems()
 {
     QGraphicsItemGroup * selectedGroup = scene()->createItemGroup(scene()->selectedItems());
     scene()->removeItem(selectedGroup);
-//    scene()->destroyItemGroup(selectedGroup);
+    //    scene()->destroyItemGroup(selectedGroup);
+}
+
+void CustomView::copy()
+{
+    QList <QGraphicsItem*> selItems = this->scene()->selectedItems();
+    if (selItems.size() == 0){
+        //Nothing is selected
+        return;
+    }
+
+    QGraphicsItem* firstItem = selItems.first();
+    //Try to cast it to rect item and then check if it is indeed a rect item
+    QGraphicsRectItem* rectItem = qgraphicsitem_cast<QGraphicsRectItem*>(firstItem);
+
+
 }

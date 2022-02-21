@@ -1,4 +1,4 @@
-#ifndef CUSTOMVIEW_H
+﻿#ifndef CUSTOMVIEW_H
 #define CUSTOMVIEW_H
 
 #include <QGraphicsView>
@@ -80,6 +80,7 @@ public slots:
     void fitToExtents();
     void fitToItem();
     void deleteSelectedItems();
+    void copy();
 };
 
 #endif // CUSTOMVIEW_H
