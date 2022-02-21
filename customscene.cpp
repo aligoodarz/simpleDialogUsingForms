@@ -1,5 +1,5 @@
 #include "customscene.h"
-
+#include <QDataStream>
 
 CustomScene::CustomScene(QWidget *parent)
     : QGraphicsScene{parent}
@@ -47,15 +47,6 @@ void CustomScene::createTModel(const double ratio)
 
 }
 
-void CustomScene::saveScene(QString &fileName)
-{
-
-}
-
-void CustomScene::loadScene(QString &fileName)
-{
-
-}
 
 
 

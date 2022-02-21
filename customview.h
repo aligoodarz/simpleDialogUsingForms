@@ -30,6 +30,9 @@
 #include <QList>
 #include <QGraphicsTextItem>
 #include <QString>
+#include <QUndoStack>
+
+#include "commands.h"
 #include "widget.h"
 
 
@@ -48,6 +51,8 @@ public: //methods
         Eraser,
         Pan
     };
+    void undo();
+    void redo();
 
 private: //methods
     void drawLineTo(const QPointF &endPoint);
@@ -63,6 +68,7 @@ private: //variables
     QPointF lastPenPoint;
     QGraphicsEllipseItem* lastEraserCircle = nullptr;
     QGraphicsItem* lastItem = nullptr;
+    QUndoStack * undoStack;
 
 protected: //methods
     void setupView();

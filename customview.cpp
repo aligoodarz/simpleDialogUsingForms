@@ -5,7 +5,8 @@
 CustomView::CustomView(QWidget *parent)
     : QGraphicsView{parent},
       drawing(false),
-      tool(Cursor)
+      tool(Cursor),
+      undoStack (new QUndoStack(this->scene()))
 {
     setupView();
 }
@@ -91,6 +92,12 @@ void CustomView::createToolbar()
     auto copy = tb->addAction("Copy");
     connect(copy, &QAction::triggered, this, &CustomView::copy);
 
+    auto undo = tb->addAction("Undo");
+    connect(undo, &QAction::triggered,this, &CustomView::undo);
+
+    auto redo = tb->addAction("Redo");
+    connect(redo, &QAction::triggered,this, &CustomView::redo);
+
     //add menu to the view
     auto dockLayout = new QVBoxLayout();
     dockLayout->setMenuBar(tb); //
@@ -100,6 +107,16 @@ void CustomView::createToolbar()
 QSize CustomView::sizeHint() const
 {
     return QSize(400,600);
+}
+
+void CustomView::undo()
+{
+    undoStack->undo();
+}
+
+void CustomView::redo()
+{
+    undoStack->redo();
 }
 
 void CustomView::mousePressEvent(QMouseEvent *event)
@@ -155,7 +172,11 @@ void CustomView::mouseReleaseEvent(QMouseEvent *event)
             QGraphicsRectItem* mRect = new QGraphicsRectItem();
             mRect->setRect(QRectF(startingPoint, mapToScene(event->pos())).normalized());
             mRect->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-            this->scene()->addItem(mRect);
+//            this->scene()->addItem(mRect);
+
+            AddCommand * addCommand = new AddCommand(mRect, this->scene());
+            undoStack->push(addCommand);
+
             lastItem = nullptr;
             drawing = false;
         }
@@ -171,7 +192,11 @@ void CustomView::drawLineTo(const QPointF &endPoint)
     if (!lineGroup){
         lineGroup = new QGraphicsItemGroup();
         lineGroup->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-        this->scene()->addItem(lineGroup);
+//        this->scene()->addItem(lineGroup);
+
+        AddCommand * addCommand = new AddCommand(lineGroup, this->scene());
+        undoStack->push(addCommand);
+
         lastPenPoint = startingPoint;
     }
     auto localLine = new QGraphicsLineItem(QLineF(lastPenPoint,endPoint));
@@ -234,8 +259,10 @@ void CustomView::drawShapeTo(const QPointF &endPoint)
         QGraphicsRectItem* mRect = new QGraphicsRectItem();
         mRect->setRect(itemRect.normalized());
         this->scene()->addItem(mRect);
+
         mRect->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
         lastItem = mRect;
+
     }
 }
 

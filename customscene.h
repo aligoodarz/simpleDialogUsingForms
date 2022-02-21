@@ -26,6 +26,7 @@ public:
     void createBModel(const double ratio);
     void createTModel(const double ratio);
 
+
 };
 
 #endif // CUSTOMSCENE_H
