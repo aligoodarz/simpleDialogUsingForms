@@ -88,6 +88,9 @@ void CustomView::createToolbar()
         setStatusTip("Eraser Selected");
     });
 
+    auto copy = tb->addAction("Copy");
+    connect(copy, &QAction::triggered, this, &CustomView::copy);
+
     //add menu to the view
     auto dockLayout = new QVBoxLayout();
     dockLayout->setMenuBar(tb); //
@@ -309,6 +312,11 @@ void CustomView::copy()
     QGraphicsItem* firstItem = selItems.first();
     //Try to cast it to rect item and then check if it is indeed a rect item
     QGraphicsRectItem* rectItem = qgraphicsitem_cast<QGraphicsRectItem*>(firstItem);
+    if (rectItem){ //if not null it is a rectItem
+        QRectF size = rectItem->rect();
+        QGraphicsItem* newRect = this->scene()->addRect(size);
+        newRect->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
+    }
 
 
 }
