@@ -47,6 +47,16 @@ void CustomScene::createTModel(const double ratio)
 
 }
 
+void CustomScene::saveScene(QString &fileName)
+{
+
+}
+
+void CustomScene::loadScene(QString &fileName)
+{
+
+}
+
 
 
 
