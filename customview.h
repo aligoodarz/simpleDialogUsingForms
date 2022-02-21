@@ -31,8 +31,9 @@
 #include <QGraphicsTextItem>
 #include <QString>
 #include <QUndoStack>
+#include <QPainter>
 
-#include "addcommand.h"
+#include "commands.h"
 #include "widget.h"
 
 
@@ -87,6 +88,7 @@ public slots:
     void fitToItem();
     void deleteSelectedItems();
     void copy();
+
 };
 
 #endif // CUSTOMVIEW_H

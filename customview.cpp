@@ -1,6 +1,8 @@
 #include "customview.h"
 #include <customscene.h>
 
+#include <QGraphicsPathItem>
+
 
 CustomView::CustomView(QWidget *parent)
     : QGraphicsView{parent},
@@ -36,8 +38,12 @@ void CustomView::createToolbar()
     QPixmap eraserPixmap(defaultDir+"eraser.png");
     QPixmap deleteSelectionPixmap (defaultDir+"deleteSelection.png");
     QPixmap rectanglePixmap (defaultDir+"rectangle.png");
+    QPixmap undoPixmap (defaultDir + "undo.png");
+    QPixmap redoPixmap (defaultDir + "redo.png");
+    QPixmap copyPixmap (defaultDir + "copy.png");
     //Create Toolbar
     auto tb = new QToolBar();
+    tb->setIconSize(QSize(20,20));
     //Create actions and connect to respective slots
     auto zoomIn = tb->addAction(QIcon(zoomInPixmap),"Zoom In");
     connect(zoomIn, &QAction::triggered,this, &CustomView::zoomIn);
@@ -89,13 +95,13 @@ void CustomView::createToolbar()
         setStatusTip("Eraser Selected");
     });
 
-    auto copy = tb->addAction("Copy");
+    auto copy = tb->addAction(copyPixmap,"Copy");
     connect(copy, &QAction::triggered, this, &CustomView::copy);
 
-    auto undo = tb->addAction("Undo");
+    auto undo = tb->addAction(undoPixmap,"Undo");
     connect(undo, &QAction::triggered,this, &CustomView::undo);
 
-    auto redo = tb->addAction("Redo");
+    auto redo = tb->addAction(redoPixmap,"Redo");
     connect(redo, &QAction::triggered,this, &CustomView::redo);
 
     //add menu to the view
@@ -324,7 +330,9 @@ void CustomView::fitToItem()
 void CustomView::deleteSelectedItems()
 {
     QGraphicsItemGroup * selectedGroup = scene()->createItemGroup(scene()->selectedItems());
-    scene()->removeItem(selectedGroup);
+//    scene()->removeItem(selectedGroup);
+    RemoveCommand * removeCommand = new RemoveCommand(selectedGroup, this->scene());
+    undoStack->push(removeCommand);
     //    scene()->destroyItemGroup(selectedGroup);
 }
 
@@ -342,12 +350,23 @@ void CustomView::copy()
     QGraphicsRectItem* rectItem = qgraphicsitem_cast<QGraphicsRectItem*>(firstItem);
     if (rectItem){ //if not null it is a rectItem
         QRectF size = rectItem->rect();
-        QGraphicsItem* newRect = this->scene()->addRect(size);
-        newRect->moveBy(15,15);
-        newRect->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
+        QGraphicsRectItem* copiedRect = new QGraphicsRectItem(size);
+        AddCommand * addCommand = new AddCommand(copiedRect, this->scene());
+        undoStack->push(addCommand);
+        copiedRect->moveBy(15,15);
+        copiedRect->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
         return;
     }
 
-
+    //Fix this later on, try to find a way to draw the path
+    QGraphicsItemGroup* handDrawnItem = qgraphicsitem_cast<QGraphicsItemGroup*>(firstItem);
+    if (handDrawnItem){
+        qDebug()<<"Item Group";
+        QPainterPath path = handDrawnItem->opaqueArea();
+        QGraphicsPathItem* copiedItem = this->scene()->addPath(path);
+//        copiedItem->paint(painter);
+    }
 
 }
+
+

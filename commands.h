@@ -1,5 +1,5 @@
-#ifndef ADDCOMMAND_H
-#define ADDCOMMAND_H
+#ifndef COMMANDS_H
+#define COMMANDS_H
 
 #include <QUndoCommand>
 #include <QGraphicsItem>
@@ -19,4 +19,17 @@ private:
 
 };
 
-#endif // ADDCOMMAND_H
+
+class RemoveCommand : public QUndoCommand
+{
+public:
+    RemoveCommand(QGraphicsItem * item, QGraphicsScene * scene);
+    void undo() override;
+    void redo() override;
+
+private:
+    QGraphicsItem * mItem;
+    QGraphicsScene * mScene;
+};
+
+#endif // COMMANDS_H
