@@ -214,11 +214,8 @@ void CustomView::drawLineTo(const QPointF &endPoint)
     if (!lineGroup){
         lineGroup = new QGraphicsItemGroup();
         lineGroup->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-//        this->scene()->addItem(lineGroup);
-
         AddCommand * addCommand = new AddCommand(lineGroup, this->scene());
         undoStack->push(addCommand);
-
         lastPenPoint = startingPoint;
     }
     auto localLine = new QGraphicsLineItem(QLineF(lastPenPoint,endPoint));
@@ -281,13 +278,11 @@ void CustomView::drawShapeTo(const QPointF &endPoint)
         QGraphicsRectItem* mRect = new QGraphicsRectItem();
         mRect->setRect(itemRect.normalized());
         this->scene()->addItem(mRect);
-        mRect->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
         lastItem = mRect;
     }else if (tool == Line){
         QGraphicsLineItem* mLine = new QGraphicsLineItem(startingPoint.x(),startingPoint.y(),
                                                          endPoint.x(), endPoint.y());
         this->scene()->addItem(mLine);
-        mLine->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
         lastItem = mLine;
     }
 }
