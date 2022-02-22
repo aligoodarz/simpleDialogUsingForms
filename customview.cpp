@@ -344,11 +344,9 @@ void CustomView::fitToItem()
 
 void CustomView::deleteSelectedItems()
 {
-    QGraphicsItemGroup * selectedGroup = scene()->createItemGroup(scene()->selectedItems());
-//    scene()->removeItem(selectedGroup);
+    QGraphicsItemGroup * selectedGroup = scene()->createItemGroup(scene()->selectedItems());;
     RemoveCommand * removeCommand = new RemoveCommand(selectedGroup, this->scene());
     undoStack->push(removeCommand);
-    //    scene()->destroyItemGroup(selectedGroup);
 }
 
 void CustomView::copy()
@@ -368,8 +366,20 @@ void CustomView::copy()
         QGraphicsRectItem* copiedRect = new QGraphicsRectItem(size);
         AddCommand * addCommand = new AddCommand(copiedRect, this->scene());
         undoStack->push(addCommand);
-        copiedRect->moveBy(15,15);
+        copiedRect->moveBy(rectItem->x()+15,rectItem->y()+15);
         copiedRect->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
+        return;
+    }
+
+    //Try to cast the item to lineItem and then check if it is indded a line item
+    QGraphicsLineItem* lineItem = qgraphicsitem_cast<QGraphicsLineItem*>(firstItem);
+    if (lineItem){
+        QGraphicsLineItem* copiedLine = new QGraphicsLineItem();
+        copiedLine->setLine(lineItem->line());
+        AddCommand * addCommand = new AddCommand(copiedLine, this->scene());
+        undoStack->push(addCommand);
+        copiedLine->moveBy(lineItem->x()+15,lineItem->y()+15);
+        copiedLine->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
         return;
     }
 
