@@ -50,7 +50,8 @@ public: //methods
         Rect,
         Ellipse,
         Eraser,
-        Pan
+        Pan,
+        Line
     };
     void undo();
     void redo();

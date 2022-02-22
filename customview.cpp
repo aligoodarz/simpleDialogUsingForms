@@ -74,6 +74,13 @@ void CustomView::createToolbar()
         setStatusTip("Rect Selected");
     });
 
+    auto drawLine = tb->addAction("Line");
+    connect(drawLine, &QAction::triggered, this, [this](){
+        tool = Line;
+        setDragMode(QGraphicsView::NoDrag);
+        setStatusTip("Line Selected");
+    });
+
     auto cursorActive = tb->addAction(mouseSelectionPixmap,"Cursor");
     connect(cursorActive, &QAction::triggered,this,[this](){
         tool = Cursor;
@@ -132,7 +139,7 @@ void CustomView::mousePressEvent(QMouseEvent *event)
         ShowContextMenu(event->pos()); //Show context menu
     }if(event->button() == Qt::LeftButton){
         if (tool == ToolType::Pen || tool == ToolType::Eraser
-                || tool == Rect || tool == Ellipse){
+                || tool == Rect || tool == Ellipse || tool == Line){
             setInteractive(false); //Added to disable selection when drawing
             startingPoint = mapToScene(event->pos()); //Pick the starting position
             drawing = true;
@@ -150,7 +157,8 @@ void CustomView::mouseMoveEvent(QMouseEvent *event)
             drawLineTo(mapToScene(event->pos()));
         }else if ( tool == ToolType::Eraser){
             drawEraserAt(mapToScene(event->pos()));
-        }else if (tool == ToolType::Rect) {
+        }else if (tool == ToolType::Rect ||
+                  tool == Line) {
             drawShapeTo(mapToScene(event->pos()));
         }
     }else
@@ -265,10 +273,14 @@ void CustomView::drawShapeTo(const QPointF &endPoint)
         QGraphicsRectItem* mRect = new QGraphicsRectItem();
         mRect->setRect(itemRect.normalized());
         this->scene()->addItem(mRect);
-
         mRect->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
         lastItem = mRect;
-
+    }else if (tool == Line){
+        QGraphicsLineItem* mLine = new QGraphicsLineItem(startingPoint.x(),startingPoint.y(),
+                                                         endPoint.x(), endPoint.y());
+        this->scene()->addItem(mLine);
+        mLine->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+        lastItem = mLine;
     }
 }
 
