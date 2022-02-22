@@ -153,12 +153,11 @@ void CustomView::mousePressEvent(QMouseEvent *event)
 void CustomView::mouseMoveEvent(QMouseEvent *event)
 {
     if ((event->buttons() & Qt::LeftButton) && drawing){
-        if (tool == ToolType::Pen){
+        if (tool == Pen){
             drawLineTo(mapToScene(event->pos()));
-        }else if ( tool == ToolType::Eraser){
+        }else if ( tool == Eraser){
             drawEraserAt(mapToScene(event->pos()));
-        }else if (tool == ToolType::Rect ||
-                  tool == Line) {
+        }else if (tool == Rect || tool == Line) {
             drawShapeTo(mapToScene(event->pos()));
         }
     }else
@@ -168,29 +167,38 @@ void CustomView::mouseMoveEvent(QMouseEvent *event)
 void CustomView::mouseReleaseEvent(QMouseEvent *event)
 {
     if ((event->button() == Qt::LeftButton) && drawing){
-        if (tool == ToolType::Pen){
+        if (tool == Pen){
             lineGroup = nullptr;
             drawing = false;   
 
-        }if(tool == ToolType::Eraser){
+        }if(tool == Eraser){
             scene()->removeItem(lastEraserCircle);
             delete lastEraserCircle;
             lastEraserCircle = nullptr;
             drawing = false;
 
-        }if (lastItem && (tool == Rect)){
+        }if (lastItem && (tool == Rect || tool == Line)){
             this->scene()->removeItem(lastItem);
             delete lastItem; //Free memory
 
         }if (tool == Rect) {
+            //Create the final rectangle and set flags
             QGraphicsRectItem* mRect = new QGraphicsRectItem();
             mRect->setRect(QRectF(startingPoint, mapToScene(event->pos())).normalized());
             mRect->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-//            this->scene()->addItem(mRect);
-
+            //Create an add command and add it to the undo stack
             AddCommand * addCommand = new AddCommand(mRect, this->scene());
             undoStack->push(addCommand);
-
+            //Clear previous lastItem and set drawing to false
+            lastItem = nullptr;
+            drawing = false;
+        }if (tool == Line){
+            //Same as Rect but with a line
+            QGraphicsLineItem* mLine = new QGraphicsLineItem(startingPoint.x(), startingPoint.y(),
+                                                             mapToScene(event->pos()).x(), mapToScene(event->pos()).y());
+            mLine->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+            AddCommand * addCommand = new AddCommand(mLine, this->scene());
+            undoStack->push(addCommand);
             lastItem = nullptr;
             drawing = false;
         }
