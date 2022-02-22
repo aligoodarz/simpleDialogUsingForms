@@ -358,8 +358,7 @@ void CustomView::copy()
         return;
     }
 
-    //    QGraphicsItem* firstItem = selItems.first();
-    foreach(QGraphicsItem* selItem, selItems){
+    foreach(QGraphicsItem* selItem, selItems){ //Iterate to copy all items
         //Try to cast it to rect item and then check if it is indeed a rect item
         QGraphicsRectItem* rectItem = qgraphicsitem_cast<QGraphicsRectItem*>(selItem);
         if (rectItem){ //if not null it is a rectItem
@@ -369,7 +368,6 @@ void CustomView::copy()
             undoStack->push(addCommand);
             copiedRect->moveBy(rectItem->x()+15,rectItem->y()+15);
             copiedRect->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
-//            return;
         }
 
         //Try to cast the item to lineItem and then check if it is indded a line item
@@ -381,7 +379,6 @@ void CustomView::copy()
             undoStack->push(addCommand);
             copiedLine->moveBy(lineItem->x()+15,lineItem->y()+15);
             copiedLine->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
-//            return;
         }
 
         //Fix this later on, try to find a way to draw the path

@@ -20,7 +20,7 @@ void CustomScene::createUModel(const double ratio)
     group->addToGroup(addLine(150,55,150,40+(100.0*ratio)));
     group->addToGroup(addLine(250,55,250,40+(100.0*ratio)));
     group->addToGroup(addEllipse(150,25+(100.0*ratio),100,30));
-//    group->setFlag(QGraphicsItem::ItemIsMovable);
+    group->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
     this->addItem(group);
 
 }
@@ -33,6 +33,7 @@ void CustomScene::createBModel(const double ratio)
     group->addToGroup(addLine(105,150,90+(100.0*ratio),150));
     group->addToGroup(addLine(105,250,90+(100.0*ratio),250));
     group->addToGroup(addEllipse(75+(100.0*ratio),150,30,100));
+    group->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
     this->addItem(group);
 
 }
@@ -43,6 +44,7 @@ void CustomScene::createTModel(const double ratio)
     QGraphicsItemGroup* group = new QGraphicsItemGroup();
     group->addToGroup(addRect(10,10,380,380)); //Square
     group->addToGroup(addEllipse(200-(380/ratio),200-(380/ratio),2*380/ratio,2*380/(ratio))); //circle
+    group->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
     this->addItem(group);
 
 }
