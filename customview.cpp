@@ -19,8 +19,8 @@ void CustomView::setupView()
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     //This connects the request for a context menu to an actual context menu
-//    connect(this, SIGNAL(customContextMenuRequested(QPoint)),
-//            this, SLOT(ShowContextMenu(QPoint)));
+    //    connect(this, SIGNAL(customContextMenuRequested(QPoint)),
+    //            this, SLOT(ShowContextMenu(QPoint)));
     createToolbar(); //Create the toolbar and add actions to it
 }
 
@@ -169,7 +169,7 @@ void CustomView::mouseReleaseEvent(QMouseEvent *event)
     if ((event->button() == Qt::LeftButton) && drawing){
         if (tool == Pen){
             lineGroup = nullptr;
-            drawing = false;   
+            drawing = false;
 
         }if(tool == Eraser){
             scene()->removeItem(lastEraserCircle);
@@ -269,8 +269,8 @@ void CustomView::eraseStrokesUnder(QGraphicsEllipseItem *item)
 void CustomView::drawShapeTo(const QPointF &endPoint)
 {
     if (lastItem){
-       this->scene()->removeItem(lastItem); //remove the lastItem from the scene
-       delete lastItem; //Free up the memory
+        this->scene()->removeItem(lastItem); //remove the lastItem from the scene
+        delete lastItem; //Free up the memory
     }
     QRectF itemRect(startingPoint, endPoint); //Bounding Rect of various shapes
 
@@ -358,38 +358,40 @@ void CustomView::copy()
         return;
     }
 
-    QGraphicsItem* firstItem = selItems.first();
-    //Try to cast it to rect item and then check if it is indeed a rect item
-    QGraphicsRectItem* rectItem = qgraphicsitem_cast<QGraphicsRectItem*>(firstItem);
-    if (rectItem){ //if not null it is a rectItem
-        QRectF size = rectItem->rect();
-        QGraphicsRectItem* copiedRect = new QGraphicsRectItem(size);
-        AddCommand * addCommand = new AddCommand(copiedRect, this->scene());
-        undoStack->push(addCommand);
-        copiedRect->moveBy(rectItem->x()+15,rectItem->y()+15);
-        copiedRect->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
-        return;
-    }
+    //    QGraphicsItem* firstItem = selItems.first();
+    foreach(QGraphicsItem* selItem, selItems){
+        //Try to cast it to rect item and then check if it is indeed a rect item
+        QGraphicsRectItem* rectItem = qgraphicsitem_cast<QGraphicsRectItem*>(selItem);
+        if (rectItem){ //if not null it is a rectItem
+            QRectF size = rectItem->rect();
+            QGraphicsRectItem* copiedRect = new QGraphicsRectItem(size);
+            AddCommand * addCommand = new AddCommand(copiedRect, this->scene());
+            undoStack->push(addCommand);
+            copiedRect->moveBy(rectItem->x()+15,rectItem->y()+15);
+            copiedRect->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
+//            return;
+        }
 
-    //Try to cast the item to lineItem and then check if it is indded a line item
-    QGraphicsLineItem* lineItem = qgraphicsitem_cast<QGraphicsLineItem*>(firstItem);
-    if (lineItem){
-        QGraphicsLineItem* copiedLine = new QGraphicsLineItem();
-        copiedLine->setLine(lineItem->line());
-        AddCommand * addCommand = new AddCommand(copiedLine, this->scene());
-        undoStack->push(addCommand);
-        copiedLine->moveBy(lineItem->x()+15,lineItem->y()+15);
-        copiedLine->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
-        return;
-    }
+        //Try to cast the item to lineItem and then check if it is indded a line item
+        QGraphicsLineItem* lineItem = qgraphicsitem_cast<QGraphicsLineItem*>(selItem);
+        if (lineItem){
+            QGraphicsLineItem* copiedLine = new QGraphicsLineItem();
+            copiedLine->setLine(lineItem->line());
+            AddCommand * addCommand = new AddCommand(copiedLine, this->scene());
+            undoStack->push(addCommand);
+            copiedLine->moveBy(lineItem->x()+15,lineItem->y()+15);
+            copiedLine->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
+//            return;
+        }
 
-    //Fix this later on, try to find a way to draw the path
-    QGraphicsItemGroup* handDrawnItem = qgraphicsitem_cast<QGraphicsItemGroup*>(firstItem);
-    if (handDrawnItem){
-        qDebug()<<"Item Group";
-        QPainterPath path = handDrawnItem->opaqueArea();
-        QGraphicsPathItem* copiedItem = this->scene()->addPath(path);
-//        copiedItem->paint(painter);
+        //Fix this later on, try to find a way to draw the path
+        QGraphicsItemGroup* handDrawnItem = qgraphicsitem_cast<QGraphicsItemGroup*>(selItem);
+        if (handDrawnItem){
+            qDebug()<<"Item Group";
+            QPainterPath path = handDrawnItem->opaqueArea();
+            QGraphicsPathItem* copiedItem = this->scene()->addPath(path);
+            //        copiedItem->paint(painter);
+        }
     }
 
 }
