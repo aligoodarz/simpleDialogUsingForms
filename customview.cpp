@@ -41,6 +41,7 @@ void CustomView::createToolbar()
     QPixmap undoPixmap (defaultDir + "undo.png");
     QPixmap redoPixmap (defaultDir + "redo.png");
     QPixmap copyPixmap (defaultDir + "copy.png");
+    QPixmap linePixmap (defaultDir + "line.png");
     //Create Toolbar
     auto tb = new QToolBar();
     tb->setIconSize(QSize(20,20));
@@ -74,7 +75,7 @@ void CustomView::createToolbar()
         setStatusTip("Rect Selected");
     });
 
-    auto drawLine = tb->addAction("Line");
+    auto drawLine = tb->addAction(linePixmap,"Line");
     connect(drawLine, &QAction::triggered, this, [this](){
         tool = Line;
         setDragMode(QGraphicsView::NoDrag);
