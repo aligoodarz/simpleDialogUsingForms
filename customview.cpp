@@ -338,9 +338,12 @@ void CustomView::fitToExtents()
 void CustomView::fitToItem()
 {
     QGraphicsItemGroup * selectedGroup = scene()->createItemGroup(scene()->selectedItems());
-    selectedGroup->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-    fitInView(selectedGroup->boundingRect(),Qt::KeepAspectRatio);
-    scene()->destroyItemGroup(selectedGroup);
+    if (selectedGroup){
+        selectedGroup->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+        fitInView(selectedGroup->boundingRect(),Qt::KeepAspectRatio);
+        scene()->destroyItemGroup(selectedGroup);
+        delete selectedGroup;
+    }
 }
 
 void CustomView::deleteSelectedItems()
@@ -349,6 +352,7 @@ void CustomView::deleteSelectedItems()
     if (selectedGroup){
         RemoveCommand * removeCommand = new RemoveCommand(selectedGroup, this->scene());
         undoStack->push(removeCommand);
+        delete selectedGroup;
     }
 }
 
