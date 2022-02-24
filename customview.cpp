@@ -346,14 +346,15 @@ void CustomView::fitToItem()
 void CustomView::deleteSelectedItems()
 {
     QGraphicsItemGroup * selectedGroup = scene()->createItemGroup(scene()->selectedItems());;
-    RemoveCommand * removeCommand = new RemoveCommand(selectedGroup, this->scene());
-    undoStack->push(removeCommand);
+    if (selectedGroup){
+        RemoveCommand * removeCommand = new RemoveCommand(selectedGroup, this->scene());
+        undoStack->push(removeCommand);
+    }
 }
 
 void CustomView::copy()
 {
     QList <QGraphicsItem*> selItems = this->scene()->selectedItems();
-    qDebug()<< selItems;
     if (selItems.size() == 0){
         //Nothing is selected
         return;
