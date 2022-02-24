@@ -18,9 +18,9 @@ void CustomView::setupView()
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    //This connects the request for a context menu to an actual context menu
-    //    connect(this, SIGNAL(customContextMenuRequested(QPoint)),
-    //            this, SLOT(ShowContextMenu(QPoint)));
+
+    undoStack->setUndoLimit(10); //To make sure the memory doesn't get filled
+
     createToolbar(); //Create the toolbar and add actions to it
 }
 
@@ -316,7 +316,6 @@ void CustomView::ShowContextMenu(const QPoint &pos)
     QAction action1(tr("Clear"), this);
     connect(&action1, SIGNAL(triggered()),this->scene(), SLOT(clear()));
     contextMenu.addAction(&action1);
-
     contextMenu.exec(mapToGlobal(pos));
 }
 
