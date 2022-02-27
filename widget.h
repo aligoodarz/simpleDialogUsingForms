@@ -78,7 +78,6 @@ private slots:
     void setModel();
     void visualize();
 
-
 public slots:
     void saveJson(); //Saves the user inputs in the JSON format
     bool fieldIsEmpty(); //Warns users if a field is empty

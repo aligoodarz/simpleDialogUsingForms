@@ -173,17 +173,3 @@ void Widget::visualize()
         this->setStatusTip("Visualization Successfull");
     }
 }
-
-
-
-//void Widget::on_unitsComboBox_currentIndexChanged(int index)
-//{
-//    Q_UNUSED(index);
-//    //This is used to pass on the units to the view
-//    //It can be done in a better way but the current architecture does not allow for it.
-//    view->units = ui->unitsComboBox->currentText();
-//    //The normal update function would not update immediately so viewport had to be used
-//    auto vp = view->viewport();
-//    vp->update();
-//}
-

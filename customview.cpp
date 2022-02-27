@@ -341,7 +341,6 @@ void CustomView::fitToItem()
         selectedGroup->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
         fitInView(selectedGroup->boundingRect(),Qt::KeepAspectRatio);
         scene()->destroyItemGroup(selectedGroup);
-        delete selectedGroup;
     }
 }
 
