@@ -6,7 +6,7 @@
 - Understanding of the Meta-Object system is used to handle events and send signals or design slots.
 - The main layout of the application looks as follows:
 ![image](https://user-images.githubusercontent.com/72888089/155899522-48e8835f-c90e-4cb0-b339-653f30c70428.png)
-- Upon the user selection of the layout field, the picture on the right changes to the desired orientation like the following picture. The parameter 1 and 2 text also change:
+- Upon the user selection of the layout field, parameter 1 and 2 text change:
 ![image](https://user-images.githubusercontent.com/72888089/155899542-99fc8718-db97-473e-90c9-2822602e3cfb.png)
 - Then the picture is modeled by pressing the visualize button
 - ![image](https://user-images.githubusercontent.com/72888089/155899568-accb9099-1553-4698-add1-6a8ea662f88a.png)
