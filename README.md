@@ -1,5 +1,9 @@
 # simpleDialogUsingForms
 - This project is made to prompt the user to enter information about a specimen and then save the user inputs into a JSON file.
+- The project leverages capabilities such as :
+- - Zoom in, Zoom Out, Zoom To Fit, Zoom to Item, Delete Selection, Draw with Pin, Draw Rectangle, Draw Line, Rubberband Selection, Panning, Erasing, Copying, Undo, Redo.
+- OOP principles are used to use existing Qt objects and extend them.
+- Understanding of the Meta-Object system is used to handle events and send signals or design slots.
 - The main layout of the application looks as follows:
 ![image](https://user-images.githubusercontent.com/72888089/155899522-48e8835f-c90e-4cb0-b339-653f30c70428.png)
 - Upon the user selection of the layout field, the picture on the right changes to the desired orientation like the following picture. The parameter 1 and 2 text also change:
